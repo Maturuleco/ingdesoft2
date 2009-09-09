@@ -1,0 +1,84 @@
+Sistema
+	--------
+	Análisis Funcional
+			Analisis de Requerimientos...
+			Confección del modelo de objetivos
+			Modelo de casos de uso...
+			....
+
+			// CS
+			Obtención de Requerimientos
+			Análisis de Requerimientos / CU
+			Generación de Doc funcional
+			Verificación y Validación con cliente
+			etc.....
+
+			HITO: Presentación de *el documento*
+			
+	--------
+	Organización ?
+			Desarrollo entorno de desarrollo
+			Desarrollo del entorno de testing
+			Instalación de los servidores (para los dos de arriba)
+
+			// CS
+			Gestion:
+				Definición de fechas inicio/fin
+				Asignación de recursos
+				Definición de Roles y Responsabilidades
+				Estimación del costo/riesgo
+
+			Entorno:
+				Armado/Istalación de Ambiente de desarrollo 
+				Armado/Istalación de Ambiente de testing 
+
+	--------
+	Diseño
+		Diseño de la funcionalidad 1
+			Diseño de protocolo ?
+		Diseño de la funcionalidad 2
+		
+		// CS: tareas del experto en IT 
+		Creación de modelo d arquitectura
+		Generación de Documentación
+		...
+
+
+		HITO: Presentación del diseño general		
+
+	--------
+	Desarrollo
+		Desarrollo de ... (las cosas que se diseñan (una por una))
+		
+		// CS: son algunos items q se dijeron en clase
+		Obtener datos
+		Procesar datos
+		Publicar datos
+		Documentar / javadoc / tutorials .. bla bla bla
+
+	--------
+	Testing
+		Creación de Casos de Test: 
+				test de unidad
+				test de "caja negra"
+				
+				// CS
+				Pruebas unitarias
+				Pruebas funcionales
+				Pruebas de Integración
+				Pruebas de validación
+				Pruebas de regresión
+				Pruebas de carga
+				Reportes
+
+	--------
+	Implementación
+		Testeo de terminales (pantallas y bla) (Testeo físico)
+		Testeo de red interna del aeropuerto
+		Prueba del sistema en conjunto acotado de pantallas (Si, estoy chamuyando)
+		Implementación del sistema en pantallas
+		Implementación del sistema en televisores
+
+	
+
+
