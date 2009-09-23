@@ -1,0 +1,19 @@
+perdon q va en txt, pero estoy en la compu q no tiene word =P prometo pasarlo
+
+Riesgos:
+
+1 - el sistema tiene interacción con demasiados sistemas externos: google maps, mapa eolico, biggest satellite, monitoreador de energia, etc.
+
+2 - las terminales remotas se instalarán en todo el territorio del país, incluso en lugares alejados o de difícil acceso. y, en muchos casos, con problemas de comunicaciones
+
+3 - los modelos matemáticos y estadísticos aún no se encuentran totalmente definidos y existe gran variación en las condiciones de cada pauta en cada modelo y en las acciones a tomar ante cada una de estas condiciones
+
+
+Mis prioridades son:
+
+El más riesgoso es el segundo, luego el primero, y luego el tercero
+
+Nota:
+
+El tercero lo considero riesgoso porque puede hacer retrasar todo el proyecto
+
