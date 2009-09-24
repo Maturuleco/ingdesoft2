@@ -38,3 +38,23 @@ Integrar subsistemas
 	Integrar TR a EC
 	Integrar EC a interfaces gráficas
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Agregados desde el proyect....
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Obtener aprobacion de cliente
+Revisar requerimientos
+Implementar cambios de los requerimientos
+Entrenamiento de Usuarios para el uso del sist
+Documentar
+	Documentos de ayuda
+	Manuales
+Realizar piloto de pruebas
+Obtener feedback del piloto
+Evaluar feedback e incorporarlo al sist
+
+Deploy
+	Determinar estrategia
+	Determinar Metodología
+	Determinar recursos necesarios
+	Entrenar al personal
