@@ -1,0 +1,34 @@
+MARTA: Riesgo: Modelos matemáticos no definidos (capaz que no se puede definir)
+
+
+Ahora sí... tareas:
+
+Diseño de Arquitectura
+	Definir Estructuras de almacenamiento
+		Diseño de Bases de Datos
+		Redundancia en los datos?
+Diseño de protocolos de comunicación
+
+Diseño de ambiente de Desarrollo
+Diseño de ambiente de Testing
+Armado de ambiente de Desarrollo
+Armado de ambiente de Testing
+	Virtualizacion de sistemas externos
+	Virtualizacion de componentes de sistema
+Definir Tecnología a usar (Lenguaje de prog)
+
+Investigar Tecnologías (GSM, etc)
+Investigar Sistemas Externos (eólico...)
+Diseño de Interfases entre sistemas
+[Estas 3 serían de la 2º fase de elaboracion capaz]
+
+Diseño de interfases gráficas
+Asignar recursos <- Esta no
+Tests... Ayuda, no sé mucho de testeo
+Diseño de la Red de TR (Cantidad, localizacion, etc)
+	Analizar localizacion de TR
+	Comunicacion con sensores
+
+Deploy...
+Integracion con sist externos... Creo que hay CUs con respecto a esto
+
