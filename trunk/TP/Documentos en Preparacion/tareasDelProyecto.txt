@@ -32,3 +32,9 @@ Diseño de la Red de TR (Cantidad, localizacion, etc)
 Deploy...
 Integracion con sist externos... Creo que hay CUs con respecto a esto
 
+Integrar la prueba de concepto al sistema
+Integrar subsistemas
+	Integrar sensores a TRs
+	Integrar TR a EC
+	Integrar EC a interfaces gráficas
+
