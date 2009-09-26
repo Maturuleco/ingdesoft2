@@ -8,5 +8,17 @@ TOP FIVE:
 5. Modificabilidad (El modelo matematico debe ser facilmente adaptable)
 
 
-El Resto:
+La lista completa:
 
+a_ Acceso simple y rápido a la informacion generada (por parte de la poblacion)
+b_ Exportar funcionalidades a Clientes Externos (CE)
+c_ "Disponibilidad" de los datos de los últimos 6 mese para el modelo matemático
+d_ Gran capacidad de computo (Para el modelo matemático)
+e_ Transmicion segura de datos
+f_ Poder auditar los datos (Donde, cuando, etc)
+g_ Sistema de regla facilmente modificables
+h_ No demoras en la visualizacion/generacion de alarmas
+i_ Disponibilidad 7x24 (del sistema)
+j_ Informacion confiable y fideligna (que no haya datos erroneos)
+k_ Datos en orden
+l_ Trabajo en conjunto con sistema eólico
