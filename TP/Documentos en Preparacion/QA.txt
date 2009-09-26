@@ -1,0 +1,12 @@
+TOP FIVE:
+
+
+1. Confiabilidad. (Alta precisión en los resultados que arroje el sistema. Es necesario evitar alarmar a la población con pronósticos erróneos, y no sorprenderse con fenómenos meteorológicos no previstos)
+2. Disponibilidad (Es necesario que los datos capturados no se pierdan, más alla de delays o caída de comunicaciones).
+3. Performance. (Los pronosticos deben ser producidos en tiempos razonables)
+4. Seguridad. (Transmisión de datos segura, evitando intrusos).
+5. Modificabilidad (El modelo matematico debe ser facilmente adaptable)
+
+
+El Resto:
+
