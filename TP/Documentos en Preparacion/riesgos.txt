@@ -1,19 +1,21 @@
-perdon q va en txt, pero estoy en la compu q no tiene word =P prometo pasarlo
-
 Riesgos:
 
-1 - el sistema tiene interacción con demasiados sistemas externos: google maps, mapa eolico, biggest satellite, monitoreador de energia, etc.
+El sistema tiene interacción con muchos sistemas y componentes externos. Entre los sistemas podemos mencionar Google Maps o Biggest Satellite, y entre los componentes, los sensores, por ejemplo. 
 
-2 - las terminales remotas se instalarán en todo el territorio del país, incluso en lugares alejados o de difícil acceso. y, en muchos casos, con problemas de comunicaciones
+Esto trae aparejados dos riesgos:
 
-3 - los modelos matemáticos y estadísticos aún no se encuentran totalmente definidos y existe gran variación en las condiciones de cada pauta en cada modelo y en las acciones a tomar ante cada una de estas condiciones
+1- La complejidad de entender su funcionamiento y programar la interacción con ellos.
+2- El hecho de que cualquier problema propio de ellos repercutirá en nuestro sistema.
 
+Por otro lado, las terminales remotas se instalarán en todo el territorio del país, incluso en lugares alejados o de difícil acceso. y, en muchos casos, con problemas de comunicaciones.
 
-Mis prioridades son:
+Aquí podemos identificar otro riesgo:
 
-El más riesgoso es el segundo, luego el primero, y luego el tercero
+3- El sistema deberá asegurar la integridad y no pérdida de los datos a lo largo de toda la red, subsanando estas dificultades.
 
-Nota:
+Por último, los modelos matemáticos y estadísticos aún no se encuentran totalmente definidos y existe gran variación en las condiciones de cada pauta en cada modelo y en las acciones a tomar ante cada una de estas condiciones.
 
-El tercero lo considero riesgoso porque puede hacer retrasar todo el proyecto
+Esto nos permite identificar dos nuevos riesgos:
 
+4- La necesidad de definir un modelo suficientemente flexible, como para poder adaptarlo a los cambios recurrentes en las condiciones de las pautas.
+5 - El hecho de que los modelos no se encuentren aún definidos, podría causar una demora en el tiempo estimado para el proyecto, dado que no se podrá desarrollar ese módulo hasta que los modelos estén bien definidos.
