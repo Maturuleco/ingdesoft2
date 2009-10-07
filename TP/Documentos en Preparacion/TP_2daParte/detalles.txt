@@ -1,0 +1,12 @@
+Seguridad: tiene la responsabilidad de reconocer los mensajes de instrusos en la red y de toda la seguridad de las transmisiones.. etc.
+Agenda: es la componente de la EC que tiene la responsabilidad de mandar los mensaje de configuración de cronog, etc. Falta decidir si este se comunica con las tr pasando por seguridad. Otra cosa es ver donde esta la info de las TR/Sensores registrados.
+Manager Datos: tiene la responsabilidad de manejar las BBDD ( provee y almacena).
+Manager Modelo: Provee informacion al modelo matematico y provee la info de este cuando los pronosticos son malos.
+Visual: se encarga de la parte visual del sistema, monitor y web.
+Manager Red: recibe info del modulo de seguridad y mantiene el estado de las tr,segmentos y caidas.
+Manager Caida: Sabe preguntando al mod de red q tr esta caida y en ese caso registra a esta en el triangulador si este responde negativamente pide datos al proxy biggest, cuando se levanta una tr es el encargado de cortar los servicios pedidos a biggest y del triangulador. Hay q decidir si este almacena la info que llega de proxybiggest y la envia al Mdatos??
+Proxy Biggest: Sabe como comunicarse con el sistema externo BiggestS, parte de este lleva la cuenta de la facturacion.
+Triangulador TR: Pregunta al MRed la info de las vecinas de la tr caida, de tener tres TRs vecinas activas, obtiene la info de estas de la BD (esto no esta claro aun ya q podria obtener los datos del mod de seguridad) y guarda la info parcial en una base local hasta tener los 3 datos, luego lo envia al manager de datos para que sea almacenado.
+
+
+
