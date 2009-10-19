@@ -1,0 +1,64 @@
+AC:
+--
+
+1) QAW: Disponibilidad. Es necesario que los datos capturados no se pierdan, mas alla de los delays o caídas de comunicaciones.
+	En el enunciado dice: "Es requerimiento fundamental que ningún dato sensado se pierda y si como se prevé, 
+	es necesario retransmitir alguna información, es indispensable que el sistema detecte y deseche los posibles repetidos"
+	
+	Preguntas: En la primera entrega nos teniamos para este AC los escenarios de Caída y Recu de TR, tienen q ver con disponibilidad deberían ir aca o como otros AC.
+		  Que los datos no se pierdan entra como Disponibilidad?? De ser así, el escenario para especificar sería algo asi:
+		  ( OJO! este escenario solo muestra una idea, puede que no sea del todo correcto.)
+		  desc: "Es necesario que los datos capturados no se pierdan, mas alla de delays y caidas de comunic."
+		  Fuente:	TR
+		  Estimulo:	Envio de mensaje
+		  Entorno:	Conexion con "delay" o "congestionada" // algo que diga que tardan los mensajes
+		  Artefacto:	EC
+		  Respuesta:	Se recibe la info
+		  Medida:	99 % de las veces llega
+		  
+2) QAW: Confiabilidad. Para especificar la integridad de los datos agregamos este escenario
+		
+		desc: "Alta precisión en los resultados provistos por el sistema."
+		Fuente:		Interna
+		Estímulo:	Envío de mensaje 
+		Artefacto:	Sistema
+		Entorno:	Conectado
+		Respuesta: S	e recibe un mensaje con errores de datos
+		Medida:		Se rechaza el 99.9% de los mensajes con errores de integridad
+
+3) Escenario de Seguridad
+
+	Pregunta: este escenario es correcto?? la duda es porque en las consultas Jonathan dijo que era una manera de hacerlo.. 
+		desc: "Transmisión segura de datos y evitar intrusos en las transmisiones."
+		Fuente:		usuario
+		Estímulo:	Consulta al sistema
+		Artefacto:	Sistema
+		Entorno:	El sistema esta caído
+		Respuesta:	El sistema no responde
+		Medida:		a lo sumo 3 segundos
+
+4) Escenario Interoperabilidad.
+	Pregunta: Este atributo va?? es decir, el sistema eolico que es externo al sistema a implementar.
+		desc: "Se pretende integrar el sistema eólico con este sistema."
+		Fuente:		Administrador de otro sistema
+		Estímulo:	Desea integrar información de su sistema.
+		Artefacto:	Sistema
+		Entorno:	normal
+		Respuesta:	Los datos del sistema externo se ingresan en el sistema.
+		Medida:		La interacción entre ambos  sistemas es implementada en menos de XX hs hombre.
+
+Riesgos:
+-------
+	En el enunciado dice:	"La primera metodologia consiste en usar datos históricos producidos por el mismo sistema para detectar outliers. 
+	Los intervalos de confianza dependeran de ciertas variables como fecha, lugar y hora de la produccion del dato, entre otras...
+	Estos intervalos de confianza serán definidos por un grupo de estadisticos. Resulta evidente que esta opción no será de aplicación inmediata, al menos, 
+	para ciertas variables."
+
+	Pregunta1: Sería correcta definir como riesgo que "los intervalos de las variables no están definidos para todas las variables (problemas para localizar errores)" 
+		  ya que debemos cumplir con no alarmar a la poblacion con pronosticos errados.. y de pasarse un error esto puede suceder ?¿?¿
+
+	Pregunta2: ¿Cuántos riesgos debemos planificar de todos los encotnrados?? 
+	Pregunta3: Hay riesgos que se deben por ejemplo al modulo del modelo matematico: 
+			o Que los resultados obtenidos de los modelo no sean correctos.
+			o La performance de los modelos podría no ser suficiente para cumplir con los atributos de calidad requeridos.
+			entre otros.. esto es correcto? o con los supuestos de que siempre anda bien ya esta?
