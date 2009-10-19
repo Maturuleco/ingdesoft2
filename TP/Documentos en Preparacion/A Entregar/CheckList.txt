@@ -1,7 +1,7 @@
-Dependencias de CU
-Actores CU
-Plan de proyecto general (Todas las itetraciones)
-Plan de la 1º iteracion (1º Iteración)
-xls de las Estimaciones
+Dependencias de CU   				Hecho
+Actores CU					Hecho
+Plan de proyecto general (Todas las itetraciones)	Hecho
+Plan de la 1º iteracion (1º Iteración)			Hecho
+xls de las Estimaciones				Hecho
 Informe TP (el .doc con todo)
 
