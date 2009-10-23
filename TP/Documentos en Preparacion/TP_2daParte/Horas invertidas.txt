@@ -3,3 +3,7 @@ Se supòne que c/u vaya poniendo las horas que trabajó para hacer el seguimiento,
 Matías:
 	Arquitectura: 5 (en lo de pablo) + 2 (facu) + 1 (de bondi/casa) + 2 hoy en casa modif 1º ent
 		total: 8
+
+Santiago: Arquitectura 2 en lo de pablo + 5 casa + 5 casa (otro dia) + 2 facu + 2 facu
+
+	Estimacion de esfuerzo (plan general): 2 en lo de pablo
