@@ -1,8 +1,12 @@
+package GSM;
+
+import java.util.Date;
 
 public class MensajeGSM {
-	private int destino;
-	private int origen;
+	private Integer destino;
+	private Integer origen;
 	private char[] mensaje;
+	private Date fecha;
 	
 	public MensajeGSM(int orig, int dest, char[] msj)
 	{
@@ -10,6 +14,7 @@ public class MensajeGSM {
 		origen = orig;
 		mensaje = new char[160];
 		int lon = msj.length;
+		fecha = new Date();
 		
 		for (int i=0; i < mensaje.length; i++) {
 			if (lon >= i)
@@ -19,12 +24,12 @@ public class MensajeGSM {
 		}
 	}
 	
-	public int getDestino()
+	public Integer getDestino()
 	{
 		return destino;
 	}
 	
-	public int getOrigen()
+	public Integer getOrigen()
 	{
 		return origen;
 	}
@@ -32,6 +37,11 @@ public class MensajeGSM {
 	public char[] getMensaje()
 	{
 		return mensaje;
+	}
+	
+	public Date getFecha()
+	{
+		return fecha;
 	}
 	
 }
