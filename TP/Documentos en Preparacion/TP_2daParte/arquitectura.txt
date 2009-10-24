@@ -2,28 +2,28 @@ TR Message Receiver:
 Recibe los mensajes enviados desde la TR, que contienen la información provista por los sensores.
 
 Data Receiver:
-Agrupa la información ambiental proveniente de los distintos componentes.
+Agrupa la información meteorológica proveniente de los distintos componentes.
 
 Validator:
 Es el encargado de validar los datos obtenidos de los distintos componentes usando la información almacenada de los últimos seis meses. Aquellos que considere outliers los guardará momentáneamente en la base de datos "outliers" y los informará al componente Consultant. El resto los guardará en la base de datos "Datos válidos". Cuando el componente COnsultant le informe que debe hacerse con los outliers los eliminará definitivamente o los pasará a la base de datos "Datos Válidos" según corresponda.
 
+Data Sender:
+A él se suscriben los distintos componentes que desean recibir información de los datos que ya fueron validados por el componente "Validator".
+
 Consultant:
-Este componente deberá comunicarse con los expertos para decidir qué decisión tomar con respecto a los outliers y le informará esto al componente Validador.
+Este componente deberá comunicarse con los expertos para ver qué decisión debe tomarse con respecto a los outliers y le informará esto al componente Validador.
 
 Predictor:
-Utilizando los datos ambientales que obtiene de la base de datos "Datos Válidos" y las reglas de modelo que se encuentran almacenadas en la base de datos "Rules", se encargará de realizar las predicciones y guardarlas en la base de datos "Predicciones"
---Cambiar esto en el visio  --> podemos dejarlo como estaba pq le gusto al corrector
+Utilizando los datos meteorológicos que obtiene de la base de datos "Datos Válidos" y las reglas de modelo que se encuentran almacenadas en la base de datos "Rules", se encargará de realizar las predicciones y enviárselas al componente "Predictor Viewer"
 
-Predictor Viewer:
-Es el que mostrará las predicciones en la página web. Las mismas serás obtenidas de la base de datos "Predicciones".
+Prediction Manager:
+Es el que se encargará de guardar y obtener las predicciones de la base de datos "Predicciones".
 
 Information Sender:
-Este componente enviará la información de las predicciones a los distintos usuarios externos. Para ello accederá a la base de datos "Predicciones" en la que se encontrarán almacenadas las mismas.
---Cambiar esto en el visio --> podemos dejarlo como estaba pq le gusto al corrector
+Este componente enviará la información de los datos sensados como así también de las predicciones a los distintos usuarios externos. La información de las predicciones se la pedirá al componente "Predictor Viewer", mientras que la de los datos sensados la recibirá por medio del componente "Data Sender". 
 
 Agenda Contoler:
---Malisimo, q hace este componente conectado al viewer???
---Ademas se tiene q conectar con la TR este !!!
+Consulta los datos de las predicciones por medio del componente "Predictor Viewer" y dependiendo de las mismas, ordena a las TRs que reconfiguren las agendas de los sensores.
 
 Rule Loader:
 A través de este componente se realizarán las modificaciones a las reglas del modelo, que se encuentran almacenadas en la base de datos "Rules".
@@ -40,20 +40,20 @@ Es el encargado de mostrar la información del tráfico de la red y el estado de c
 Alarm Notifier:
 Este componente enviará por email alarmas cuando se caiga una TR o haya demoras en la red. Éstas serán configurables por el operador desde el componente "GUI".
 
-TR Restart Detector:
+TR Recovery Detector:
 Cuando el componente "Network Controller" detecte la posible caída de un TR se lo comunicará. Desde ese momento se dispondrá a esperar la notificación de la TR caída de que ya se encuentra nuevamente operando y le comunicará esto al componente "TR Fail Manager" para que pueda tomar las medidas necesarias. 
 
 TR Fail Manager:
 Se encargará de administrar las caídas de las TRs. Verificará si es posible reemplazar los datos mediante triangulación de las TRs cercanas. En caso de que sea posible le delegará al componente "Triangulador de TRs" este trabajo, y en caso contrario le pedirá al componente "Biggest Satellite Controller" que le envíe los datos del sistema Biggest Satellite.
 
 Biggest Satellite Controller:
-Se comunicará con el sistema externo Biggest Satellite para pedirle datos ambientales, y registrará los gastos provenientes de este consumo para enviar el informe de los mismos al Ministerio de Infraestructura. Los datos obtenidos de Biggest Satellite serás enviados al componente "Data Receiver".
+Se comunicará con el sistema externo Biggest Satellite para pedirle datos meteorológicos, y registrará los gastos provenientes de este consumo para enviar el informe de los mismos al Ministerio de Infraestructura. Los datos obtenidos de Biggest Satellite serás enviados al componente "Data Receiver".
 
 Triangulador de TRs:
-Este componente realizará la triangulación de las TRs y proveerá dicha información al componente "Data Receiver"
+Este componente realizará la triangulación de las TRs y proveerá dicha información al componente "Data Receiver".
 
 Eolian System Controller:
-Se encargará de la retroalimentación entre el Sistema Eólico y nuestro sistema. Priorizará la información de cada uno según su precisión en determinadas zonas y la enviará al otro componente para que pueda utizarla. 
+Se encargará de la retroalimentación entre el Sistema Eólico y nuestro sistema. Priorizará la información de cada uno según su precisión en determinadas zonas y la enviará al otro componente para que pueda utizarla. Recibirá la información de los datos validados por medio del componente "Data Sender". 
 
 Tácticas utilizadas:
 
