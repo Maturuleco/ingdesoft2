@@ -7,3 +7,7 @@ Matías:
 Santiago: Arquitectura 2 en lo de pablo + 5 casa + 5 casa (otro dia) + 2 facu + 2 facu
 
 	Estimacion de esfuerzo (plan general): 2 en lo de pablo
+
+Marta: Arquitectura: 3 (primer aproach) + 2 (con santi en lo de pablo la vez pasada) + 3 (definicion de componentes) + 1 (facu - segui con definicion de componentes) + 5 (hoy - tacticas y terminar definiciones)
+	Estimacion de esfuerzo (plan general): 2 con santi en lo de pablo
+	QAW: 3 en lo de pablo con ceci
