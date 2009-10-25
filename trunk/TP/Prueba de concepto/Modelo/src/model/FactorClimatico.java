@@ -46,7 +46,8 @@ public enum FactorClimatico {
             case lluvias: return "L";
             case velocidad_viento: return "V";
             case direccion_viento: return "D";
-            default: return "ERROR";
+            default: 
+                throw new UnsupportedOperationException("No hay entrada para" + this.name());
         }
     }
 
