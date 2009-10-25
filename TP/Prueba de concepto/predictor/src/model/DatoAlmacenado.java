@@ -5,6 +5,8 @@
 
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author Santiago Avendaño
@@ -12,6 +14,12 @@ package model;
 public class DatoAlmacenado extends DatoSensado {
     private Integer idTR;
     private DataSource dataSource;
+
+    public DatoAlmacenado(Integer idSensor, Date timeStamp, FactorClimatico factor, Float valor, Integer idTR, DataSource dataSource) {
+        super(idSensor, timeStamp, factor, valor);
+        this.idTR = idTR;
+        this.dataSource = dataSource;
+    }
 
     public DataSource getDataSource() {
         return dataSource;

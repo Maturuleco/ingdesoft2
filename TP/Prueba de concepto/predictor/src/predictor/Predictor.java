@@ -6,45 +6,31 @@
 package predictor;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import model.Alerta;
 import model.DatoSensado;
 
 /**
  *
  * @author Santiago Avendaño
  */
-public class Predictor {
-    Map<Integer, Collection<DatoSensado> > datosSensados;
+public abstract class Predictor {    
 
-
-    public void analizar(){
-        Collection<Integer> idTRs = datosSensados.keySet();
+    public List<Alerta> analizar(Map<Integer, Collection<DatoSensado>> datosSensados){
+        Set<Integer> idTRs = datosSensados.keySet();
+        List<Alerta> alertas = new LinkedList<Alerta>();
         for (Integer id : idTRs) {
-            if (analizarHuracanes(datosSensados.get(id))) {
-                System.out.println("Huracán detectado en la TR: " + id.toString());
+            if (analizar(datosSensados.get(id))) {
+                alertas.add(new Alerta(id, "Se detectó un huracán"));
             }
         }
+        return alertas;
     }
 
-    public Boolean analizarHuracanes(Collection<DatoSensado> datosAEvaluar){
-        final Integer limite_velocidad = 60;
-        final Integer limite_humedad = 90;
-        final Integer limite_temperatura = 28;
-        for (DatoSensado datoSensado : datosAEvaluar) {
-            switch(datoSensado.getFactor()){
-                case velocidad_viento:
-                    if (datoSensado.getValor() < limite_velocidad) return Boolean.FALSE;
-                    break;
-                case humedad:
-                    if (datoSensado.getValor() < limite_humedad ) return Boolean.FALSE;
-                    break;
-                case temperatura:
-                    if (datoSensado.getValor() <  limite_temperatura) return Boolean.FALSE;
-                    break;
-            }
-        }
-        return Boolean.TRUE;
-    }
+    public abstract Boolean analizar(Collection<DatoSensado> datosAEvaluar);
 
 
 }

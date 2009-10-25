@@ -11,11 +11,19 @@ import java.util.Date;
  *
  * @author Santiago Avendaño
  */
-public class DatoSensado {
+public class DatoSensado{
     private Integer idSensor;
     private Date timeStamp;
+
     private FactorClimatico factor;
     private Float valor;
+
+    public DatoSensado(Integer idSensor, Date timeStamp, FactorClimatico factor, Float valor) {
+        this.idSensor = idSensor;
+        this.timeStamp = timeStamp;
+        this.factor = factor;
+        this.valor = valor;
+    }
 
     public FactorClimatico getFactor() {
         return factor;
