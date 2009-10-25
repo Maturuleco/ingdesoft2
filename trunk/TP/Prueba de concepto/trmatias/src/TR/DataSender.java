@@ -3,13 +3,12 @@
  * and open the template in the editor.
  */
 
-package trmatias;
+package TR;
 
 import java.util.List;
 
-import gsm.MensajeGSM;
-import gsm.MensajeGSM;
-import gsm.ModemGSM;
+import red_gsm.MensajeGSM;
+import red_gsm.ModemGSM;
 import model.Mensaje;
 
 /**
