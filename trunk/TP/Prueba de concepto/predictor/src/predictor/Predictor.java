@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import model.DatoSensado;
 import model.FactorClimatico;
+import predictorModel.Regla;
 
 /**
  *
@@ -22,7 +23,8 @@ public class Predictor {
 
     // Analiza que todos los datos cumplan todas las condiciones
     // Controlando todos con todos
-    public Boolean analizar(Collection<Condicion> condiciones, Collection<DatoSensado> datos){
+    public Boolean analizar(Regla regla, Collection<DatoSensado> datos){
+        Collection<Condicion> condiciones = regla.getCondiciones();
         for (Condicion condicion : condiciones) {
             for (DatoSensado dato  : datos) {
                 if (!condicion.aplicar(dato)) return Boolean.FALSE;
@@ -49,13 +51,13 @@ public class Predictor {
 
     // Analiza que todos los datos cumplan todas las condiciones
     // Controlando por factor
-    public Boolean analizarReglasPorFactor(Collection<Condicion> condiciones, Collection<DatoSensado> datos){
-        Map<FactorClimatico, Collection<Condicion>> reglasPorFactor;
+    public Boolean analizarCondicionesPorFactor(Collection<Condicion> condiciones, Collection<DatoSensado> datos){
+        Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor;
 
-        reglasPorFactor = ordenarPorFactor(condiciones);
+        condicionesPorFactor = ordenarPorFactor(condiciones);
 
         for (DatoSensado dato: datos) {
-            if (analizar(reglasPorFactor.get(dato.getFactor()), dato)) return Boolean.FALSE;
+            if (analizar(condicionesPorFactor.get(dato.getFactor()), dato)) return Boolean.FALSE;
         }
         return Boolean.TRUE;
     }
