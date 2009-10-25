@@ -24,16 +24,26 @@ public class Mensaje {
     public Mensaje(MensajeGSM m) throws ParseException {
         String cuerpo = new String(m.getMensaje());
         String[] partes = cuerpo.split("|");
-        //TODO: mejorar la liea de abajo!!!
-        assert(partes.length < 2);
+
+        if (partes.length < 2)
+            throw new ParseException(cuerpo, 0);
+        
         idTR = Integer.parseInt(partes[0]);
         dataSource = DataSource.parse(partes[1]);
         datos = new LinkedList<DatoSensado>();
         for (int i = 2; i < partes.length; i++)
             datos.add(DatoSensado.parse(partes[i]));
-        //AAAAAAAAAAAAHHHHHHHHHHH!!!!!!!!!!!
     }
 
+    @Override public String toString(){
+        String id = Integer.toString(idTR);
+        String ds = dataSource.toString();
+        String res = id+"|"+ds;
+        for (DatoSensado datoSensado : datos) {
+            res += "|"+(datoSensado.toString());
+        }
+        return res;
+    }
 
     public DataSource getDataSource() {
         return dataSource;
