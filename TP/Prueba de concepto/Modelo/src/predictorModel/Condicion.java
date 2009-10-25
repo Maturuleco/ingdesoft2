@@ -5,12 +5,9 @@
 package predictorModel;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -23,13 +20,13 @@ import model.FactorClimatico;
  *
  * @author Santiago Avendaño
  */
-public class Regla {
+public class Condicion {
 
     private Comparador comparador;
     private Comparable constante;
     private FactorClimatico factor;
 
-    public Regla(FactorClimatico factor, Comparador comparador, Comparable constante) {
+    public Condicion(FactorClimatico factor, Comparador comparador, Comparable constante) {
         this.comparador = comparador;
         this.constante = constante;
         this.factor = factor;
@@ -69,7 +66,7 @@ public class Regla {
         return res;
     }
 
-    public static Regla parse(String dato) throws ParseException {
+    public static Condicion parse(String dato) throws ParseException {
         String[] partes = dato.split(" ");
         if (partes.length != 3) {
             throw new ParseException(dato, 0);
@@ -77,7 +74,7 @@ public class Regla {
             FactorClimatico fact = FactorClimatico.parse(partes[0]);
             Comparador comp = Comparador.parse(partes[1]);
             Float cons = Float.parseFloat(partes[2]);
-            return new Regla(fact, comp, cons);
+            return new Condicion(fact, comp, cons);
         }
     }
 
@@ -94,11 +91,11 @@ public class Regla {
         fw.append(this.toString());
     }
 
-    public static void writeReglas(Collection<Regla> reglas, String fileName){
+    public static void writeCondiciones(Collection<Condicion> condiciones, String fileName){
         try {
             FileWriter fr = new FileWriter(fileName);
-            for (Regla regla : reglas) {
-                regla.write(fr);
+            for (Condicion condicion : condiciones) {
+                condicion.write(fr);
                 fr.append("\n");
             }
             fr.close();
@@ -108,27 +105,27 @@ public class Regla {
         }
     }
 
-    public static Collection<Regla> readReglas(FileReader fr) {
-        Collection<Regla> res = new LinkedList<Regla>();
+    public static Collection<Condicion> readCondiciones(FileReader fr) {
+        Collection<Condicion> res = new LinkedList<Condicion>();
         try {
-            Regla regla = null;
+            Condicion condicion = null;
             BufferedReader br = new BufferedReader(fr);
             String line;
 
             line = br.readLine();
 
             while (line != null) {
-                regla = Regla.parse(line);
-                res.add(regla);
+                condicion = Condicion.parse(line);
+                res.add(condicion);
                 line = br.readLine();
             }
             br.close();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(Regla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Condicion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
-            Logger.getLogger(Regla.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Condicion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }

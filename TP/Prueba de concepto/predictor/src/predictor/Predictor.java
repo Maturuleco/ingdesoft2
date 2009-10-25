@@ -6,7 +6,7 @@
 package predictor;
 
 import java.util.Collection;
-import predictorModel.Regla;
+import predictorModel.Condicion;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -20,39 +20,39 @@ import model.FactorClimatico;
 public class Predictor {
 
 
-    // Analiza que todos los datos cumplan todas las reglas
+    // Analiza que todos los datos cumplan todas las condiciones
     // Controlando todos con todos
-    public Boolean analizar(Collection<Regla> reglas, Collection<DatoSensado> datos){
-        for (Regla regla : reglas) {
+    public Boolean analizar(Collection<Condicion> condiciones, Collection<DatoSensado> datos){
+        for (Condicion condicion : condiciones) {
             for (DatoSensado dato  : datos) {
-                if (!regla.aplicar(dato)) return Boolean.FALSE;
+                if (!condicion.aplicar(dato)) return Boolean.FALSE;
             }
         }
         return Boolean.TRUE;
     }
     
-    // Analiza que el dato cumpla todas las reglas
-    public Boolean analizar(Collection<Regla> reglas, DatoSensado dato){
-        for (Regla regla : reglas) {
-            if (!regla.aplicar(dato)) return Boolean.FALSE;
+    // Analiza que el dato cumpla todas las condiciones
+    public Boolean analizar(Collection<Condicion> condiciones, DatoSensado dato){
+        for (Condicion condicion : condiciones) {
+            if (!condicion.aplicar(dato)) return Boolean.FALSE;
         }
         return Boolean.TRUE;
     }
 
-    // Analiza q la regla se satisfaga en todos los datos
-     public Boolean analizar(Regla regla, Collection<DatoSensado> datos){
+    // Analiza q la condicion se satisfaga en todos los datos
+     public Boolean analizar(Condicion condicion, Collection<DatoSensado> datos){
          for (DatoSensado dato : datos) {
-             if (!regla.aplicar(dato)) return Boolean.FALSE;
+             if (!condicion.aplicar(dato)) return Boolean.FALSE;
          }
          return Boolean.TRUE;
     }
 
-    // Analiza que todos los datos cumplan todas las reglas
+    // Analiza que todos los datos cumplan todas las condiciones
     // Controlando por factor
-    public Boolean analizarReglasPorFactor(Collection<Regla> reglas, Collection<DatoSensado> datos){
-        Map<FactorClimatico, Collection<Regla>> reglasPorFactor;
+    public Boolean analizarReglasPorFactor(Collection<Condicion> condiciones, Collection<DatoSensado> datos){
+        Map<FactorClimatico, Collection<Condicion>> reglasPorFactor;
 
-        reglasPorFactor = ordenarPorFactor(reglas);
+        reglasPorFactor = ordenarPorFactor(condiciones);
 
         for (DatoSensado dato: datos) {
             if (analizar(reglasPorFactor.get(dato.getFactor()), dato)) return Boolean.FALSE;
@@ -60,15 +60,15 @@ public class Predictor {
         return Boolean.TRUE;
     }
 
-    public Map<FactorClimatico, Collection<Regla>> ordenarPorFactor(Collection<Regla> reglas){
-        Map<FactorClimatico, Collection<Regla>> result = new EnumMap<FactorClimatico, Collection<Regla>>(FactorClimatico.class);
+    public Map<FactorClimatico, Collection<Condicion>> ordenarPorFactor(Collection<Condicion> condiciones){
+        Map<FactorClimatico, Collection<Condicion>> result = new EnumMap<FactorClimatico, Collection<Condicion>>(FactorClimatico.class);
         
         for (FactorClimatico factor : FactorClimatico.values()) {
-            result.put(factor, new LinkedList<Regla>() );
+            result.put(factor, new LinkedList<Condicion>() );
         }
 
-        for (Regla regla : reglas) {
-            result.get(regla.getFactor()).add(regla);
+        for (Condicion condicion : condiciones) {
+            result.get(condicion.getFactor()).add(condicion);
         }
 
         return result;
