@@ -23,8 +23,8 @@ public class DataSender {
     public void send(Mensaje m)
     {
         //Acá se haría la particion de los msjs
-        int id = Mensaje.id;
-        modem.send(estacionCentral, Mensaje.toString());
+        int id = m.getIdTR();
+        modem.send(estacionCentral, m.toString());
         enviados.add(id);
     }
 
