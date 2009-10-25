@@ -5,6 +5,7 @@
 
 package model;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -23,6 +24,28 @@ public class DatoSensado{
         this.timeStamp = timeStamp;
         this.factor = factor;
         this.valor = valor;
+    }
+
+    public static DatoSensado parse(String dato) throws ParseException{
+        String[] partes = dato.split("_");
+        if (partes.length != 4)
+            throw new ParseException(dato, 0);
+        else {
+            Integer idSensor = Integer.parseInt(partes[0]);
+            Date date = new Date(Date.parse(partes[1]));
+            FactorClimatico fc = FactorClimatico.parse(partes[2]);
+            Float valor = Float.parseFloat(partes[3]);
+
+            return new DatoSensado(idSensor, date, fc, valor);
+        }
+    }
+
+    @Override public String toString(){
+        String idS = this.idSensor.toString();
+        String date = timeStamp.toString();
+        String fc = factor.toString();
+        String val = valor.toString();
+        return idS+"_"+date+"_"+fc+"_"+val;
     }
 
     public FactorClimatico getFactor() {
