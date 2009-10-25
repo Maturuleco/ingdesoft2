@@ -5,6 +5,7 @@
 
 package model;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,18 +20,53 @@ public class Mensaje {
     DataSource dataSource;
     List<DatoSensado> datos;
 
-    public Mensaje(MensajeGSM m) throws ParseException {
+    public Mensaje(Integer id, DataSource ds) {
+        idTR = id;
+        dataSource = ds;
+        datos = new LinkedList<DatoSensado>();
+    }
+
+    public Mensaje makeFromSMS(MensajeGSM m) throws ParseException {
         String cuerpo = new String(m.getMensaje());
-        String[] partes = cuerpo.split("|");
+        return Mensaje.parse(cuerpo);
+    }
+
+    public static Mensaje parse(String cuerpo) throws ParseException {
+        String[] partes = cuerpo.split("\\|");
 
         if (partes.length < 2)
             throw new ParseException(cuerpo, 0);
-        
-        idTR = Integer.parseInt(partes[0]);
-        dataSource = DataSource.parse(partes[1]);
-        datos = new LinkedList<DatoSensado>();
+
+        Integer id = Integer.valueOf(partes[0]);
+        DataSource dataS = DataSource.parse(partes[1]);
+
+        Mensaje msj = new Mensaje(id, dataS);
+
         for (int i = 2; i < partes.length; i++)
-            datos.add(DatoSensado.parse(partes[i]));
+            msj.addDato(DatoSensado.parse(partes[i]));
+
+        return msj;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Mensaje other = (Mensaje) obj;
+        if (this.idTR != other.idTR && (this.idTR == null || !this.idTR.equals(other.idTR))) {
+            return false;
+        }
+        if (this.dataSource != other.dataSource) {
+            return false;
+        }
+        if (this.datos != other.datos && (this.datos == null || !this.datos.equals(other.datos))) {
+            return false;
+        }
+        return true;
     }
 
     @Override public String toString(){
@@ -57,6 +93,10 @@ public class Mensaje {
 
     public void setDatos(List<DatoSensado> datos) {
         this.datos = datos;
+    }
+
+    public void addDato(DatoSensado d) {
+        datos.add(d);
     }
 
     public Integer getIdTR() {
