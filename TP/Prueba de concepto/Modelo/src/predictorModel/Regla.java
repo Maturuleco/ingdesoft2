@@ -35,28 +35,21 @@ public class Regla {
         return factor;
     }
 
-
-
     public boolean aplicar(DatoSensado dato){
         boolean res = true;
 
         if (dato.getFactor().equals(factor)) {
             switch (comparador){
                 case igual:
-                    res = constante.compareTo(dato.getValor()) == 0;
-                    break;
+                    return constante.compareTo(dato.getValor()) == 0;
                 case menor:
-                    res = constante.compareTo(dato.getValor()) > 0;
-                    break;
+                    return constante.compareTo(dato.getValor()) > 0;
                 case mayor:
-                    res = constante.compareTo(dato.getValor()) < 0;
-                    break;
+                    return constante.compareTo(dato.getValor()) < 0;
                 case mayeq:
-                    res = (constante.compareTo(dato.getValor()) < 0) ||  (constante.compareTo(dato.getValor()) == 0);
-                    break;
+                    return (constante.compareTo(dato.getValor()) < 0) ||  (constante.compareTo(dato.getValor()) == 0);
                 case meneq:
-                    res = (constante.compareTo(dato.getValor()) > 0) ||  (constante.compareTo(dato.getValor()) == 0);
-                    break;
+                    return (constante.compareTo(dato.getValor()) > 0) ||  (constante.compareTo(dato.getValor()) == 0);
                 default :
                     throw new UnsupportedOperationException("El operador " + comparador + "no esá soportado");
             }
