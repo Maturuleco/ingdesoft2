@@ -15,6 +15,7 @@ public class MensajeGSM {
 		mensaje = new String(msj);
 		fecha = new Date();
 		/*
+                // Lo que sobra lo tira...
                 mensaje = new char[160];
                 int lon = msj.length();
 		for (int i=0; i < mensaje.length(); i++) {
