@@ -8,7 +8,9 @@ package trmatias;
 import java.util.List;
 
 import gsm.MensajeGSM;
+import gsm.MensajeGSM;
 import gsm.ModemGSM;
+import model.Mensaje;
 
 /**
  *
@@ -19,7 +21,7 @@ public class DataSender {
     private int estacionCentral = 0;
     private List<Integer> enviados;
 
-    public void send(Mensaje)
+    public void send(Mensaje m)
     {
         //Acá se haría la particion de los msjs
         int id = Mensaje.id;
