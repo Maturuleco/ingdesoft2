@@ -26,7 +26,7 @@ public class Mensaje {
         datos = new LinkedList<DatoSensado>();
     }
 
-    public Mensaje makeFromSMS(MensajeGSM m) throws ParseException {
+    public static Mensaje makeFromSMS(MensajeGSM m) throws ParseException {
         String cuerpo = new String(m.getMensaje());
         return Mensaje.parse(cuerpo);
     }
