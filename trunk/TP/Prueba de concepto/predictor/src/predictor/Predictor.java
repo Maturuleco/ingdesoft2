@@ -6,13 +6,13 @@
 package predictor;
 
 import java.util.Collection;
-import predictorModel.Condicion;
+import model.Condicion;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
 import model.DatoSensado;
 import model.FactorClimatico;
-import predictorModel.Regla;
+import model.Regla;
 
 /**
  *

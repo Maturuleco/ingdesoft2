@@ -15,9 +15,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import predictor.Predictor;
-import predictorModel.Comparador;
-import predictorModel.Condicion;
-import predictorModel.Regla;
+import model.Comparador;
+import model.Condicion;
+import model.Regla;
 
 /**
  *
