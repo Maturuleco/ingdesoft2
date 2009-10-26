@@ -1,4 +1,4 @@
-package predictorModelTest;
+
 
 /*
  * To change this template, choose Tools | Templates
@@ -7,8 +7,8 @@ package predictorModelTest;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import predictorModel.Comparador;
-import predictorModel.Condicion;
+import model.Comparador;
+import model.Condicion;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;

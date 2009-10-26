@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package predictorModel;
+package model;
 
 import java.text.ParseException;
 
