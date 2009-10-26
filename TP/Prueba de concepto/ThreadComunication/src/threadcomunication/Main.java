@@ -1,3 +1,6 @@
+
+package threadcomunication;
+
 import java.io.*;
 import java.nio.*;
 import java.nio.channels.*;
@@ -5,15 +8,15 @@ import java.nio.channels.*;
 public class Main {
 
     public static void main(String [] args){
-        String dir = "C:/Documents and Settings/Mar/Escritorio/red/";
+        String dir = "./red/";
 
-        for (int i = 1; i <= 10; ++i){
+        for (int i = 1; i <= 1; ++i){
             try{
-            String path = dir+"sensor"+i+".txt";
-            File file = new File(path);
-            FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
-            new Sensor(channel, "s"+i, 50*i).start();
-            new Adapter(channel, "a"+i, 500*i).start();
+                String path = dir+"sensor"+i+".txt";
+                File file = new File(path);
+                FileChannel channel = new RandomAccessFile(file, "rw").getChannel();
+                new Sensor(channel, "s"+i, 50*i).start();
+   //             new Adapter(channel, "a"+i, 500*i).start();
             }catch(Exception e){
                 e.printStackTrace();
             }

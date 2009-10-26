@@ -28,9 +28,7 @@ public class Main {
         System.out.println(qonda);
         System.out.println(hola);
         adic(qonda);
-
-        System.out.println(qonda);
-        System.out.println(hola);
+        System.out.println((0-1+6)%6);
     }
 
 }
