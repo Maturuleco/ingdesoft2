@@ -5,6 +5,8 @@
 
 package predictorModel;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -34,5 +36,22 @@ public class Regla {
 
     public void setMensajePrediccion(String prediccion) {
         this.mensajePrediccion = prediccion;
+    }
+
+    public void writeRegla(String fileName){
+        try {
+            FileWriter fr = new FileWriter(fileName);
+            for (Condicion condicion : condiciones) {
+                fr.append("c:");
+                condicion.write(fr);
+                fr.append("\n");
+            }
+            fr.append("p:");
+            fr.append(mensajePrediccion);
+            fr.close();
+        } catch (IOException e) {
+            System.out.println("IOException:");
+            e.printStackTrace();
+        }
     }
 }
