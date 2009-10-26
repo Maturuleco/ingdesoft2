@@ -5,6 +5,9 @@
  * Time: 16:20:54
  * To change this template use File | Settings | File Templates.
  */
+
+package threadcomunication;
+
 import java.io.*;
 import java.nio.*;
 import java.nio.channels.*;
@@ -22,10 +25,11 @@ public class Adapter extends Thread{
 
     public void run() {
         String phrase = getName();
-
-        for(int i = 0; true; ++i){
+        int i = 1;
+        while(true){
             try {
-                if (i%frequency==0){
+                if (i==frequency){
+                    i = 0;
                     ByteBuffer buf = ByteBuffer.allocate(1024);
 
                     int numRead = 0;
@@ -35,6 +39,7 @@ public class Adapter extends Thread{
                         numRead = channel.read(buf);
                         System.out.println("num "+numRead);
                         buf.rewind();
+
                         for (int m=0; m<numRead; m++) {
                             byte b = buf.get();
                             mensaje+=String.valueOf(b);
@@ -49,6 +54,7 @@ public class Adapter extends Thread{
             } catch (Exception e) {
               e.printStackTrace(System.err);
             }
+            i++;
         }
       }
 }

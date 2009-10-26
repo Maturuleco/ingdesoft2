@@ -62,8 +62,8 @@ public class RedGSM {
             out.write("De: "+msj.getOrigen().toString());
             out.write("A: "+msj.getDestino().toString());
 	    //No le gusta lo de Date porque dice que está fuera de uso...
-	    String fechaGMT = fechaMsj.toGMTString();
-            out.write("Fecha: " + fechaGMT );
+//	    String fechaGMT = fechaMsj.toGMTString();
+//            out.write("Fecha: " + fechaGMT );
 	    out.write(msj.getMensaje());
 		    
 	    out.close();
