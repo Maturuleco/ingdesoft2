@@ -11,7 +11,7 @@ import model.Mensaje;
  * @author matiaz
  */
 
-public class pipeMensajes {
+public class PipeMensajes {
     private final static int size = 6;
     private Mensaje buffer[] = new Mensaje[size];
 
