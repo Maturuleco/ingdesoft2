@@ -10,11 +10,11 @@ package red_gsm;
  * @author tas
  */
 
-public class MensajeModemGSM {
+public class MensajeToModemGSM {
 	private Integer destino;
 	private String mensaje;
 		
-	public MensajeModemGSM(int dest, String msj)
+	public MensajeToModemGSM(int dest, String msj)
 	{
 		destino = dest;
 		mensaje = new String(msj);
