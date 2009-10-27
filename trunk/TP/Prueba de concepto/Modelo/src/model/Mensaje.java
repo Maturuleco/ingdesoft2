@@ -5,8 +5,8 @@
 
 package model;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,11 +16,14 @@ import red_gsm.MensajeGSM;
  * @author Santiago Avendaño
  */
 public class Mensaje {
+    long timeStamp;
     Integer idTR;
     DataSource dataSource;
     List<DatoSensado> datos;
 
     public Mensaje(Integer id, DataSource ds) {
+        Date d = new Date();
+        timeStamp = d.getTime();
         idTR = id;
         dataSource = ds;
         datos = new LinkedList<DatoSensado>();
@@ -34,15 +37,16 @@ public class Mensaje {
     public static Mensaje parse(String cuerpo) throws ParseException {
         String[] partes = cuerpo.split("\\|");
 
-        if (partes.length < 2)
+        if (partes.length < 3)
             throw new ParseException(cuerpo, 0);
-
+        
         Integer id = Integer.valueOf(partes[0]);
         DataSource dataS = DataSource.parse(partes[1]);
 
         Mensaje msj = new Mensaje(id, dataS);
+        msj.setTimeStamp(Long.valueOf(partes[3]));
 
-        for (int i = 2; i < partes.length; i++)
+        for (int i = 3; i < partes.length; i++)
             msj.addDato(DatoSensado.parse(partes[i]));
 
         return msj;
@@ -57,6 +61,9 @@ public class Mensaje {
             return false;
         }
         final Mensaje other = (Mensaje) obj;
+        if (this.timeStamp != other.timeStamp) {
+            return false;
+        }
         if (this.idTR != other.idTR && (this.idTR == null || !this.idTR.equals(other.idTR))) {
             return false;
         }
@@ -72,7 +79,8 @@ public class Mensaje {
     @Override public String toString(){
         String id = Integer.toString(idTR);
         String ds = dataSource.toString();
-        String res = id+"|"+ds;
+        String ts = Long.toString(timeStamp);
+        String res = id+"|"+ds+"|"+ts;
         for (DatoSensado datoSensado : datos) {
             res += "|"+(datoSensado.toString());
         }
@@ -106,4 +114,14 @@ public class Mensaje {
     public void setIdTR(Integer idTR) {
         this.idTR = idTR;
     }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+    
+    
 }
