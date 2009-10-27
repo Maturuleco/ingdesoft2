@@ -6,10 +6,11 @@
 package TR;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import red_gsm.MensajeGSM;
 import model.Mensaje;
 import red_gsm.MensajeModemGSM;
-import threadcomunication.ColaSync;
 
 /**
  *
@@ -47,6 +48,7 @@ public class DataSender extends Thread {
         this.salida = salida;
     }
     
+    @Override
     public void run() {
         
     }
@@ -74,11 +76,15 @@ public class DataSender extends Thread {
             if ( cuerpo[0].equals("CONFIG") )
                 manejarMensajeConfiguracion(msj);
             else if ( cuerpo[0].equals("ACK") ) {
-                int id = Integer.valueOf(cuerpo[1]);
-                enviando[id].requestStop();
-                enviando[id] = null;
-                salida.put(mensajesPendientes[id]);
-                estadoBuffer--;
+                try {
+                    int id = Integer.valueOf(cuerpo[1]);
+                    enviando[id].requestStop();
+                    enviando[id] = null;
+                    salida.put(mensajesPendientes[id]);
+                    estadoBuffer--;
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else
                 return false;

@@ -33,8 +33,8 @@ public class Sender extends Thread {
     @Override
     public void run() {
         while (keepTrying) {
-            modem.put(mensaje);
             try {
+                modem.put(mensaje);
                 //Espero y reintento
                 sleep(tiempoEspera);
             } catch (InterruptedException ex) { }
@@ -44,9 +44,9 @@ public class Sender extends Thread {
     public void requestStop(){
         keepTrying = false;
     }
-    
-    public void setSalida(BlockingQueue<MensajeModemGSM>) {
-        modem = m;
+
+    public void setModem(BlockingQueue<MensajeModemGSM> modem) {
+        this.modem = modem;
     }
 
 }
