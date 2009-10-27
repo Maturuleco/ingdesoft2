@@ -9,6 +9,6 @@ package predictor;
  *
  * @author Santiago Avendaño
  */
-public class SelectorDatos {
+public class SelectorReglas {
 
 }

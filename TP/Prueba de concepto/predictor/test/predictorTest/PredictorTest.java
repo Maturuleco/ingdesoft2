@@ -1,3 +1,5 @@
+package predictorTest;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,9 +17,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import predictor.Predictor;
-import model.Comparador;
-import model.Condicion;
-import model.Regla;
+import modelo.Comparador;
+import modelo.Condicion;
+import modelo.Regla;
 
 /**
  *

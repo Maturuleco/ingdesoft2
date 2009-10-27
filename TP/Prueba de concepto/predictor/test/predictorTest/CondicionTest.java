@@ -1,3 +1,5 @@
+package predictorTest;
+
 
 
 /*
@@ -7,8 +9,8 @@
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import model.Comparador;
-import model.Condicion;
+import modelo.Comparador;
+import modelo.Condicion;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
