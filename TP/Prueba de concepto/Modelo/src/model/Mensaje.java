@@ -44,7 +44,7 @@ public class Mensaje {
         DataSource dataS = DataSource.parse(partes[1]);
 
         Mensaje msj = new Mensaje(id, dataS);
-        msj.setTimeStamp(Long.valueOf(partes[3]));
+        msj.setTimeStamp(Long.valueOf(partes[2]));
 
         for (int i = 3; i < partes.length; i++)
             msj.addDato(DatoSensado.parse(partes[i]));
