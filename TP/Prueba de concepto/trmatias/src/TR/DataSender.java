@@ -66,6 +66,10 @@ public class DataSender extends Thread {
             }
             while (msjEnProceso != 0){
                 sensarEntradaModem();
+                try {
+                    // Duermo 1/2 segundo
+                    sleep(500);
+                    } catch (InterruptedException ex) {}
             }
             // Esto está para ir leyendo los posibles mensajes con delay
             // que me lleguen de comunicaciones pasadas
@@ -107,7 +111,7 @@ public class DataSender extends Thread {
     private String[] fraccionar(String msj) {
         // TODO: los msj SMS tienen 160 caracteres!
         String[] partes = new String[1];
-        partes[1] = msj;
+        partes[0] = msj;
         return partes;
     }
     
