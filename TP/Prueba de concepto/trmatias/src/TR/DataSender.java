@@ -5,6 +5,7 @@
 
 package TR;
 
+import java.util.concurrent.BlockingQueue;
 import red_gsm.MensajeGSM;
 import model.Mensaje;
 import red_gsm.MensajeModemGSM;
@@ -21,16 +22,29 @@ public class DataSender extends Thread {
     private int estadoBuffer = 0;
     private Sender[] enviando;
     private Mensaje[] mensajesPendientes;
-    private ColaSync<Mensaje> salida;
-    private ColaSync<Mensaje> entrada;
-    private ColaSync<MensajeModemGSM> modemSalida;
-    private ColaSync<MensajeModemGSM> modemEntrada;
+    private BlockingQueue<Mensaje> salida;
+    private BlockingQueue<Mensaje> entrada;
+    private BlockingQueue<MensajeModemGSM> modemSalida;
+    private BlockingQueue<MensajeModemGSM> modemEntrada;
     
-    public DataSender(ColaSync<Mensaje> e, ColaSync<Mensaje> s, ColaSync<MensajeModemGSM> m) {
+    public DataSender() {
         enviando = new Sender[tamañoBuffer];
-        salida = s;
-        entrada = e;
-        modemSalida = m;
+    }
+
+    public void setEntrada(BlockingQueue<Mensaje> entrada) {
+        this.entrada = entrada;
+    }
+
+    public void setModemEntrada(BlockingQueue<MensajeModemGSM> modemEntrada) {
+        this.modemEntrada = modemEntrada;
+    }
+
+    public void setModemSalida(BlockingQueue<MensajeModemGSM> modemSalida) {
+        this.modemSalida = modemSalida;
+    }
+
+    public void setSalida(BlockingQueue<Mensaje> salida) {
+        this.salida = salida;
     }
     
     public void run() {
