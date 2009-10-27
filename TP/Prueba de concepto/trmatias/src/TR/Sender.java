@@ -6,8 +6,7 @@
 package TR;
 
 import java.util.concurrent.BlockingQueue;
-import red_gsm.MensajeModemGSM;
-import threadcomunication.ColaSync;
+import red_gsm.MensajeToModemGSM;
 
 /**
  *
@@ -18,16 +17,16 @@ public class Sender extends Thread {
     private static final long tiempoEspera = 10000;
     
     private volatile boolean keepTrying = true;
-    private MensajeModemGSM mensaje;
-    private BlockingQueue<MensajeModemGSM> modem;
+    private MensajeToModemGSM mensaje;
+    private BlockingQueue<MensajeToModemGSM> modem;
     
-    public Sender(String msj, BlockingQueue<MensajeModemGSM> m) {
-        mensaje = new MensajeModemGSM(estacionCentral, msj);
+    public Sender(String msj, BlockingQueue<MensajeToModemGSM> m) {
+        mensaje = new MensajeToModemGSM(estacionCentral, msj);
         modem = m;
     }
     
     public Sender(String msj) {
-        mensaje = new MensajeModemGSM(estacionCentral, msj);
+        mensaje = new MensajeToModemGSM(estacionCentral, msj);
     }
     
     @Override
@@ -45,7 +44,7 @@ public class Sender extends Thread {
         keepTrying = false;
     }
 
-    public void setModem(BlockingQueue<MensajeModemGSM> modem) {
+    public void setModem(BlockingQueue<MensajeToModemGSM> modem) {
         this.modem = modem;
     }
 
