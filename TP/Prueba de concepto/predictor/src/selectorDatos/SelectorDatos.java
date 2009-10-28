@@ -64,6 +64,6 @@ public class SelectorDatos {
         } finally {
             cliente.close();
         }
-        return resultado.subList(0, resultado.size()-1);
+        return resultado;
     }
 }
