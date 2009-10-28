@@ -13,7 +13,7 @@ import red_gsm.MensajeGSM;
  *
  * @author tas
  */
-public class modemDispatcher {
+public class modemDispatcher extends Thread {
     private static final int estacionCentral = 0;
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<MensajeGSM> configSalida;
@@ -34,14 +34,24 @@ public class modemDispatcher {
         this.modemEntrada = modemEntrada;
     }
 
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                MensajeGSM respuesta = modemEntrada.take();
+                recive(respuesta);
+            } catch (InterruptedException ex) { }
+        }
+    }
+
    
 
     private void recive(MensajeGSM sms) {
         if (sms.getOrigen() != estacionCentral) {
             String contenido = sms.getMensaje();
             String[] cuerpo = contenido.split("#");
-            String hash = DataSender.getHash(cuerpo[0]+cuerpo[1]+cuerpo[2]);
-            if (hash.equals(cuerpo[3])){
+            
+            if (Validador.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2])){
                if (Validador.validar(contenido, DataSource.estacion_central)) {
                     if ( cuerpo[0].equals("CONFIG") )
                         configSalida.add(sms);
@@ -49,10 +59,8 @@ public class modemDispatcher {
                         dataSalida.add(sms);
                     }
                 }
-            }
-            
-        }
-        
+            }            
+        }        
     }
     
 }
