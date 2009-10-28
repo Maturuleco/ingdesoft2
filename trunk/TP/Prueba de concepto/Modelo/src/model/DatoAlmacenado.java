@@ -37,5 +37,9 @@ public class DatoAlmacenado extends DatoSensado {
         this.idTR = idTR;
     }
 
+    @Override
+    public String toString(){
+        return super.toString()+"_" + dataSource + "_" + idTR.toString();
+    }
 
 }
