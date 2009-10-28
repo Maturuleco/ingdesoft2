@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import red_gsm.MensajeGSM;
 /**
  *
  * @author Santiago Avendaño
@@ -39,11 +38,6 @@ public class Mensaje {
         dataSource = ds;
         datos = new LinkedList<DatoSensado>();
         this.priority = priority;
-    }
-
-    public static Mensaje makeFromSMS(MensajeGSM m) throws ParseException {
-        String cuerpo = new String(m.getMensaje());
-        return Mensaje.parse(cuerpo);
     }
 
     public static Mensaje parse(String cuerpo) throws ParseException {
