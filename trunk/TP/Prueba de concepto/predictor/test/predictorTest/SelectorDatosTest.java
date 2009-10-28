@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package predictorTest;
 
 import com.db4o.Db4o;
@@ -74,13 +73,12 @@ public class SelectorDatosTest {
         ObjectContainer db = Db4o.openFile(rutabd);
 
         for (int i = 0; i < 10000; i++) {
-            dato1 = new DatoAlmacenado(i, Calendar.getInstance().getTime() , FactorClimatico.presion, 5.0f, 3, DataSource.triangulador);
+            dato1 = new DatoAlmacenado(i, Calendar.getInstance().getTime(), FactorClimatico.presion, 5.0f, 3, DataSource.triangulador);
             db.store(dato1);
         }
 
         List<DatoAlmacenado> datos = db.query(DatoAlmacenado.class);
-
         assertTrue(datos.size() == 10000);
-                db.close();
+        db.close();
     }
 }
