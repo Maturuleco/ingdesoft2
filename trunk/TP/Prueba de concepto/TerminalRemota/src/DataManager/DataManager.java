@@ -8,46 +8,51 @@
 
 package DataManager;
 
+import com.db4o.Db4o;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectServer;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
-import model.Mensaje;
+import com.db4o.ext.DatabaseClosedException;
+import com.db4o.ext.DatabaseReadOnlyException;
+import model.DatoSensado;
 
 
 public class DataManager extends Thread{
 
-    private BlockingQueue<Mensaje> salida;
-    private BlockingQueue<Mensaje> entrada;
+    private ObjectServer server;
+    private BlockingQueue<DatoSensado> entrada;
     private static final long sleepTime = 10000;
-
-    private StringBuffer dataBuffer = new StringBuffer(100000);
-    private int msjEnProceso = 0;
+    private final static long frequency = 1000;
 
     public DataManager () {
+        server = Db4o.openServer("", 0);
     }
 
-    public void setEntrada(BlockingQueue<Mensaje> entrada) {
+    public void setEntrada(BlockingQueue<DatoSensado> entrada) {
         this.entrada = entrada;
-    }
-
-    public void setSalida(BlockingQueue<Mensaje> salida) {
-        this.salida = salida;
     }
 
     @Override
     public void run() {
+        Timer timer = new Timer();
+        TimerTask tareaEnvio = new TareaEnvioDatosSensados(server);
+        timer.scheduleAtFixedRate(tareaEnvio, new Date(), frequency);
+
         while (true) {
-            if (msjEnProceso == 0) {
-                if (! sensarEntradaDatos() ) {
-                    try {
-                        // Duermo un segundo
-                        sleep(sleepTime);
-                    } catch (InterruptedException ex) {}
-                }
+            if (! sensarEntradaDatos() ) {
+                try {
+                    // Duermo un segundo
+                    sleep(sleepTime);
+                } catch (InterruptedException ex) {}
             }
         }
     }
 
     private boolean sensarEntradaDatos() {
-        Mensaje cabeza = entrada.poll();
+        DatoSensado cabeza = entrada.poll();
         if (cabeza != null) {
             guardar(cabeza);
             return true;
@@ -55,8 +60,20 @@ public class DataManager extends Thread{
         return false;
     }
 
-    private void guardar(Mensaje m){
-       dataBuffer.append(m);
+    public void guardar(DatoSensado m) {
+        ObjectContainer cliente = server.openClient();
+        try {
+            cliente.store(m);
+            cliente.commit();
+        } catch (DatabaseClosedException e) {
+            System.out.println("la base que intenta ingresar se encuentra cerrada");
+            System.out.println(e.getMessage());
+        } catch (DatabaseReadOnlyException e) {
+            System.out.println("la base que intenta ingresar esta en estado read-only");
+            System.out.println(e.getMessage());
+        } finally {
+            cliente.close();
+        }
     }
 
 }
