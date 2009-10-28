@@ -8,6 +8,7 @@
 
 package threadcomunication;
 
+import DataManager.DataManager;
 import java.io.*;
 import java.nio.*;
 import java.nio.channels.*;

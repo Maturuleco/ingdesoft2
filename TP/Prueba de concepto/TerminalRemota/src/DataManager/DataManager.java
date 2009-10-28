@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-package threadcomunication;
+package DataManager;
 
 import java.util.concurrent.BlockingQueue;
 import model.Mensaje;

@@ -6,6 +6,7 @@
 package model;
 
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import red_gsm.MensajeGSM;
  * @author Santiago Avendaño
  */
 public class Mensaje {
+    private int priority = 0;
     long timeStamp;
     Integer idTR;
     DataSource dataSource;
@@ -27,6 +29,16 @@ public class Mensaje {
         idTR = id;
         dataSource = ds;
         datos = new LinkedList<DatoSensado>();
+    }
+
+
+    public Mensaje(Integer id, DataSource ds, int priority) {
+        Date d = new Date();
+        timeStamp = d.getTime();
+        idTR = id;
+        dataSource = ds;
+        datos = new LinkedList<DatoSensado>();
+        this.priority = priority;
     }
 
     public static Mensaje makeFromSMS(MensajeGSM m) throws ParseException {
@@ -121,6 +133,18 @@ public class Mensaje {
 
     public void setTimeStamp(long timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public class Comparador implements Comparator<Mensaje> {
+
+        public int compare(Mensaje m1, Mensaje m2) {
+            return (m1.getPriority() - m2.getPriority());
+        }
+
     }
     
     
