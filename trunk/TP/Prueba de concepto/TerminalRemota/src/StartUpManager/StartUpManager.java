@@ -26,7 +26,7 @@ public class StartUpManager extends Thread {
     @Override
     public void run() {
         Date d = new Date();
-        String mensaje = Initialize.TRid + "#" + d.getTime();
+        String mensaje = "Raise" + "#" + Initialize.idTR + "#" + d.getTime();
         mensaje = mensaje + "#" + ValidatingTools.getHash(mensaje);
         MensajeGSM mensajeInicial = 
                 new MensajeGSM(0, Initialize.estacionCentral, mensaje, priority);
