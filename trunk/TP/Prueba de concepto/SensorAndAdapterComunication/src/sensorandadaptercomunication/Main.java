@@ -1,5 +1,6 @@
 package sensorandadaptercomunication;
 
+import Adapters.Adapter;
 import java.io.File;
 import java.text.ParseException;
 import java.util.logging.Level;
