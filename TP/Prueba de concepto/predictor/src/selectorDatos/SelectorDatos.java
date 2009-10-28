@@ -6,9 +6,11 @@ package selectorDatos;
 
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
+import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
+import com.db4o.ext.Db4oIOException;
 import java.util.Collection;
 import java.util.List;
 import model.DatoAlmacenado;
@@ -19,36 +21,48 @@ import model.DatoAlmacenado;
  */
 public class SelectorDatos {
 
-    public static final String nombrebd = "resoruces/validData.yap";
+    public ObjectServer server;
+
+    public SelectorDatos(ObjectServer serverBD) {
+        server = serverBD;
+    }
 
     public void escribirDatos(Collection<DatoAlmacenado> datos) {
-        ObjectContainer db = Db4o.openFile(nombrebd);
+        ObjectContainer cliente = server.openClient();
         try {
             for (DatoAlmacenado datoAlmacenado : datos) {
-                db.store(datoAlmacenado);
+                cliente.store(datoAlmacenado);
             }
-
+            cliente.commit();
         } catch(DatabaseClosedException e){
             System.out.println("la base que intenta ingresar se encuentra cerrada");
             System.out.println(e.getMessage());
-        }catch(DatabaseReadOnlyException e){
+        } catch(DatabaseReadOnlyException e){
             System.out.println("la base que intenta ingresar esta en estado read-only");
             System.out.println(e.getMessage());
+        } catch (Db4oIOException e) {
+            System.out.println("Se produjo un error de entrada salida");
+            System.out.println(e.getMessage());
         }finally {
-            db.close();
+            cliente.close();
         }
 
     }
 
     public List<DatoAlmacenado> leerTodosLosDatos() {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null,null, null, null);
-        ObjectContainer db = Db4o.openFile(nombrebd);
-        ObjectSet<DatoAlmacenado> resultado;
+        ObjectSet<DatoAlmacenado> resultado = null;
+        ObjectContainer cliente = server.openClient();
         try {
-            resultado = db.queryByExample(prototipo);
-
+            resultado = cliente.queryByExample(prototipo);
+        } catch(DatabaseClosedException e){
+            System.out.println("la base de datos se encuentra cerrada");
+            System.out.println(e.getMessage());
+        } catch (Db4oIOException e){
+            System.out.println("Error de I/O");
+            System.out.println(e.getMessage());
         } finally {
-            db.close();
+            cliente.close();
         }
         return resultado.subList(0, resultado.size()-1);
     }
