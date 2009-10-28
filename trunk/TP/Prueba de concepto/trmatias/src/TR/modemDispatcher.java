@@ -39,14 +39,18 @@ public class modemDispatcher {
     private void recive(MensajeGSM sms) {
         if (sms.getOrigen() != estacionCentral) {
             String contenido = sms.getMensaje();
-            if (Validador.validar(contenido, DataSource.estacion_central)) {
-                String[] cuerpo = contenido.split("#");
-                if ( cuerpo[0].equals("CONFIG") )
-                    configSalida.add(sms);
-                else if ( cuerpo[0].equals("ACK") ) {
-                    dataSalida.add(sms);
+            String[] cuerpo = contenido.split("#");
+            String hash = DataSender.getHash(cuerpo[0]+cuerpo[1]+cuerpo[2]);
+            if (hash.equals(cuerpo[3])){
+               if (Validador.validar(contenido, DataSource.estacion_central)) {
+                    if ( cuerpo[0].equals("CONFIG") )
+                        configSalida.add(sms);
+                    else if ( cuerpo[0].equals("ACK") ) {
+                        dataSalida.add(sms);
+                    }
                 }
             }
+            
         }
         
     }

@@ -90,7 +90,7 @@ public class Main {
         
         try {
             MensajeToModemGSM msjToModem = modemSalida.take();
-            System.out.println("\nSe recive el Mensaje");
+            System.out.println("\nSe recibe el Mensaje");
             String cuerpo = msjToModem.getMensaje();
             String[] cachos = cuerpo.split("#");
             Mensaje m1bis = Mensaje.parse(cachos[2]);
@@ -114,7 +114,7 @@ public class Main {
         
         try {
             Mensaje m1bisbis = salida.take();
-            System.out.println("\nSe recive el mensaje de confirmacion de envio");
+            System.out.println("\nSe recibe el mensaje de confirmacion de envio");
             assert m1.equals(m1bisbis) : "\nLos mensajes son distintos" ;
         } catch (InterruptedException ex) {
             System.out.println("\nLa cola no me deja tomar el mensaje");
