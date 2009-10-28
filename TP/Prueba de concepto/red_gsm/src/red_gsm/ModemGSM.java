@@ -12,7 +12,7 @@ public class ModemGSM extends Thread {
             
     private String redDirectory = Red.path;
     private BlockingQueue<MensajeGSM> salida;
-    private BlockingQueue<MensajeToModemGSM> entrada;
+    private BlockingQueue<MensajeGSM> entrada;
     private ModemSender modemSender;
     private ModemReciver modemReciver;
     
@@ -24,7 +24,7 @@ public class ModemGSM extends Thread {
         folderPropia.mkdir();
     }
 
-    public void setEntrada(BlockingQueue<MensajeToModemGSM> entrada) {
+    public void setEntrada(BlockingQueue<MensajeGSM> entrada) {
         this.entrada = entrada;
     }
 
@@ -34,7 +34,7 @@ public class ModemGSM extends Thread {
 
     @Override
     public void run() {
-        MensajeToModemGSM mensajeInicio = new MensajeToModemGSM(0, "Mensaje_de_Inicio_de_Sesion");
+        MensajeGSM mensajeInicio = new MensajeGSM(0, 0, "Mensaje_de_Inicio_de_Sesion");
         entrada.offer(mensajeInicio);
         modemSender = new ModemSender(numero);
         modemSender.setEntradaDatos(entrada);

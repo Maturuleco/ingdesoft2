@@ -12,7 +12,7 @@ package DataSender;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import red_gsm.MensajeToModemGSM;
+import red_gsm.MensajeGSM;
 import model.Mensaje;
 import model.ValidatingTools;
 import red_gsm.MensajeGSM;
@@ -25,7 +25,7 @@ import red_gsm.MensajeGSM;
  */
 
 public class DataSender extends Thread {
-    private BlockingQueue<MensajeToModemGSM> modemSalida;
+    private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<Mensaje> salida;
     private BlockingQueue<Mensaje> entrada;
@@ -47,7 +47,7 @@ public class DataSender extends Thread {
         this.modemEntrada = modemEntrada;
     }
 
-    public void setModemSalida(BlockingQueue<MensajeToModemGSM> modemSalida) {
+    public void setModemSalida(BlockingQueue<MensajeGSM> modemSalida) {
         this.modemSalida = modemSalida;
     }
 

@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 
         ModemGSM[] modems = new ModemGSM[11];
-        MensajeToModemGSM[] mensajes = new MensajeToModemGSM[10];
+        MensajeGSM[] mensajes = new MensajeGSM[10];
 
         BlockingQueue<MensajeGSM> salida1 = new LinkedBlockingQueue<MensajeGSM>();
         /*
@@ -37,28 +37,28 @@ public class Main {
         private static BlockingQueue<MensajeGSM> salida11 = new LinkedBlockingQueue<MensajeGSM>();
         */
 
-        BlockingQueue<MensajeToModemGSM> entrada1 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada2 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada3 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada4 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada5 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada6 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada7 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada8 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada9 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada10 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
-        BlockingQueue<MensajeToModemGSM> entrada11 =
-                                    new LinkedBlockingQueue<MensajeToModemGSM>();
+        BlockingQueue<MensajeGSM> entrada1 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada2 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada3 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada4 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada5 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada6 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada7 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada8 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada9 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada10 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
+        BlockingQueue<MensajeGSM> entrada11 =
+                                    new LinkedBlockingQueue<MensajeGSM>();
 
 
         for (int i = 0; i < 11; i++) {
@@ -90,7 +90,7 @@ public class Main {
         modems[0].setSalida(salida1);
 
         for (int i = 0; i < mensajes.length; i++) {
-            mensajes[i] = new MensajeToModemGSM(100+i, "Hola Manola "+i+"\n");
+            mensajes[i] = new MensajeGSM(0, 100+i, "Hola Manola "+i+"\n");
         }
 
         for (int i = 0; i < modems.length; i++) {

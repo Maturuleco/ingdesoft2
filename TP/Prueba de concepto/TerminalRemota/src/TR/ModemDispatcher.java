@@ -13,13 +13,13 @@ import red_gsm.MensajeGSM;
  *
  * @author tas
  */
-public class modemDispatcher extends Thread {
+public class ModemDispatcher extends Thread {
     private static final int estacionCentral = 0;
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<MensajeGSM> configSalida;
     private BlockingQueue<MensajeGSM> dataSalida;
         
-    public modemDispatcher() {
+    public ModemDispatcher() {
     }
 
     public void setConfigSalida(BlockingQueue<MensajeGSM> configSalida) {

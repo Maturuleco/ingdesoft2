@@ -20,19 +20,19 @@ public class ModemSender extends Thread {
     private int numero;
     private int numSms = 1;
     private String redDirectory = Red.path;
-    private BlockingQueue<MensajeToModemGSM> entradaDatos;
+    private BlockingQueue<MensajeGSM> entradaDatos;
 
     public ModemSender(int numero) {
         this.numero = numero;
  //       this.redDirectory = redDirectory;
     }
 
-    public void setEntradaDatos(BlockingQueue<MensajeToModemGSM> entradaDatos) {
+    public void setEntradaDatos(BlockingQueue<MensajeGSM> entradaDatos) {
         this.entradaDatos = entradaDatos;
     }
 
 
-    private void send(MensajeToModemGSM mensaje)
+    private void send(MensajeGSM mensaje)
     {
         MensajeGSM msj = new MensajeGSM(numero, mensaje.getDestino(), mensaje.getMensaje());
         String path = redDirectory;
@@ -60,7 +60,7 @@ public class ModemSender extends Thread {
     }
     
     private boolean sensarEntradaSistema() {
-        MensajeToModemGSM cabeza = entradaDatos.poll();
+        MensajeGSM cabeza = entradaDatos.poll();
         if (cabeza != null) {
             send(cabeza);
             return true;

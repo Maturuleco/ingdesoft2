@@ -48,6 +48,10 @@ public class Adapter implements Runnable {
             i++;
         }
     }
+
+    public void setSalida(BlockingQueue<MensajeSMSInterno> salida) {
+        this.salida = salida;
+    }
     
     public void start() {
         thread = new Thread( this );
