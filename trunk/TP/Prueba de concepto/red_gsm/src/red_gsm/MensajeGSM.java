@@ -84,11 +84,11 @@ public class MensajeGSM {
         String orig = origen.toString();
         String dest = destino.toString();
         String fech = String.valueOf( fecha.getTime() );
-        return (orig+"|"+dest+"|"+fech+"|"+mensaje);
+        return (orig+";"+dest+";"+fech+";"+mensaje);
     }
 
     public static MensajeGSM parse(String msj) throws ParseException {
-        String[] partes = msj.split("\\|");
+        String[] partes = msj.split(";");
 
         if (partes.length < 4)
             throw new ParseException(msj, 0);

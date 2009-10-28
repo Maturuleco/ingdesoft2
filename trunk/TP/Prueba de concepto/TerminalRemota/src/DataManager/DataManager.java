@@ -18,27 +18,36 @@ import java.util.concurrent.BlockingQueue;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import model.DatoSensado;
+import model.Mensaje;
 
 
 public class DataManager extends Thread{
 
     private ObjectServer server;
     private BlockingQueue<DatoSensado> entrada;
-    private static final long sleepTime = 10000;
+    private BlockingQueue<Mensaje> salida;
+    private static final long sleepTime = 100;
     private final static long frequency = 1000;
 
     public DataManager () {
-        server = Db4o.openServer("", 0);
+        server = Db4o.openServer("DataBuffer.yap", 0);
     }
 
     public void setEntrada(BlockingQueue<DatoSensado> entrada) {
         this.entrada = entrada;
     }
 
+    public void setSalida(BlockingQueue<Mensaje> salida) {
+        this.salida = salida;
+    }
+
+
+
     @Override
     public void run() {
         Timer timer = new Timer();
-        TimerTask tareaEnvio = new TareaEnvioDatosSensados(server);
+        TimerTask tareaEnvio = new TareaEnvioDatosSensados(server, salida);
+
         timer.scheduleAtFixedRate(tareaEnvio, new Date(), frequency);
 
         while (true) {

@@ -15,7 +15,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ModemSender extends Thread {
 
-    private static final long timeToWait = 1000;
+    private static final long timeToWait = 100;
     private static final int maxSize = 999999999;
     private int numero;
     private int numSms = 1;

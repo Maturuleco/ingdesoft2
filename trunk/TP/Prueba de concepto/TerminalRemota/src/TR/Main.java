@@ -17,7 +17,6 @@ import model.DatoSensado;
 import model.FactorClimatico;
 import model.Mensaje;
 import red_gsm.MensajeGSM;
-import red_gsm.MensajeToModemGSM;
 
 /**
  *
@@ -52,7 +51,7 @@ public class Main {
     public static void testDataSender() {
 
 
-        BlockingQueue<MensajeToModemGSM> modemSalida = new LinkedBlockingQueue<MensajeToModemGSM>();
+        BlockingQueue<MensajeGSM> modemSalida = new LinkedBlockingQueue<MensajeGSM>();
         BlockingQueue<MensajeGSM> modemEntrada = new LinkedBlockingQueue<MensajeGSM>();
         BlockingQueue<Mensaje> salida = new LinkedBlockingQueue<Mensaje>();
         BlockingQueue<Mensaje> entrada = new LinkedBlockingQueue<Mensaje>();
@@ -90,7 +89,7 @@ public class Main {
         }
         
         try {
-            MensajeToModemGSM msjToModem = modemSalida.take();
+            MensajeGSM msjToModem = modemSalida.take();
             System.out.println("\nSe recibe el Mensaje");
             String cuerpo = msjToModem.getMensaje();
             String[] cachos = cuerpo.split("#");
