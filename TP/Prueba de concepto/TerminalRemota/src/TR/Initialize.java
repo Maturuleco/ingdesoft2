@@ -5,6 +5,7 @@
 
 package TR;
 
+import Adapters.Adapter;
 import DataManager.DataManager;
 import DataSender.DataSender;
 import StartUpManager.StartUpManager;
@@ -21,6 +22,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.DatoSensado;
+import model.Mensaje;
 import red_gsm.ModemGSM;
 import red_gsm.MensajeGSM;
 
@@ -39,8 +42,8 @@ public class Initialize {
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
 
-    private static BlockingQueue<MensajeSMSInterno> adapterManager =
-            new LinkedBlockingQueue<MensajeSMSInterno>();
+    private static BlockingQueue<DatoSensado> adapterManager =
+            new LinkedBlockingQueue<DatoSensado>();
 
     private static BlockingQueue<Mensaje> managerSender =
             new LinkedBlockingQueue<Mensaje>();

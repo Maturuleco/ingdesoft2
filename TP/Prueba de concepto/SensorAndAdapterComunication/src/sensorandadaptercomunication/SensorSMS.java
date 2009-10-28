@@ -23,7 +23,7 @@ public class SensorSMS {
      */
     public String getInfo() {
        Date d = new Date();
-       String info = sensor.getName() + "|" +
+       String info = sensor.getName().toString() + "|" +
                      sensor.getFactor().toString() + "|" +
                      System.currentTimeMillis() + "|" +
                      d.getTime();

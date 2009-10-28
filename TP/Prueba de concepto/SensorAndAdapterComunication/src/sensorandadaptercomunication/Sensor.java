@@ -8,13 +8,13 @@ public class Sensor implements Runnable {
 
     private static final int maxSize = 999999999;
     
-    private String name;
+    private Integer name;
     private FactorClimatico factor;
     private long frequency;
     private String directory;
     private Thread thread = null;   
     
-    public Sensor(String directory, String nombre, FactorClimatico factor, long frequency) {
+    public Sensor(String directory, Integer nombre, FactorClimatico factor, long frequency) {
         setName(nombre);
         setFactor(factor);
         setDirectory(directory);
@@ -80,11 +80,11 @@ public class Sensor implements Runnable {
         this.frequency = frequency;
     }
 
-    public String getName() {
+    public Integer getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Integer name) {
         this.name = name;
     }
 
