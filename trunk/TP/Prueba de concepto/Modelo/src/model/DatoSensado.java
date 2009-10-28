@@ -76,7 +76,7 @@ public class DatoSensado{
 
     @Override public String toString(){
         String idS = this.idSensor.toString();
-        String date = timeStamp.toString();
+        String date = Long.toString(timeStamp.getTime());
         String fc = factor.toString();
         String val = valor.toString();
         return idS+"_"+date+"_"+fc+"_"+val;
