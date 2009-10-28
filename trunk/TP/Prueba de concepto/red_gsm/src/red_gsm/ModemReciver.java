@@ -33,7 +33,10 @@ public class ModemReciver extends Thread {
     private void recive() {
         try {
             File[] files = folderPropia.listFiles();
-            for (int j = 0; j < files.length; j++) {
+            int longitud = 0;
+            if (files != null)
+                longitud = files.length;
+            for (int j = 0; j < longitud; j++) {
                 File file = files[j];
                 //System.out.println( getName()+ "D:" + file.getName());
                 if(file.canRead()){

@@ -1,6 +1,5 @@
 package red_gsm;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.util.concurrent.BlockingQueue;
 
@@ -11,17 +10,17 @@ public class ModemGSM extends Thread {
     private int numSms = 1;
     private File folderPropia;
             
-    private String redDirectory;
+    private String redDirectory = Red.path;
     private BlockingQueue<MensajeGSM> salida;
     private BlockingQueue<MensajeToModemGSM> entrada;
     private ModemSender modemSender;
     private ModemReciver modemReciver;
     
-    public ModemGSM(int num, String dirRed)
+    public ModemGSM(int num)
     {
         numero = num;
-        redDirectory = dirRed;
-        folderPropia = new File ("GSM/"+numero);
+   //     redDirectory = dirRed;
+        folderPropia = new File (redDirectory+numero);
         folderPropia.mkdir();
     }
 
@@ -35,7 +34,9 @@ public class ModemGSM extends Thread {
 
     @Override
     public void run() {
-        modemSender = new ModemSender(numero, redDirectory);
+        MensajeToModemGSM mensajeInicio = new MensajeToModemGSM(0, "Mensaje_de_Inicio_de_Sesion");
+        entrada.offer(mensajeInicio);
+        modemSender = new ModemSender(numero);
         modemSender.setEntradaDatos(entrada);
         modemReciver = new ModemReciver(folderPropia);
         modemReciver.setSalida(salida);

@@ -17,14 +17,13 @@ import java.util.Hashtable;
  * @author tas
  */
 public class Red {
-
+    public static final String path = "GSM";
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
         final int maxSize = 999999;
-        final String path = "GSM";
         Dictionary< Integer , File > modems = new Hashtable< Integer, File >();
         Dictionary< Integer , Integer > mensajeModems = new Hashtable< Integer, Integer >();
         File carpeta = new File (path);
@@ -46,7 +45,10 @@ public class Red {
                 // Recive
                 try {
                     File[] files = carpeta.listFiles();
-                    for (int j = 0; j < files.length; j++) {
+                    int longitud = 0;
+                    if (files != null)
+                            longitud = files.length;
+                    for (int j = 0; j < longitud; j++) {
                         File file = files[j];
                         //System.out.println( getName()+ "D:" + file.getName());
                         if(file.canRead()){
@@ -59,7 +61,7 @@ public class Red {
                             // Computo el origen
                             numeroOrig = mensaje.getOrigen();
                             if (modems.get(numeroOrig) == null){
-                                File dirModem = new File ("GSM/"+numeroOrig);
+                                File dirModem = new File (path+numeroOrig);
                                 modems.put(numeroOrig, dirModem);
                                 mensajeModems.put(numeroOrig, 0);
                             }
@@ -68,7 +70,7 @@ public class Red {
                             // Si es mandado a mi o si conozco el destino 
                             // ya sé que lo voy a poder mandar, lo borro
                             if (numeroDest == 0 || modems.get(numeroDest) != null) {
-                                // fr.close();
+                                 fr.close();
                                 file.delete();
                                 if (numeroDest != 0) {
                                     hayMensaje = true;
@@ -92,7 +94,7 @@ public class Red {
             String phrase = mensaje.toString();
 
             try {
-                pathDestino +=  numeroOrig + "-" + numeroMsj +".txt";
+                pathDestino +=  "/" + numeroOrig + "-" + numeroMsj +".txt";
                 //System.out.println(getName() + " C: " +"sms"+ j +".txt");
 
                 File file = new File(pathDestino);

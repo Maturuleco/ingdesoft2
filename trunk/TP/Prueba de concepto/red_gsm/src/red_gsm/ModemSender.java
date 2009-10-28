@@ -19,12 +19,12 @@ public class ModemSender extends Thread {
     private static final int maxSize = 999999999;
     private int numero;
     private int numSms = 1;
-    private String redDirectory;
+    private String redDirectory = Red.path;
     private BlockingQueue<MensajeToModemGSM> entradaDatos;
 
-    public ModemSender(int numero, String redDirectory) {
+    public ModemSender(int numero) {
         this.numero = numero;
-        this.redDirectory = redDirectory;
+ //       this.redDirectory = redDirectory;
     }
 
     public void setEntradaDatos(BlockingQueue<MensajeToModemGSM> entradaDatos) {
@@ -40,7 +40,7 @@ public class ModemSender extends Thread {
         String phrase = msj.toString();
         
         try {
-            path +=  numero + "-" + numSms +".txt";
+            path += "/" + numero + "-" + numSms +".txt";
             //System.out.println(getName() + " C: " +"sms"+ j +".txt");
 
             File file = new File(path);
@@ -70,12 +70,16 @@ public class ModemSender extends Thread {
 
     @Override
     public void run() {
-        if (! sensarEntradaSistema() ) {
-            try {
-                // Duermo un segundo
-                sleep(timeToWait);
-            } catch (InterruptedException ex) {}
+        
+        while (true) {
+            if (! sensarEntradaSistema() ) {
+                try {
+                    // Duermo un segundo
+                    sleep(timeToWait);
+                } catch (InterruptedException ex) {}
+            }
         }
+        
     }
     
     
