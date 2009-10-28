@@ -5,6 +5,7 @@
 
 package predictor;
 
+import com.db4o.ObjectServer;
 import java.util.Collection;
 import model.DatoAlmacenado;
 import modelo.Regla;
@@ -22,9 +23,9 @@ public class PredictorManager implements Runnable {
     private SelectorDatos selectorDatos;
     private SelectorReglas selectorReglas;
 
-    public PredictorManager(SelectorDatos selectorDatos, SelectorReglas selectorReglas) {
-        this.selectorDatos = selectorDatos;
-        this.selectorReglas = selectorReglas;
+    public PredictorManager(ObjectServer server) {
+        selectorDatos = new SelectorDatos(server);
+        selectorReglas = new SelectorReglas();
     }
 
     @Override

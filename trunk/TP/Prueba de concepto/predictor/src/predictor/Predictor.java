@@ -4,6 +4,7 @@
  */
 package predictor;
 
+import java.util.Calendar;
 import java.util.Collection;
 import modelo.Condicion;
 import java.util.EnumMap;
@@ -36,6 +37,7 @@ public class Predictor implements Runnable {
         Boolean detectoAlerta = analizar();
         if (detectoAlerta) {
             //TODO: escribir en un archivo
+            System.out.println(Calendar.getInstance().getTime().toString());
             System.out.println(regla.getMensajePrediccion());
         } else {
             //TODO: hacer algo
