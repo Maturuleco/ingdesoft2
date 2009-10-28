@@ -14,9 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import red_gsm.MensajeToModemGSM;
 import model.Mensaje;
+import model.Validador;
 import red_gsm.MensajeGSM;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -38,26 +37,6 @@ public class DataSender extends Thread {
     private Sender[] enviando;
         
     public DataSender () {
-    }
-
-    public static String getHash(String mensaje){
-        String hash = "";
-        try{
-            byte[] buffer = mensaje.getBytes();
-            MessageDigest md = MessageDigest.getInstance("SHA1");
-            md.update(buffer);
-            byte[] digest = md.digest();
-            for (byte aux : digest) {
-                int b = aux & 0xff;
-                if (Integer.toHexString(b).length() == 1) {
-                    hash += "0";
-                }
-                hash += Integer.toHexString(b);
-            }
-        } catch (NoSuchAlgorithmException e){
-            e.printStackTrace(System.err);
-        }
-        return hash;
     }
 
     public void setEntrada(BlockingQueue<Mensaje> entrada) {
@@ -108,6 +87,7 @@ public class DataSender extends Thread {
         }
         return false;
     }
+    
     private void sensarEntradaModem() {
         MensajeGSM respuesta = modemEntrada.poll();
         if (respuesta != null)
@@ -140,7 +120,7 @@ public class DataSender extends Thread {
     
     private void firmar(String[] mensajes){
         for (int i = 0; i < mensajes.length; i++){
-            String hash = getHash(mensajes[i]);
+            String hash = Validador.getHash(mensajes[i]);
             mensajes[i] += '#'+hash;
         }
     }
