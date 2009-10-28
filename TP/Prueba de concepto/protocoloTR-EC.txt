@@ -4,6 +4,9 @@ num: numero de mensaje
 msj: el mensaje en sí
 firma: un hash del archivo
 
+TR a EC: Raise#idTR#timeStamp#firma
+Este el el mensaje cuando se levanta la TR
+
 EC a TR: ACK#num#timeStamp#firma
 ACK = "ACK"
 num = numero del mensaje que recivió
