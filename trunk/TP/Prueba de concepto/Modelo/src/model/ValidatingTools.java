@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author tas
  */
-public class Validador {
+public class ValidatingTools {
     
     public static Boolean validar(String mensaje, DataSource origen) {
         // TODO: hacer el cuerpo del validador de mensajes
