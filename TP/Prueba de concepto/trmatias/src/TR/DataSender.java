@@ -15,6 +15,9 @@ import java.util.logging.Logger;
 import red_gsm.MensajeToModemGSM;
 import model.Mensaje;
 import red_gsm.MensajeGSM;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 /**
  *
@@ -35,6 +38,26 @@ public class DataSender extends Thread {
     private Sender[] enviando;
         
     public DataSender () {
+    }
+
+    public static String getHash(String mensaje){
+        String hash = "";
+        try{
+            byte[] buffer = mensaje.getBytes();
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(buffer);
+            byte[] digest = md.digest();
+            for (byte aux : digest) {
+                int b = aux & 0xff;
+                if (Integer.toHexString(b).length() == 1) {
+                    hash += "0";
+                }
+                hash += Integer.toHexString(b);
+            }
+        } catch (NoSuchAlgorithmException e){
+            e.printStackTrace(System.err);
+        }
+        return hash;
     }
 
     public void setEntrada(BlockingQueue<Mensaje> entrada) {
@@ -115,9 +138,12 @@ public class DataSender extends Thread {
         return partes;
     }
     
-    private void firmar(String[] mensajes) {
-        // TODO: Hacer el cuerpo de la parte de seguridad
-}
+    private void firmar(String[] mensajes){
+        for (int i = 0; i < mensajes.length; i++){
+            String hash = getHash(mensajes[i]);
+            mensajes[i] += '#'+hash;
+        }
+    }
     
     private void send(Mensaje m)
     {
