@@ -15,7 +15,7 @@ import red_gsm.MensajeGSM;
  */
 public class Sender extends Thread {
     
-    private static final long tiempoEspera = 10000;
+    private static final long tiempoEspera = 15000;
     
     private volatile boolean keepTrying = true;
     private MensajeGSM mensaje;

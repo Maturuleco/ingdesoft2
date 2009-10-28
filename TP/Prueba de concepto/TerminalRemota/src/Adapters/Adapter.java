@@ -29,18 +29,20 @@ public class Adapter implements Runnable {
         
         while(true){
             try {
-                File[] files = folder.listFiles();
-                for (int j = 0; j < files.length; j++) {
-                    File file = files[j];
-                    if(file.canRead()){
-                        FileReader fr = new FileReader(file);
-                        BufferedReader br = new BufferedReader(fr);
-                        String texto = br.readLine();
-                        file.delete();
+                File[] files = folder.listFiles( );
+                if (files != null) {
+                    for (int j = 0; j < files.length; j++) {
+                        File file = files[j];
+                        if(file.canRead()){
+                            FileReader fr = new FileReader(file);
+                            BufferedReader br = new BufferedReader(fr);
+                            String texto = br.readLine();
+                            file.delete();
 
-                        // Se envia el mensaje a quien corresponda
-                        DatoSensado mensaje = parsear(texto);
-                        salida.put(mensaje);
+                            // Se envia el mensaje a quien corresponda
+                            DatoSensado mensaje = parsear(texto);
+                            salida.put(mensaje);
+                        }
                     }
                 }
             } catch (Exception e) {

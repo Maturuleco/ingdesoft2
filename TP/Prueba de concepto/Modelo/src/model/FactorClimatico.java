@@ -33,8 +33,10 @@ public enum FactorClimatico {
             res = FactorClimatico.velocidad_viento;
         else if (id.equals("D"))
             res = FactorClimatico.direccion_viento;
-        else
+        else {
+            System.out.println("Imposible parsear"+ id +"\n");
             throw new ParseException(id, 0);
+        }
         return res;
     }
 

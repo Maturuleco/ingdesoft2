@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package TR;
 
 import Adapters.Adapter;
@@ -32,6 +31,7 @@ import red_gsm.MensajeGSM;
  * @author matiaz
  */
 public class Initialize {
+
     public static int estacionCentral;
     public static int idTR;
     private static int numeroModem;
@@ -41,10 +41,8 @@ public class Initialize {
     private static StartUpManager startUpManager;
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
-
     private static BlockingQueue<DatoSensado> adapterManager =
             new LinkedBlockingQueue<DatoSensado>();
-
     private static BlockingQueue<Mensaje> managerSender =
             new LinkedBlockingQueue<Mensaje>();
     private static BlockingQueue<Mensaje> senderManager =
@@ -56,62 +54,71 @@ public class Initialize {
     private static BlockingQueue<MensajeGSM> dispatcherSender =
             new LinkedBlockingQueue<MensajeGSM>();
 
-
-
-
     private static String getDatoFromLine(String linea) throws ParseException {
-        if (linea == null)
+        if (linea == null) {
             throw new ParseException("Configuration file", 0);
+        }
         String[] partes = linea.split(":");
-        if (partes.length != 2)
-            throw new ParseException("En archivo de configuracion "+linea, 0);
+        if (partes.length != 2) {
+            throw new ParseException("En archivo de configuracion " + linea, 0);
+        }
         return partes[1];
     }
 
     private static Adapter getAdapter(String dato) throws ParseException {
         String[] parte = dato.split("\\|", 2);
         Adapter adapter;
-        if (parte[0].equalsIgnoreCase("default"))
+        if (parte[0].equalsIgnoreCase("default")) {
             adapter = Adapter.parse(parte[1]);
-        else
+        } else {
             throw new ParseException(dato, 1);
+        }
         return adapter;
     }
 
     private static void configurar(File configFile) throws ParseException, FileNotFoundException {
-        
-            if (!configFile.canRead()) {
-                throw new FileNotFoundException();
-            }
-            FileReader fr = null;
-            fr = new FileReader(configFile);
-            BufferedReader br = new BufferedReader(fr);
+
+        if (!configFile.canRead()) {
+            throw new FileNotFoundException();
+        }
+        FileReader fr = null;
+        fr = new FileReader(configFile);
+        BufferedReader br = new BufferedReader(fr);
         try {
             String linea = br.readLine();
             String dato = getDatoFromLine(linea);
             idTR = Integer.valueOf(dato);
+            System.out.println("IdTR cargado\n");
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             numeroModem = Integer.valueOf(dato);
+            System.out.println("Numero de Modem " + numeroModem + "\n");
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             estacionCentral = Integer.valueOf(dato);
+            System.out.println("Numero Estacion Central " + estacionCentral + "\n");
             Adapter adapter;
             linea = br.readLine();
+            System.out.println("Comienzo Carga de adapters");
             while (linea != null) {
                 dato = getDatoFromLine(linea);
                 adapter = getAdapter(dato);
+                System.out.println("Adapter " + adapter.getName() + " cargado\n");
                 adapters.add(adapter);
+                linea = br.readLine();
             }
-            configFile.delete();
+            System.out.println("Fin Carga Adapters");
+       //     configFile.delete();
             linea = br.readLine();
         } catch (IOException ex) {
             Logger.getLogger(Initialize.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (fr != null)
+            if (fr != null) {
                 try {
-                fr.close();
-            } catch (IOException ex) { }
+                    fr.close();
+                } catch (IOException ex) {
+                }
+            }
         }
     }
 
@@ -145,7 +152,7 @@ public class Initialize {
         modemGSM.setEntrada(entradaModem);
         modemGSM.setSalida(salidaModem);
 
-        startUpManager.setSalida(salidaModem);
+        startUpManager.setSalida(entradaModem);
 
     }
 
@@ -156,8 +163,7 @@ public class Initialize {
     private static StartUpManager startUpManager;
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
-    */
-    
+     */
     private static void prenderComponentes() {
         modemGSM.start();
         modemDispatcher.start();
@@ -166,20 +172,22 @@ public class Initialize {
         for (Adapter adapter : adapters) {
             adapter.start();
         }
+        //startUpManager.start();
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        if (args.length < 1)
+        if (args.length < 1) {
             System.out.println("Es necesario el archivo de configuracion\n");
-        else {
+        } else {
+            System.out.println(args[0]);
             String configPath = args[0];
             File configFile = new File(configPath);
-            if (! configFile.isFile())
+            if (!configFile.isFile()) {
                 System.out.println("Es necesario el archivo de configuracion\n");
-            else {
+            } else {
                 try {
                     configurar(configFile);
                 } catch (ParseException ex) {
@@ -187,7 +195,7 @@ public class Initialize {
                 } catch (FileNotFoundException ex) {
                     System.out.println("Path invalido\n");
                 }
-                System.out.println("Inicializando TR"+idTR+"\n");
+                System.out.println("Inicializando TR" + idTR + "\n");
                 System.out.println("Creando componentes\n");
                 crearComponentes();
                 System.out.println("Conectando componentes\n");
@@ -198,7 +206,6 @@ public class Initialize {
 
             }
         }
-        
-    }
 
+    }
 }

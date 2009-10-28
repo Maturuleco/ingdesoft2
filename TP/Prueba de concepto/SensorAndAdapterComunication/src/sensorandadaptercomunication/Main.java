@@ -1,5 +1,6 @@
 package sensorandadaptercomunication;
 
+import sensor.Sensor;
 import Adapters.Adapter;
 import java.io.File;
 import java.text.ParseException;

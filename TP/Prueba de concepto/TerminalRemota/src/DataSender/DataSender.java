@@ -12,7 +12,6 @@ package DataSender;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import red_gsm.MensajeGSM;
 import model.Mensaje;
 import model.ValidatingTools;
 import red_gsm.MensajeGSM;
@@ -29,7 +28,7 @@ public class DataSender extends Thread {
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<Mensaje> salida;
     private BlockingQueue<Mensaje> entrada;
-    private static final long sleepTime = 10000;
+    private static final long sleepTime = 1000;
     
     private Mensaje mensajeActual;
     private int msjEnProceso = 0;

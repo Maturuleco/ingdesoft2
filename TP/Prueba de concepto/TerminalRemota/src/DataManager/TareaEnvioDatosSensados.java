@@ -23,14 +23,11 @@ public final class TareaEnvioDatosSensados extends TimerTask{
     private ObjectServer server;
     private BlockingQueue<Mensaje> salida;
 
-    public TareaEnvioDatosSensados(ObjectServer server){
+    public TareaEnvioDatosSensados(ObjectServer server, BlockingQueue<Mensaje> salida){
         this.server = server;
-    }
-
-    public void setSalida(BlockingQueue<Mensaje> salida) {
         this.salida = salida;
     }
-    
+
     public final void run()
     {
         DatoSensado dato = new DatoSensado(null, null, null, null);
@@ -47,7 +44,6 @@ public final class TareaEnvioDatosSensados extends TimerTask{
     private void send(ObjectSet<DatoSensado> datos)
     {
         Integer id = Initialize.idTR;
-        datos.subList(0, datos.size() - 1);
         Mensaje m = new Mensaje(id, model.DataSource.terminal_remota);
         m.setDatos(datos);
         salida.add(m);
