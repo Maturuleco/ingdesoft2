@@ -163,7 +163,7 @@ public class DataSender extends Thread {
     }
     
     private Boolean checkACK(int id, long timeStamp) {
-        // TODO: Checkeo de que el ACK no sea de un mensaje viejo
+        // Checkeo de que el ACK no sea de un mensaje viejo
         return (timeStampMsjActual == timeStamp);
     }
     
