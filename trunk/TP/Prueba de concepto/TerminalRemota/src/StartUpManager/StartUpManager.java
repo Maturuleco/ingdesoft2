@@ -9,17 +9,17 @@ import TR.Initialize;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import model.ValidatingTools;
-import red_gsm.MensajeToModemGSM;
+import red_gsm.MensajeGSM;
 
 /**
  *
  * @author matiaz
  */
 public class StartUpManager extends Thread {
-    private static final int priority = 10;
-    private BlockingQueue<MensajeToModemGSM> salida;
+    private static final int priority = 3;
+    private BlockingQueue<MensajeGSM> salida;
 
-    public void setSalida(BlockingQueue<MensajeToModemGSM> salida) {
+    public void setSalida(BlockingQueue<MensajeGSM> salida) {
         this.salida = salida;
     }
 
@@ -28,8 +28,8 @@ public class StartUpManager extends Thread {
         Date d = new Date();
         String mensaje = Initialize.TRid + "#" + d.getTime();
         mensaje = mensaje + "#" + ValidatingTools.getHash(mensaje);
-        MensajeToModemGSM mensajeInicial = 
-                new MensajeToModemGSM(Initialize.estacionCentral, mensaje, priority);
+        MensajeGSM mensajeInicial = 
+                new MensajeGSM(0, Initialize.estacionCentral, mensaje, priority);
         try {
             salida.put(mensajeInicial);
         } catch (InterruptedException ex) { }

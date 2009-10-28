@@ -7,7 +7,7 @@ package DataSender;
 
 import TR.Initialize;
 import java.util.concurrent.BlockingQueue;
-import red_gsm.MensajeToModemGSM;
+import red_gsm.MensajeGSM;
 
 /**
  *
@@ -18,16 +18,16 @@ public class Sender extends Thread {
     private static final long tiempoEspera = 10000;
     
     private volatile boolean keepTrying = true;
-    private MensajeToModemGSM mensaje;
-    private BlockingQueue<MensajeToModemGSM> modem;
+    private MensajeGSM mensaje;
+    private BlockingQueue<MensajeGSM> modem;
     
-    public Sender(String msj, BlockingQueue<MensajeToModemGSM> m) {
-        mensaje = new MensajeToModemGSM(Initialize.estacionCentral, msj);
+    public Sender(String msj, BlockingQueue<MensajeGSM> m) {
+        mensaje = new MensajeGSM(0, Initialize.estacionCentral, msj);
         modem = m;
     }
     
     public Sender(String msj) {
-        mensaje = new MensajeToModemGSM(Initialize.estacionCentral, msj);
+        mensaje = new MensajeGSM(0, Initialize.estacionCentral, msj);
     }
     
     @Override
@@ -45,7 +45,7 @@ public class Sender extends Thread {
         keepTrying = false;
     }
 
-    public void setModem(BlockingQueue<MensajeToModemGSM> modem) {
+    public void setModem(BlockingQueue<MensajeGSM> modem) {
         this.modem = modem;
     }
 

@@ -1,16 +1,42 @@
 package red_gsm;
 
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.Date;
 
 public class MensajeGSM {
     private Integer destino;
     private Integer origen;
+    private Integer priority;
     private String mensaje;
     private Date fecha;
 
     public MensajeGSM(int orig, int dest, String msj)
     {
+            destino = dest;
+            origen = orig;
+            mensaje = new String(msj);
+            fecha = new Date();
+            /*
+            // Lo que sobra lo tira...
+            mensaje = new char[160];
+            int lon = msj.length();
+            for (int i=0; i < mensaje.length(); i++) {
+                    if (lon >= i)
+                        mensaje[i] = msj[i] ;
+                    else
+                            mensaje[i] = ' ';
+            }
+            */
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public MensajeGSM(int orig, int dest, String msj, int priority)
+    {
+            this.priority = priority;
             destino = dest;
             origen = orig;
             mensaje = new String(msj);
@@ -76,6 +102,14 @@ public class MensajeGSM {
         mensaje.setFecha(fecha);
         
         return mensaje;
+    }
+
+    public static class Comparador implements Comparator<MensajeGSM> {
+
+        public int compare(MensajeGSM m1, MensajeGSM m2) {
+            return (m1.getPriority() - m2.getPriority());
+        }
+
     }
 	
 }
