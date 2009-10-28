@@ -1,14 +1,17 @@
 package sensorandadaptercomunication;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
+import java.util.concurrent.BlockingQueue;
 
 public class Adapter implements Runnable {
     
-    private long frequency;
     private String name;
+    private long frequency;
     private String directory;
     private Thread thread = null;   
+    private BlockingQueue<MensajeSMSInterno> salida;
     
     public Adapter(String directory, String nombre, long frequency) {
         setName(nombre);
@@ -27,12 +30,16 @@ public class Adapter implements Runnable {
                     File[] files = folder.listFiles();
                     for (int j = 0; j < files.length; j++) {
                             File file = files[j];
-                            System.out.println( getName()+ "    D:" + file.getName());
                             if(file.canRead()){
-                                // LEER INFO  Y BORRAR
+                                FileReader fr = new FileReader(file);
+                                BufferedReader br = new BufferedReader(fr);
+                                String texto = br.readLine();
                                 file.delete();
+                                
+                                // Se envia el mensaje a quien corresponda
+                                MensajeSMSInterno mensaje = new MensajeSMSInterno(texto);
+                                salida.put(mensaje);
                             }
-                            
                         }
                     }
             } catch (Exception e) {

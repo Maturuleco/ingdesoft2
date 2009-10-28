@@ -2,57 +2,60 @@ package sensorandadaptercomunication;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
+import model.FactorClimatico;
 
 public class Sensor implements Runnable {
 
-    private long frequency;
+    private static final int maxSize = 999999999;
+    
     private String name;
+    private FactorClimatico factor;
+    private long frequency;
     private String directory;
     private Thread thread = null;   
     
-    public Sensor(String directory, String nombre, long frequency) {
+    public Sensor(String directory, String nombre, FactorClimatico factor, long frequency) {
         setName(nombre);
+        setFactor(factor);
         setDirectory(directory);
         setFrequency(frequency);
     }
 
     public void run() {
-        String phrase = getInfo();
-        int i = 1;
-        File folder = new File (directory);
+        
+        int numSMS = 0;
+        int numFreq = 1;
         String path = directory;
-        int j = 0;
+        File folder = new File (directory);
+        
         while(true){
             path = directory;
             try {
-                if (i == frequency){
-                    i=0;
+                if (numFreq == frequency){
+                    numFreq=0;
                     File[] files = folder.listFiles();
-                    // Solo se puede crear un mensaje nuevo si la carpeta no esta "llena"
+                    
+                    // Solo se puede crear un mensaje nuevo
+                    // si la carpeta no esta "llena"
                     if(files.length < 10){
-                        path +=  "sms"+ j +".txt";
-                        System.out.println(getName() + " C: " +"sms"+ j +".txt");
+                        path +=  "sms"+ numSMS +".txt";
                         
                         File file = new File(path);
                         FileOutputStream fos = new FileOutputStream(file);
-                        
-                        for (char ch : phrase.toCharArray()) {
+                        SensorSMS sms = new SensorSMS(this);
+                        for (char ch : sms.getInfo().toCharArray()) {
                             fos.write(ch);
                         }
                         fos.close();
-                    }else{
-                        System.out.println(getName() + ": no lugar ");
                     }
-                    j++;
-                    if( j > 999999999 )
-                        j = 0;
+                    numSMS++;
+                    if( numSMS > maxSize )
+                        numSMS = 0;
                 }
             } catch (Exception e) {
               e.printStackTrace(System.err);
             }
-            i++;
-            
+            numFreq++;
         }
     }
     
@@ -85,25 +88,12 @@ public class Sensor implements Runnable {
         this.name = name;
     }
 
-    private String getInfo() {
-       Date d = new Date();
-        String info = getName() + "," +
-                      getType() + "," +
-                      System.currentTimeMillis() + "," +
-                      d.toString();
-                     
-        return info;
-    }
-
-    private String getType() {
-        if(frequency%30==0){
-            return FactorConstants.HUM;
-        } else if(frequency%20==0){
-            return FactorConstants.VIENTO;
-        } else{
-            return FactorConstants.TEMP;
-        }
+    public FactorClimatico getFactor() {
+        return factor;
     }
     
+    public void setFactor(FactorClimatico factor) {
+        this.factor = factor;
+    }
     
 }
