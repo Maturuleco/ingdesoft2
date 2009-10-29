@@ -9,6 +9,7 @@ import java.util.concurrent.BlockingQueue;
 import model.DatoAlmacenado;
 import model.DatoSensado;
 import model.Mensaje;
+import networkcontroller.HeartbeatMessege;
 
 /**
  *
@@ -16,7 +17,8 @@ import model.Mensaje;
  */
 public class DataReceiver extends Thread{
     private BlockingQueue<Mensaje> entrada;
-    private BlockingQueue<DatoAlmacenado> salida;
+    private BlockingQueue<DatoAlmacenado> salidaValidator;
+    private BlockingQueue<HeartbeatMessege> salidaNetworkController;
     private static final long sleepTime = 100;
 
     public DataReceiver () {
@@ -26,11 +28,13 @@ public class DataReceiver extends Thread{
         this.entrada = entrada;
     }
 
-    public void setSalida(BlockingQueue<DatoAlmacenado> salida) {
-        this.salida = salida;
+    public void setSalidaValidator(BlockingQueue<DatoAlmacenado> salidaValidator) {
+        this.salidaValidator = salidaValidator;
     }
 
-
+    public void setSalidaNetworkController(BlockingQueue<HeartbeatMessege> salidaNetworkController) {
+        this.salidaNetworkController = salidaNetworkController;
+    }
 
     @Override
     public void run() {
@@ -52,15 +56,21 @@ public class DataReceiver extends Thread{
                 DatoAlmacenado datoAlm = new DatoAlmacenado(dato.getIdSensor(),
                         dato.getTimeStamp(),dato.getFactor(),dato.getValor(),
                         cabeza.getIdTR(),cabeza.getDataSource());
-                enviar(datoAlm);
+                enviarValidator(datoAlm);
+                HeartbeatMessege heartbeat = new HeartbeatMessege(cabeza.getIdTR(),dato.getTimeStamp(), null, null);
+                enviarNetworkController(heartbeat);
             }
             return true;
         }
         return false;
     }
 
-    public void enviar(DatoAlmacenado m) {
-        salida.add(m);
+    public void enviarValidator(DatoAlmacenado m) {
+        salidaValidator.add(m);
+    }
+
+    public void enviarNetworkController(HeartbeatMessege m) {
+        salidaNetworkController.add(m);
     }
 
 }
