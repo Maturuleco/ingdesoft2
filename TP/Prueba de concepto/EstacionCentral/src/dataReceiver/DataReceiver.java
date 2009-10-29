@@ -9,7 +9,7 @@ import java.util.concurrent.BlockingQueue;
 import model.DatoAlmacenado;
 import model.DatoSensado;
 import model.Mensaje;
-import networkcontroller.HeartbeatMessege;
+import networkController.HeartbeatMessege;
 
 /**
  *
