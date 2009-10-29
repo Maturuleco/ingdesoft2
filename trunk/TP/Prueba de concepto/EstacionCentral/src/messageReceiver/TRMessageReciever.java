@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package EcMessageReceiver;
+package messageReceiver;
 
 import java.text.ParseException;
 import java.util.Dictionary;
@@ -19,7 +19,7 @@ import red_gsm.MensajeGSM;
  *
  * @author matiaz
  */
-public class EcMessageReciever extends Thread{
+public class TRMessageReciever extends Thread {
     private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<Mensaje> salidaDatos;
@@ -38,7 +38,7 @@ public class EcMessageReciever extends Thread{
         this.salidaDatos = salida;
     }
 
-    public EcMessageReciever() {
+    public TRMessageReciever() {
         this.timeStamps = new Hashtable<Integer, Long>();
     }
 
@@ -50,7 +50,7 @@ public class EcMessageReciever extends Thread{
                 receive(mensaje);
                 sleep(sleepTime);
             } catch (InterruptedException ex) {
-                Logger.getLogger(EcMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -72,11 +72,11 @@ public class EcMessageReciever extends Thread{
                     try {
                         salidaDatos.put(mensaje);
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(EcMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (ParseException ex) {
-                Logger.getLogger(EcMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -114,9 +114,9 @@ public class EcMessageReciever extends Thread{
             modemSalida.put(ack);
 
         } catch (InterruptedException ex) {
-            Logger.getLogger(EcMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(EcMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

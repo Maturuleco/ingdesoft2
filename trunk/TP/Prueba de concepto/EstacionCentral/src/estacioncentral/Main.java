@@ -7,12 +7,21 @@ package estacioncentral;
 
 import com.db4o.Db4o;
 import com.db4o.ObjectServer;
+import dataReceiver.DataReceiver;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import messageReceiver.TRMessageReciever;
+import networkController.NetworkController;
 import predictor.PredictorManager;
 import validator.ValidatorManager;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
+import model.DatoAlmacenado;
+import model.Mensaje;
+import networkController.HeartbeatMessege;
+import red_gsm.MensajeGSM;
+import red_gsm.ModemGSM;
 
 /**
  *
@@ -20,8 +29,33 @@ import validator.ValidatorManager;
  */
 public class Main {
 
+    public static int numeroModem = 999;
+    private static int trRegistradas = 10;
+
     private static PredictorManager predictor;
     private static ValidatorManager validator;
+    private static DataReceiver dataReceiver;
+    private static TRMessageReciever messageReceiver;
+    private static NetworkController networkController;
+    private static ModemDispatcher modemDispatcher;
+    private static ModemGSM modemGSM;
+    
+    private static BlockingQueue<Mensaje> trReceiverToData =
+            new LinkedBlockingQueue<Mensaje>();
+    private static BlockingQueue<DatoAlmacenado> dataToValidator =
+            new LinkedBlockingQueue<DatoAlmacenado>();
+    private static BlockingQueue<HeartbeatMessege> dataToNetwork =
+            new LinkedBlockingQueue<HeartbeatMessege>();
+    private static BlockingQueue<MensajeGSM> salidaModem =
+            new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> entradaModem =
+            new PriorityBlockingQueue<MensajeGSM>(3, new MensajeGSM.Comparador());
+    private static BlockingQueue<MensajeGSM> dispatcherReceiver =
+            new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> dispatcherNetwork =
+            new LinkedBlockingQueue<MensajeGSM>();
+
+
     private static ObjectServer validDataServer;
 
     /**
@@ -29,7 +63,30 @@ public class Main {
      */
     public static void main(String[] args) {
         inicializarComponentes();
+        conectarComponentes();
         prenderComponentes();
+    }
+
+    private static void conectarComponentes() {
+        dataReceiver.setEntrada(trReceiverToData);
+        dataReceiver.setSalidaValidator(dataToValidator);
+        dataReceiver.setSalidaNetworkController(dataToNetwork);
+
+        messageReceiver.setModemEntrada(dispatcherReceiver);
+        messageReceiver.setModemSalida(salidaModem);
+        messageReceiver.setSalida(trReceiverToData);
+
+        modemDispatcher.setDataSalida(dispatcherReceiver);
+        modemDispatcher.setModemEntrada(salidaModem);
+
+        modemGSM.setEntrada(entradaModem);
+        modemGSM.setSalida(salidaModem);
+
+        networkController.setEntrada(dataToNetwork);
+        networkController.setEntradaRaise(dispatcherNetwork);
+
+        validator.setEntradaDatos(dataToValidator);
+
     }
 
     private static void inicializarComponentes(){
@@ -47,6 +104,22 @@ public class Main {
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
         validator = new ValidatorManager(validDataServer);
         System.out.println("Se creo el Validator y se le le asigno el server de ValidData");
+
+        messageReceiver = new TRMessageReciever();
+        System.out.println("Se creo TR Message Receiver");
+
+        dataReceiver = new DataReceiver();
+        System.out.println("Se creo el Data Receiver");
+
+        modemDispatcher = new ModemDispatcher();
+        System.out.println("Se creo el Modem Dispatcher");
+
+        modemGSM = new ModemGSM(numeroModem);
+        System.out.println("Se creo el Modem");
+
+        networkController = new NetworkController(trRegistradas);
+        System.out.println("Se creo el Network Controller");
+
     }
 
     private static void prenderComponentes() {
