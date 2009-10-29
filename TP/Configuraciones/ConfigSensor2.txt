@@ -1,0 +1,4 @@
+Nombre:02
+FactorClimatico:T
+Frecuencia:700
+Directorio:sensor2
