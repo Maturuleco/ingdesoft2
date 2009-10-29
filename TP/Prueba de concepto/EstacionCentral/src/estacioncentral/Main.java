@@ -51,8 +51,10 @@ public class Main {
 
     private static void prenderComponentes() {
         System.out.println("Prendiendo Componentes");
-        new Thread(predictor).run();
-        new Thread(validator).run();
+        new Thread(validator).start();
+        System.out.println("Se prendieron el validador");
+        new Thread(predictor).start();
+        System.out.println("Se prendieron el predictor");
         System.out.println("Se prendieron todos los componentes");
     }
 
