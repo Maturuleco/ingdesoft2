@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package datareceiver;
+package dataReceiver;
 
 import java.util.concurrent.BlockingQueue;
 import model.DatoAlmacenado;
