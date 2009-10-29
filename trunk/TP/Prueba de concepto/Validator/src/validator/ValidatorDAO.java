@@ -9,6 +9,7 @@ import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
+import com.db4o.ext.Db4oIOException;
 import java.util.Collection;
 import java.util.List;
 import model.DatoAlmacenado;
@@ -55,7 +56,10 @@ public class ValidatorDAO {
         } catch (DatabaseReadOnlyException e) {
             System.out.println("la base que intenta ingresar esta en estado read-only");
             System.out.println(e.getMessage());
-        } finally {
+        } catch(Db4oIOException e){
+            System.out.println("fallo la operacion de entrada salida");
+            System.out.println(e.getMessage());
+        }finally {
             cliente.close();
         }
     }

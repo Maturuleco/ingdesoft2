@@ -18,7 +18,7 @@ import model.FactorClimatico;
  */
 public class ValidatorManager implements Runnable{
 
-    private static final long tiempoEspera = 10000;
+    private static final long tiempoEspera = 1000;
     private volatile boolean keepTrying = true;
 
     private ValidatorDAO validadorDAO = null;
@@ -40,6 +40,7 @@ public class ValidatorManager implements Runnable{
                 } else {
                     validadorDAO.escribirDatosOutlier(dato);
                 }
+                System.out.println(timeStamp.toString()+"guarde un dato en la base");
                 Thread.sleep(tiempoEspera);
             } catch (InterruptedException ex) { }
         }
