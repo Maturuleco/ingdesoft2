@@ -23,7 +23,7 @@ public class NetworkController{
         
     }
     public void recibirMensaje(HeartbeatMessege m){
-        String tr = m.getTrName();
+        String tr = m.getTrName().toString();
         TimerTR timerTR = (TimerTR)timersTR.get(tr);
         // Como el generador de mensajes no tiene en cuenta que la TR este caida
         // se verifica antes de tener encuenta la información.

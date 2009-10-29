@@ -1,5 +1,6 @@
-package networkController;
+package threadcomunication;
 
+import networkController.*;
 import java.util.Random;
 
 public class HeartbeatMessegeFactory {
