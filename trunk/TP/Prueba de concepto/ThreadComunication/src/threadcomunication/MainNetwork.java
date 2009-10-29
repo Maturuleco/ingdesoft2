@@ -1,6 +1,8 @@
-package networkController;
+package threadcomunication;
 
-public class Main {
+import networkController.*;
+
+public class MainNetwork {
 
     public static void main(String[] args) {
         int trCount = 10;
