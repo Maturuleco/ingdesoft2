@@ -1,12 +1,15 @@
 package networkController;
 
 import java.util.HashMap;
+import java.util.concurrent.BlockingQueue;
 
-public class NetworkController{
+public class NetworkController extends Thread{
 
-    private HashMap timersTR = new HashMap();
     private int duration = 1;
-
+    private HashMap timersTR = new HashMap();
+    private static final long sleepTime = 100;
+    private BlockingQueue<HeartbeatMessege> entrada;
+    
     NetworkController(int trCount){
         String name;
         for (int i = 0; i < trCount; i++) {
@@ -22,6 +25,12 @@ public class NetworkController{
         //end sacar
         
     }
+     public void setEntrada(BlockingQueue<HeartbeatMessege> entrada) {
+        this.entrada = entrada;
+    }
+
+     
+    
     public void recibirMensaje(HeartbeatMessege m){
         String tr = m.getTrName().toString();
         TimerTR timerTR = (TimerTR)timersTR.get(tr);
@@ -51,6 +60,28 @@ public class NetworkController{
 
         }
     }
+     @Override
+    public void run() {
+        
+        while (true) {
+            if (! recibirMensaje() ) {
+                try {
+                    // Duermo un segundo
+                    sleep(sleepTime);
+                } catch (InterruptedException ex) {}
+            }
+        }
+    }
+     
+    private boolean recibirMensaje() {
+        HeartbeatMessege cabeza = entrada.poll();
+        if (cabeza != null) {
+            recibirMensaje(cabeza);
+            return true;
+        }
+        return false;
+    }
+     
     public void timeout( TimerTR t ) {
         // AVISAR A QUIEN CORRESPONDA QUE LA TR ESTA CAIDA
     }
