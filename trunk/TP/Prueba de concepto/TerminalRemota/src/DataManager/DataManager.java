@@ -70,6 +70,7 @@ public class DataManager extends Thread{
     }
 
     public void guardar(DatoSensado m) {
+        System.out.println("El data Manager recive "+m.toString()+"\n");
         ObjectContainer cliente = server.openClient();
         try {
             cliente.store(m);

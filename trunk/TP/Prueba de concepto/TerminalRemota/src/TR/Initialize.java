@@ -172,7 +172,7 @@ public class Initialize {
         for (Adapter adapter : adapters) {
             adapter.start();
         }
-        //startUpManager.start();
+        startUpManager.start();
     }
 
     /**

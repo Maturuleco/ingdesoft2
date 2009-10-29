@@ -46,6 +46,7 @@ public final class TareaEnvioDatosSensados extends TimerTask{
         Integer id = Initialize.idTR;
         Mensaje m = new Mensaje(id, model.DataSource.terminal_remota);
         m.setDatos(datos);
+        System.out.println("El DataManager Manda: "+m.toString()+"\n");
         salida.add(m);
     }
 }
