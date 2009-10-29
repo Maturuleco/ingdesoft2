@@ -5,7 +5,7 @@
 
 package DataSender;
 
-import TR.Initialize;
+import TR.Main;
 import java.util.concurrent.BlockingQueue;
 import red_gsm.MensajeGSM;
 
@@ -22,12 +22,12 @@ public class Sender extends Thread {
     private BlockingQueue<MensajeGSM> modem;
     
     public Sender(String msj, BlockingQueue<MensajeGSM> m) {
-        mensaje = new MensajeGSM(0, Initialize.estacionCentral, msj);
+        mensaje = new MensajeGSM(0, Main.estacionCentral, msj);
         modem = m;
     }
     
     public Sender(String msj) {
-        mensaje = new MensajeGSM(0, Initialize.estacionCentral, msj);
+        mensaje = new MensajeGSM(0, Main.estacionCentral, msj);
     }
     
     @Override

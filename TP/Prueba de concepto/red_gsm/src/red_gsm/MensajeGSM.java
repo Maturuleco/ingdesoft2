@@ -103,13 +103,4 @@ public class MensajeGSM {
         
         return mensaje;
     }
-
-    public static class Comparador implements Comparator<MensajeGSM> {
-
-        public int compare(MensajeGSM m1, MensajeGSM m2) {
-            return (m1.getPriority() - m2.getPriority());
-        }
-
-    }
-	
 }
