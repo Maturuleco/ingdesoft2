@@ -1,0 +1,21 @@
+FALTA
+
+- INFO: Unir todo
+	revisar que no falte nada en los diagramas de arq
+	revisar/sacar lo q se borro de los detalles de los componentes
+	Esta lo de los casos de uso?
+	
+
+- ARQ:  Crear casos para mostrar
+	Crear script para generar todo
+	Protocolo
+
+	Camino de la info quizas hay alguna conxion q falta:
+TR:	SENSOR -> ADAPTER -> DATA_MANAGER(saveBD) -> DATA_SENDER -> ..
+EC:	TR_MESS_RECEIVER -> DATA_RECEIVER 1 -> VALIDATOR -> BBDD -> PREDICTOR (rules)
+					  2 -> NET_CONTR 
+TR:	STARTUP -> NET_CONTR
+
+
+
+		
