@@ -5,7 +5,7 @@
 
 package DataManager;
 
-import TR.Initialize;
+import TR.Main;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
@@ -43,7 +43,7 @@ public final class TareaEnvioDatosSensados extends TimerTask{
 
     private void send(ObjectSet<DatoSensado> datos)
     {
-        Integer id = Initialize.idTR;
+        Integer id = Main.idTR;
         Mensaje m = new Mensaje(id, model.DataSource.terminal_remota);
         m.setDatos(datos);
         System.out.println("El DataManager Manda: "+m.toString()+"\n");

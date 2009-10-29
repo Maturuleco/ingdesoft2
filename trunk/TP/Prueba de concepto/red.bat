@@ -1,0 +1,1 @@
+java -jar red_gsm/dist/red_gsm.jar

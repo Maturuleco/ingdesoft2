@@ -5,7 +5,7 @@
 
 package StartUpManager;
 
-import TR.Initialize;
+import TR.Main;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 import model.ValidatingTools;
@@ -26,10 +26,10 @@ public class StartUpManager extends Thread {
     @Override
     public void run() {
         Date d = new Date();
-        String mensaje = "Raise" + "#" + Initialize.idTR + "#" + d.getTime();
+        String mensaje = "Raise" + "#" + Main.idTR + "#" + d.getTime();
         mensaje = mensaje + "#" + ValidatingTools.getHash(mensaje);
         MensajeGSM mensajeInicial = 
-                new MensajeGSM(0, Initialize.estacionCentral, mensaje, priority);
+                new MensajeGSM(0, Main.estacionCentral, mensaje, priority);
         try {
             System.out.println("StartUp manda\n");
             salida.put(mensajeInicial);
