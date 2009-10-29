@@ -45,6 +45,7 @@ public class Adapter implements Runnable {
                         }
                     }
                 }
+                Thread.sleep(frequency);
             } catch (Exception e) {
               e.printStackTrace(System.err);
             }

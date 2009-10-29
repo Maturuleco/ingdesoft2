@@ -70,14 +70,14 @@ public class Red {
                             // Si es mandado a mi o si conozco el destino 
                             // ya sé que lo voy a poder mandar, lo borro
                             if (numeroDest == 0 || modems.get(numeroDest) != null) {
-                                 fr.close();
+                                fr.close();
                                 file.delete();
                                 if (numeroDest != 0) {
                                     hayMensaje = true;
                                     break;
                                 }
                             }
- 
+                            fr.close();
                         }
 
                     }

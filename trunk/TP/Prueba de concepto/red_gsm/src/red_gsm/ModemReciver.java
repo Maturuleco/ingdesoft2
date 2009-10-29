@@ -43,7 +43,7 @@ public class ModemReciver extends Thread {
                     FileReader fr = new FileReader(file);
                     BufferedReader br = new BufferedReader(fr);
                     String texto = br.readLine();
-                    // fr.close();
+                    fr.close();
                     file.delete();
                     
                     MensajeGSM mensaje = MensajeGSM.parse(texto);
