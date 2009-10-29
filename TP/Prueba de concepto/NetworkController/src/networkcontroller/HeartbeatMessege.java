@@ -4,11 +4,18 @@ import java.util.Date;
 
 public class HeartbeatMessege {
 
-    private String trName;
+    private Integer idTR;
     private Date trTimestamp;
 
     private String sensorName;
     private Date sensorTimestamp;
+
+    public HeartbeatMessege(Integer idTR, Date trTimestamp, String sensorName, Date sensorTimestamp){
+        this.idTR = idTR;
+        this.sensorName = sensorName;
+        this.trTimestamp = trTimestamp;
+        this.sensorTimestamp = sensorTimestamp;       
+    }
 
     public String getSensorName() {
         return sensorName;
@@ -26,12 +33,12 @@ public class HeartbeatMessege {
         this.sensorTimestamp = sensorTimestamp;
     }
 
-    public String getTrName() {
-        return trName;
+    public Integer getTrName() {
+        return idTR;
     }
 
-    public void setTrName(String trName) {
-        this.trName = trName;
+    public void setTrName(Integer idTR) {
+        this.idTR = idTR;
     }
 
     public Date getTrTimestamp() {
