@@ -2,6 +2,7 @@ package networkController;
 
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
+import red_gsm.MensajeGSM;
 
 public class NetworkController extends Thread{
 
@@ -9,8 +10,9 @@ public class NetworkController extends Thread{
     private HashMap timersTR = new HashMap();
     private static final long sleepTime = 100;
     private BlockingQueue<HeartbeatMessege> entrada;
+    private BlockingQueue<MensajeGSM> entradaRaise;
     
-    NetworkController(int trCount){
+    public NetworkController(int trCount){
         String name;
         for (int i = 0; i < trCount; i++) {
             name = "TR"+i;
@@ -29,7 +31,10 @@ public class NetworkController extends Thread{
         this.entrada = entrada;
     }
 
-     
+    public void setEntradaRaise(BlockingQueue<MensajeGSM> entradaRaise) {
+        this.entradaRaise = entradaRaise;
+    }
+    
     
     public void recibirMensaje(HeartbeatMessege m){
         String tr = m.getTrName().toString();
@@ -74,6 +79,12 @@ public class NetworkController extends Thread{
     }
      
     private boolean recibirMensaje() {
+        MensajeGSM levanto = entradaRaise.poll();
+        if (levanto != null) {
+            String[] mensaje = levanto.getMensaje().split("#");
+            trRecuperada(mensaje[1]);
+            return true;
+        }
         HeartbeatMessege cabeza = entrada.poll();
         if (cabeza != null) {
             recibirMensaje(cabeza);
