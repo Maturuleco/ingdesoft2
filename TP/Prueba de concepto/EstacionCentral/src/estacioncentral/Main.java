@@ -39,7 +39,7 @@ public class Main {
         try {
             serverPath.createNewFile();
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se pudo crear el archivo");
         }
         validDataServer = Db4o.openServer(serverPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Valid Data en la ruta:" + serverPath.getAbsolutePath());
