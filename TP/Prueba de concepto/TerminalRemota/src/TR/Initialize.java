@@ -182,7 +182,7 @@ public class Initialize {
         if (args.length < 1) {
             System.out.println("Es necesario el archivo de configuracion\n");
         } else {
-            System.out.println(args[0]);
+          //  System.out.println(args[0]);
             String configPath = args[0];
             File configFile = new File(configPath);
             if (!configFile.isFile()) {
