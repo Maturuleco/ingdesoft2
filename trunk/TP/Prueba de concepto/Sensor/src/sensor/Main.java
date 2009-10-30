@@ -106,7 +106,7 @@ public class Main {
                                 File[] files = folder.listFiles();
                                 // Solo se puede crear un mensaje nuevo
                                 // si la carpeta no esta "llena"
-                                if (files.length < 10) {
+                                if (files.length < 100) {
                                     path += "/" + "dato" + numSMS + ".txt";
                                     File file = new File(path);
                                     FileOutputStream fos = new FileOutputStream(file);
