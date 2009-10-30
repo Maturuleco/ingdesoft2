@@ -1,0 +1,4 @@
+Nombre:04
+FactorClimatico:H
+Frecuencia:100000
+Directorio:sensor4
