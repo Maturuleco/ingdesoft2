@@ -27,7 +27,7 @@ import modelo.Regla;
  */
 public class PredictorTest {
 
-    Predictor predictor = new Predictor();
+    Predictor predictor;
     Regla regla;
     Collection<DatoSensado> datos;
 
