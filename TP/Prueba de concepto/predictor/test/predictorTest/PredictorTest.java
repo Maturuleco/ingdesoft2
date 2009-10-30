@@ -8,6 +8,8 @@ package predictorTest;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.LinkedList;
+import model.DataSource;
+import model.DatoAlmacenado;
 import model.DatoSensado;
 import model.FactorClimatico;
 import org.junit.After;
@@ -29,7 +31,7 @@ public class PredictorTest {
 
     Predictor predictor;
     Regla regla;
-    Collection<DatoSensado> datos;
+    Collection<DatoAlmacenado> datos;
 
     public PredictorTest() {
     }
@@ -61,8 +63,6 @@ public class PredictorTest {
         condiciones.add(condicionMayorIgual10);
         condiciones.add(condicionMayorIgual9);
         regla = new Regla(condiciones, "Se detectó un huracan");
-
-
     }
 
     @After
@@ -71,17 +71,19 @@ public class PredictorTest {
 
     @Test
     public void detectarAlertaTest() {
-        DatoSensado dato1 = new DatoSensado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 10.0f);
-        datos = new LinkedList<DatoSensado>();
+        DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 10.0f,1,DataSource.terminal_remota);
+        datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        assertTrue(predictor.analizar(regla, datos));
+        predictor = new Predictor(regla, datos);
+        assertTrue(predictor.analizar());
     }
 
     @Test
     public void noDetectarAlertaTest() {
-        DatoSensado dato1 = new DatoSensado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 5.0f);
-        datos = new LinkedList<DatoSensado>();
+        DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 5.0f,1, DataSource.terminal_remota);
+        datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        assertFalse(predictor.analizar(regla, datos));
+        predictor = new Predictor(regla, datos);
+        assertFalse(predictor.analizar());
     }
 }

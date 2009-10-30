@@ -87,7 +87,7 @@ public class Predictor implements Runnable {
         condicionesPorFactor = ordenarPorFactor(condiciones);
 
         for (DatoAlmacenado dato : datos) {
-            if (analizar(condicionesPorFactor.get(dato.getFactor()), dato)) {
+            if (!analizar(condicionesPorFactor.get(dato.getFactor()), dato)) {
                 return Boolean.FALSE;
             }
         }
