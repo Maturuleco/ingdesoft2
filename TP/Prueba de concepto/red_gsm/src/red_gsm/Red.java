@@ -54,7 +54,9 @@ public class Red {
                         if(file.canRead()){
                             FileReader fr = new FileReader(file);
                             BufferedReader br = new BufferedReader(fr);
-                            String texto = br.readLine();
+                            String texto= br.readLine();
+        
+                            System.out.println("La red lee :"+texto);
                             
                             //Lo parseo
                             mensaje = MensajeGSM.parse(texto);
