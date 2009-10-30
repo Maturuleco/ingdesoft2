@@ -38,6 +38,7 @@ public class NetworkController extends Thread{
     
     public void recibirMensaje(HeartbeatMessege m){
         String tr = m.getTrName().toString();
+        System.out.println("EL network recive "+tr);
         TimerTR timerTR = (TimerTR)timersTR.get(tr);
         // Como el generador de mensajes no tiene en cuenta que la TR este caida
         // se verifica antes de tener encuenta la información.

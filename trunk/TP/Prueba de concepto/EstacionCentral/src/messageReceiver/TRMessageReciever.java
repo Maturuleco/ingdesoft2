@@ -57,6 +57,7 @@ public class TRMessageReciever extends Thread {
 
     private void receive(MensajeGSM msj) {
         String contenido = new String(msj.getMensaje());
+        System.out.println("El reciver recibe "+contenido.toString());
 
         String[] cuerpo = contenido.split("#");
         // frag#num#msj#firma
@@ -71,6 +72,7 @@ public class TRMessageReciever extends Thread {
                 if (nuevo) {
                     try {
                         salidaDatos.put(mensaje);
+                        System.out.println("El reciver manda "+mensaje.toString());
                     } catch (InterruptedException ex) {
                         Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -109,6 +111,7 @@ public class TRMessageReciever extends Thread {
             mensaje = Mensaje.parse(partes[2]);
             long timeStamp = mensaje.getTimeStamp();
             String respuesta = "ACK#"+num+"#"+timeStamp;
+            System.out.println("El receiver manda"+respuesta);
             String hash = ValidatingTools.getHash(respuesta);
             MensajeGSM ack = new MensajeGSM(0, destino, respuesta+"#"+hash);
             modemSalida.put(ack);

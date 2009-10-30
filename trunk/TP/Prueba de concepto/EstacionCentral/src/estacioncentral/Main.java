@@ -20,6 +20,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import model.DatoAlmacenado;
 import model.Mensaje;
 import networkController.HeartbeatMessege;
+import red_gsm.ComparadorMsjGSM;
 import red_gsm.MensajeGSM;
 import red_gsm.ModemGSM;
 
@@ -49,7 +50,7 @@ public class Main {
     private static BlockingQueue<MensajeGSM> salidaModem =
             new LinkedBlockingQueue<MensajeGSM>();
     private static BlockingQueue<MensajeGSM> entradaModem =
-            new PriorityBlockingQueue<MensajeGSM>(3, new MensajeGSM.Comparador());
+            new PriorityBlockingQueue<MensajeGSM>(3, new ComparadorMsjGSM());
     private static BlockingQueue<MensajeGSM> dispatcherReceiver =
             new LinkedBlockingQueue<MensajeGSM>();
     private static BlockingQueue<MensajeGSM> dispatcherNetwork =
@@ -73,11 +74,12 @@ public class Main {
         dataReceiver.setSalidaNetworkController(dataToNetwork);
 
         messageReceiver.setModemEntrada(dispatcherReceiver);
-        messageReceiver.setModemSalida(salidaModem);
+        messageReceiver.setModemSalida(entradaModem);
         messageReceiver.setSalida(trReceiverToData);
 
         modemDispatcher.setDataSalida(dispatcherReceiver);
         modemDispatcher.setModemEntrada(salidaModem);
+        modemDispatcher.setStartupSalida(dispatcherNetwork);
 
         modemGSM.setEntrada(entradaModem);
         modemGSM.setSalida(salidaModem);
@@ -128,6 +130,23 @@ public class Main {
         System.out.println("Se prendio el validador");
         new Thread(predictor).start();
         System.out.println("Se prendio el predictor");
+
+        modemDispatcher.start();
+        System.out.println("Se prendio el modemDispatcher");
+
+        modemGSM.start();
+        System.out.println("Se prendio el modem");
+
+        messageReceiver.start();
+        System.out.println("Se prendio el receiver");
+
+        dataReceiver.start();
+        System.out.println("Se prendio el data receiver");
+
+        networkController.start();
+        System.out.println("Se prendio el network controller");
+
+
         System.out.println("Se prendieron todos los componentes");
     }
 

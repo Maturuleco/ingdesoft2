@@ -57,6 +57,7 @@ public class DataReceiver extends Thread{
                         dato.getTimeStamp(),dato.getFactor(),dato.getValor(),
                         cabeza.getIdTR(),cabeza.getDataSource());
                 enviarValidator(datoAlm);
+                System.out.println("El receiver manda "+datoAlm.toString());
                 HeartbeatMessege heartbeat = new HeartbeatMessege(cabeza.getIdTR(),dato.getTimeStamp(), null, null);
                 enviarNetworkController(heartbeat);
             }
