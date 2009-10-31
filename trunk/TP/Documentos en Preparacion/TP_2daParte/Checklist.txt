@@ -1,8 +1,0 @@
-Revición QAW
-Explicar EZFUERZO de CU
-
-Hecho - Modificar los actores automáticos de los CU
-Hecho - 	Modificar la config de agenda
-Hecho - Poner la TR adentro del cuadrado
-Hecho - Separar dependencias del gant
-Hecho - Granularizar el gant (pasarlo a horas)
