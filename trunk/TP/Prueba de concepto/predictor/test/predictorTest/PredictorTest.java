@@ -7,10 +7,11 @@ package predictorTest;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.Map;
 import model.DataSource;
 import model.DatoAlmacenado;
-import model.DatoSensado;
 import model.FactorClimatico;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,6 +23,7 @@ import predictor.Predictor;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Regla;
+import selectorDatos.SelectorDatos;
 
 /**
  *
@@ -32,6 +34,7 @@ public class PredictorTest {
     Predictor predictor;
     Regla regla;
     Collection<DatoAlmacenado> datos;
+    Map<FactorClimatico,Collection<DatoAlmacenado>> datosOrdenadosPorFactor;
 
     public PredictorTest() {
     }
@@ -69,21 +72,42 @@ public class PredictorTest {
     public void tearDown() {
     }
 
+    /*
+     * Hay una condicion sobre la temperatura y el dato sobre temperatura la cumple
+     */
     @Test
     public void detectarAlertaTest() {
         DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 10.0f,1,DataSource.terminal_remota);
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        predictor = new Predictor(regla, datos);
+        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        predictor = new Predictor(regla,datosOrdenadosPorFactor );
         assertTrue(predictor.analizar());
     }
 
+    /*
+     * Hay una regla sobre la temperatura, pero el dato sobre temperatura no la cumple
+     */
     @Test
     public void noDetectarAlertaTest() {
         DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 5.0f,1, DataSource.terminal_remota);
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        predictor = new Predictor(regla, datos);
+        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        predictor = new Predictor(regla,datosOrdenadosPorFactor );
+        assertFalse(predictor.analizar());
+    }
+
+    /*
+     * Hay una regla sobre la temperatura y ningun dato de temperatura
+     */
+    @Test
+    public void noDetectarAlertaTest2() {
+        DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.humedad, 10.0f,1,DataSource.terminal_remota);
+        datos = new LinkedList<DatoAlmacenado>();
+        datos.add(dato1);
+        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        predictor = new Predictor(regla,datosOrdenadosPorFactor );
         assertFalse(predictor.analizar());
     }
 }
