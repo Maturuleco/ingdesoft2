@@ -58,10 +58,6 @@ public class SelectorDatos {
         ObjectContainer cliente = server.openClient();
         try {
             resultado = cliente.queryByExample(prototipo);
-            System.out.println("Datos que recibe el predictor");
-            for (DatoAlmacenado datoAlmacenado : resultado) {
-                System.out.println(datoAlmacenado.toString());
-            }
         } catch(DatabaseClosedException e){
             System.out.println("la base de datos se encuentra cerrada");
             System.out.println(e.getMessage());
