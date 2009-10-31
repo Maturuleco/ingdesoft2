@@ -4,8 +4,11 @@
  */
 package predictor;
 
+import excepciones.InsuficienciaDeDatosException;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Condicion;
 import java.util.Map;
 import model.DatoAlmacenado;
@@ -27,7 +30,13 @@ public class Predictor implements Runnable {
     }
 
     public Boolean analizar() {
-        return analizarCondicionesPorFactor();
+        Boolean res = Boolean.FALSE;
+        try {
+             res = analizarCondicionesPorFactor();
+        } catch (InsuficienciaDeDatosException ex) {
+            Logger.getLogger(Predictor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
     }
 
     @Override
@@ -57,7 +66,7 @@ public class Predictor implements Runnable {
 
     // Analiza que todos los datos cumplan todas las condiciones
     // Controlando por factor
-    private Boolean analizarCondicionesPorFactor() {
+    private Boolean analizarCondicionesPorFactor() throws InsuficienciaDeDatosException {
         Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor;
 
         condicionesPorFactor = regla.condicionesPorFactor();
@@ -77,7 +86,7 @@ public class Predictor implements Runnable {
                 //  1) debe haber un dato al que se le pueda aplicar la condicion
                 //  2) Todos deben todas las condiciones
                 if (datosFactor.isEmpty()) {
-                    return Boolean.FALSE;
+                    throw new InsuficienciaDeDatosException("No hay suficientes datos para analizar la regla");
                 } else {
                     if (!analizar(condicionesFactor, datosFactor)) {
                         return Boolean.FALSE;
