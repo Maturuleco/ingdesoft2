@@ -6,7 +6,6 @@
 package validator;
 
 import model.DatoAlmacenado;
-import model.DatoSensado;
 
 /**
  *
