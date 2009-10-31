@@ -36,31 +36,31 @@ public class SelectorDatos {
                 cliente.store(datoAlmacenado);
             }
             cliente.commit();
-        } catch(DatabaseClosedException e){
+        } catch (DatabaseClosedException e) {
             System.out.println("la base que intenta ingresar se encuentra cerrada");
             System.out.println(e.getMessage());
-        } catch(DatabaseReadOnlyException e){
+        } catch (DatabaseReadOnlyException e) {
             System.out.println("la base que intenta ingresar esta en estado read-only");
             System.out.println(e.getMessage());
         } catch (Db4oIOException e) {
             System.out.println("Se produjo un error de entrada salida");
             System.out.println(e.getMessage());
-        }finally {
+        } finally {
             cliente.close();
         }
 
     }
 
     public Map<FactorClimatico, Collection<DatoAlmacenado>> leerTodosLosDatos() {
-        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null,null, null, null);
+        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
         ObjectSet<DatoAlmacenado> resultado = null;
         ObjectContainer cliente = server.openClient();
         try {
             resultado = cliente.queryByExample(prototipo);
-        } catch(DatabaseClosedException e){
+        } catch (DatabaseClosedException e) {
             System.out.println("la base de datos se encuentra cerrada");
             System.out.println(e.getMessage());
-        } catch (Db4oIOException e){
+        } catch (Db4oIOException e) {
             System.out.println("Error de I/O");
             System.out.println(e.getMessage());
         } finally {
@@ -76,10 +76,28 @@ public class SelectorDatos {
             result.put(factor, new LinkedList<DatoAlmacenado>());
         }
 
-        for (DatoAlmacenado datoAlmacenado : datos ) {
+        for (DatoAlmacenado datoAlmacenado : datos) {
             result.get(datoAlmacenado.getFactor()).add(datoAlmacenado);
         }
 
         return result;
+    }
+
+    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerDatosDeTR(Integer idTR) {
+        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
+        ObjectSet<DatoAlmacenado> resultado = null;
+        ObjectContainer cliente = server.openClient();
+        try {
+            resultado = cliente.queryByExample(prototipo);
+        } catch (DatabaseClosedException e) {
+            System.out.println("la base de datos se encuentra cerrada");
+            System.out.println(e.getMessage());
+        } catch (Db4oIOException e) {
+            System.out.println("Error de I/O");
+            System.out.println(e.getMessage());
+        } finally {
+            cliente.close();
+        }
+        return ordenarPorFactor(resultado);
     }
 }
