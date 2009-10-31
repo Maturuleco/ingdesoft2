@@ -10,9 +10,12 @@ import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import model.DatoAlmacenado;
 import model.FactorClimatico;
@@ -24,13 +27,22 @@ import model.FactorClimatico;
 public class SelectorDatos {
 
     public ObjectServer server;
+    private ObjectContainer cliente;
 
     public SelectorDatos(ObjectServer serverBD) {
         server = serverBD;
     }
 
+    private void abrirCliente() {
+        cliente = server.openClient();
+    }
+
+    private void cerrarCliente(){
+        cliente.close();
+    }
+
     public void escribirDatos(Collection<DatoAlmacenado> datos) {
-        ObjectContainer cliente = server.openClient();
+        abrirCliente();
         try {
             for (DatoAlmacenado datoAlmacenado : datos) {
                 cliente.store(datoAlmacenado);
@@ -46,15 +58,15 @@ public class SelectorDatos {
             System.out.println("Se produjo un error de entrada salida");
             System.out.println(e.getMessage());
         } finally {
-            cliente.close();
+            cerrarCliente();
         }
 
     }
 
-    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerTodosLosDatos() {
+    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerTodosLosDatosPorFactor() {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
         ObjectSet<DatoAlmacenado> resultado = null;
-        ObjectContainer cliente = server.openClient();
+        abrirCliente();
         try {
             resultado = cliente.queryByExample(prototipo);
         } catch (DatabaseClosedException e) {
@@ -64,9 +76,27 @@ public class SelectorDatos {
             System.out.println("Error de I/O");
             System.out.println(e.getMessage());
         } finally {
-            cliente.close();
+            cerrarCliente();
         }
         return ordenarPorFactor(resultado);
+    }
+
+    public Collection<DatoAlmacenado> leerTodosLosDatos() {
+        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
+        ObjectSet<DatoAlmacenado> resultado = null;
+        abrirCliente();
+        try {
+            resultado = cliente.queryByExample(prototipo);
+        } catch (DatabaseClosedException e) {
+            System.out.println("la base de datos se encuentra cerrada");
+            System.out.println(e.getMessage());
+        } catch (Db4oIOException e) {
+            System.out.println("Error de I/O");
+            System.out.println(e.getMessage());
+        } finally {
+            cerrarCliente();
+        }
+        return resultado;
     }
 
     public static Map<FactorClimatico, Collection<DatoAlmacenado>> ordenarPorFactor(Collection<DatoAlmacenado> datos) {
@@ -83,10 +113,10 @@ public class SelectorDatos {
         return result;
     }
 
-    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerDatosDeTR(Integer idTR) {
+    public Collection<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
-        ObjectContainer cliente = server.openClient();
+        abrirCliente();
         try {
             resultado = cliente.queryByExample(prototipo);
         } catch (DatabaseClosedException e) {
@@ -96,8 +126,8 @@ public class SelectorDatos {
             System.out.println("Error de I/O");
             System.out.println(e.getMessage());
         } finally {
-            cliente.close();
+            cerrarCliente();
         }
-        return ordenarPorFactor(resultado);
+        return resultado;
     }
 }

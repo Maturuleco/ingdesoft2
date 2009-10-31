@@ -82,6 +82,15 @@ public class DatoSensado{
         return idS+"_"+date+"_"+fc+"_"+val;
     }
 
+    public String motrar(){
+        String datoMostrado = new String();
+        datoMostrado += "Fecha: " + timeStamp.toString() + "\n";
+        datoMostrado += "Sensor: " + idSensor + "\n";
+        datoMostrado += "Tipo: " + factor.name() + "\n";
+        datoMostrado += "Valor:" + valor.toString() + "\n";
+        return datoMostrado;
+    }
+
     public FactorClimatico getFactor() {
         return factor;
     }
