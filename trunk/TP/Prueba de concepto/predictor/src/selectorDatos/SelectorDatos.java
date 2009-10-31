@@ -13,7 +13,6 @@ import com.db4o.ext.Db4oIOException;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import model.DatoAlmacenado;
 import model.FactorClimatico;

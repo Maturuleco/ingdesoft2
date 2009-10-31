@@ -47,17 +47,6 @@ public class SelectorDatosTest {
     public void tearDown() {
     }
 
-    @Test
-    @Ignore
-    public void escribirDatosTest() {
-        DatoSensado dato1 = new DatoSensado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 5.0f);
-        ObjectContainer db = Db4o.openFile("resources/dbejemplo.yap");
-        db.store(dato1);
-        List<DatoSensado> datos = db.query(DatoSensado.class);
-        for (DatoSensado datoSensado : datos) {
-            System.out.println(datoSensado.toString());
-        }
-    }
 
     @Test
     public void escribirDatosAlmacenadosTest() {
