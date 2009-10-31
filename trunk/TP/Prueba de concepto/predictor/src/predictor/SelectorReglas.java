@@ -24,13 +24,9 @@ public class SelectorReglas {
         Collection<Regla> reglas = new LinkedList<Regla>();
         Collection<Condicion> condiciones1 = new LinkedList<Condicion>();
         Collection<Condicion> condiciones2 = new LinkedList<Condicion>();
-        condiciones1.add(new Condicion(FactorClimatico.humedad, Comparador.mayor, 90));
-        condiciones1.add(new Condicion(FactorClimatico.velocidad_viento, Comparador.mayor, 80));
-        condiciones2.add(new Condicion(FactorClimatico.humedad, Comparador.mayor, 90));
-        Regla regla1 = new Regla(condiciones1, "Se detecto un huracan");
-        Regla regla2 = new Regla(condiciones2, "Se detectaron lluvia fuertes");
+        condiciones1.add(new Condicion(FactorClimatico.temperatura, Comparador.menor, 0.0f));
+        Regla regla1 = new Regla(condiciones1, "se detecto frío polar");
         reglas.add(regla1);
-        reglas.add(regla2);
         return reglas;
     }
 

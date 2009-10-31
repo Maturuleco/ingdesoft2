@@ -19,7 +19,7 @@ import selectorDatos.SelectorDatos;
  */
 public class PredictorManager implements Runnable {
 
-    private static final long tiempoEspera = 10000;
+    private static final long tiempoEspera = 5000;
     private volatile boolean keepTrying = true;
 
     private SelectorDatos selectorDatos;
