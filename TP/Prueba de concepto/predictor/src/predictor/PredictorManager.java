@@ -7,7 +7,9 @@ package predictor;
 
 import com.db4o.ObjectServer;
 import java.util.Collection;
+import java.util.Map;
 import model.DatoAlmacenado;
+import model.FactorClimatico;
 import modelo.Regla;
 import selectorDatos.SelectorDatos;
 
@@ -32,7 +34,7 @@ public class PredictorManager implements Runnable {
     public void run() {
         while (keepTrying) {
             try {
-                Collection<DatoAlmacenado> datos = selectorDatos.leerTodosLosDatos();
+                Map<FactorClimatico,Collection<DatoAlmacenado>> datos = selectorDatos.leerTodosLosDatos();
                 Collection<Regla> reglas = selectorReglas.getReglas();
                 Predictor predictor;
                 for (Regla regla : reglas) {

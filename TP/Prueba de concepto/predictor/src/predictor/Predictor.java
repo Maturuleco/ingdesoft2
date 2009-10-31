@@ -7,8 +7,6 @@ package predictor;
 import java.util.Calendar;
 import java.util.Collection;
 import modelo.Condicion;
-import java.util.EnumMap;
-import java.util.LinkedList;
 import java.util.Map;
 import model.DatoAlmacenado;
 import model.FactorClimatico;
@@ -21,15 +19,15 @@ import modelo.Regla;
 public class Predictor implements Runnable {
 
     private Regla regla;
-    private Collection<DatoAlmacenado> datos;
+    private Map<FactorClimatico, Collection<DatoAlmacenado>> datos;
 
-    public Predictor(Regla regla, Collection<DatoAlmacenado> datos) {
+    public Predictor(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos) {
         this.regla = regla;
         this.datos = datos;
     }
 
     public Boolean analizar() {
-        return analizarCondicionesPorFactor(regla.getCondiciones(), datos);
+        return analizarCondicionesPorFactor();
     }
 
     @Override
@@ -45,13 +43,11 @@ public class Predictor implements Runnable {
         }
     }
 
-    // Analiza que todos los datos cumplan todas las condiciones
-    // Controlando todos con todos
-    public Boolean analizarTodosConTodos() {
-        Collection<Condicion> condiciones = regla.getCondiciones();
-        for (Condicion condicion : condiciones) {
-            for (DatoAlmacenado dato : datos) {
-                if (!condicion.aplicar(dato)) {
+    // Analiza que el dato cumpla todas las condiciones
+    private Boolean analizar(Collection<Condicion> condiciones, Collection<DatoAlmacenado> datosAlmacenados) {
+        for (DatoAlmacenado datoAlmacenado : datosAlmacenados) {
+            for (Condicion condicion : condiciones) {
+                if (!condicion.aplicar(datoAlmacenado)) {
                     return Boolean.FALSE;
                 }
             }
@@ -59,52 +55,37 @@ public class Predictor implements Runnable {
         return Boolean.TRUE;
     }
 
-    // Analiza que el dato cumpla todas las condiciones
-    public Boolean analizar(Collection<Condicion> condiciones, DatoAlmacenado dato) {
-        for (Condicion condicion : condiciones) {
-            if (!condicion.aplicar(dato)) {
-                return Boolean.FALSE;
-            }
-        }
-        return Boolean.TRUE;
-    }
-
-    // Analiza q la condicion se satisfaga en todos los datos
-    public Boolean analizar(Condicion condicion, Collection<DatoAlmacenado> datos) {
-        for (DatoAlmacenado dato : datos) {
-            if (!condicion.aplicar(dato)) {
-                return Boolean.FALSE;
-            }
-        }
-        return Boolean.TRUE;
-    }
-
     // Analiza que todos los datos cumplan todas las condiciones
     // Controlando por factor
-    public Boolean analizarCondicionesPorFactor(Collection<Condicion> condiciones, Collection<DatoAlmacenado> datos) {
+    private Boolean analizarCondicionesPorFactor() {
         Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor;
 
-        condicionesPorFactor = ordenarPorFactor(condiciones);
-
-        for (DatoAlmacenado dato : datos) {
-            if (!analizar(condicionesPorFactor.get(dato.getFactor()), dato)) {
-                return Boolean.FALSE;
+        condicionesPorFactor = regla.condicionesPorFactor();
+        Collection<Condicion> condicionesFactor;
+        Collection<DatoAlmacenado> datosFactor;
+        for (FactorClimatico factor : FactorClimatico.values()) {
+            condicionesFactor = condicionesPorFactor.get(factor);
+            datosFactor = datos.get(factor);
+            if (datosFactor == null ||condicionesFactor == null) {
+                throw  new NullPointerException("Tanto el diccionario de " +
+                        "condicionesPorFactor como el de datosPorFactor deben " +
+                        "tener definidas todas las claves correspondientes a los Factores ");
+            }
+            // Si no tengo condiciones para ese dato no analizo los datos
+            if (!condicionesFactor.isEmpty()) {
+                //Si tengo condiciones sobre los datos:
+                //  1) debe haber un dato al que se le pueda aplicar la condicion
+                //  2) Todos deben todas las condiciones
+                if (datosFactor.isEmpty()) {
+                    return Boolean.FALSE;
+                } else {
+                    if (!analizar(condicionesFactor, datosFactor)) {
+                        return Boolean.FALSE;
+                    }
+                }
             }
         }
+
         return Boolean.TRUE;
-    }
-
-    public Map<FactorClimatico, Collection<Condicion>> ordenarPorFactor(Collection<Condicion> condiciones) {
-        Map<FactorClimatico, Collection<Condicion>> result = new EnumMap<FactorClimatico, Collection<Condicion>>(FactorClimatico.class);
-
-        for (FactorClimatico factor : FactorClimatico.values()) {
-            result.put(factor, new LinkedList<Condicion>());
-        }
-
-        for (Condicion condicion : condiciones) {
-            result.get(condicion.getFactor()).add(condicion);
-        }
-
-        return result;
     }
 }

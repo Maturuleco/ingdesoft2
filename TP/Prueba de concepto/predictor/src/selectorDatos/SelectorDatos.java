@@ -4,7 +4,6 @@
  */
 package selectorDatos;
 
-import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
@@ -12,8 +11,12 @@ import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
 import java.util.Collection;
+import java.util.EnumMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import model.DatoAlmacenado;
+import model.FactorClimatico;
 
 /**
  *
@@ -49,7 +52,7 @@ public class SelectorDatos {
 
     }
 
-    public List<DatoAlmacenado> leerTodosLosDatos() {
+    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerTodosLosDatos() {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null,null, null, null);
         ObjectSet<DatoAlmacenado> resultado = null;
         ObjectContainer cliente = server.openClient();
@@ -68,6 +71,20 @@ public class SelectorDatos {
         } finally {
             cliente.close();
         }
-        return resultado;
+        return ordenarPorFactor(resultado);
+    }
+
+    public static Map<FactorClimatico, Collection<DatoAlmacenado>> ordenarPorFactor(Collection<DatoAlmacenado> datos) {
+        Map<FactorClimatico, Collection<DatoAlmacenado>> result = new EnumMap<FactorClimatico, Collection<DatoAlmacenado>>(FactorClimatico.class);
+
+        for (FactorClimatico factor : FactorClimatico.values()) {
+            result.put(factor, new LinkedList<DatoAlmacenado>());
+        }
+
+        for (DatoAlmacenado datoAlmacenado : datos ) {
+            result.get(datoAlmacenado.getFactor()).add(datoAlmacenado);
+        }
+
+        return result;
     }
 }
