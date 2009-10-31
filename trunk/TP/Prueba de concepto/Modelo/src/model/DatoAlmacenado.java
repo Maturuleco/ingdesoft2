@@ -42,4 +42,12 @@ public class DatoAlmacenado extends DatoSensado {
         return super.toString()+"_" + dataSource + "_" + idTR.toString();
     }
 
+    public String mostrar(){
+        String datoMostrado = new String();
+        datoMostrado += "nº TR: " + idTR.toString() + "\n";
+        datoMostrado += "Fuente: " + dataSource.name() + "\n";
+        datoMostrado += super.motrar();
+        return datoMostrado;
+    }
+
 }

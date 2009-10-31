@@ -34,7 +34,7 @@ public class PredictorManager implements Runnable {
     public void run() {
         while (keepTrying) {
             try {
-                Map<FactorClimatico,Collection<DatoAlmacenado>> datos = selectorDatos.leerTodosLosDatos();
+                Map<FactorClimatico,Collection<DatoAlmacenado>> datos = selectorDatos.leerTodosLosDatosPorFactor();
                 Collection<Regla> reglas = selectorReglas.getReglas();
                 Predictor predictor;
                 for (Regla regla : reglas) {

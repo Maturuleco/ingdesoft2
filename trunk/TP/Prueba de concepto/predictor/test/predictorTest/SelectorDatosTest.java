@@ -31,35 +31,35 @@ import static org.junit.Assert.*;
  * @author Santiago Avendaño
  */
 public class SelectorDatosTest {
-    String directorioBDs = "../bases";
-    String rutabd = directorioBDs+"/dbTestSelector.yap";
-    File bdFile;
-    ObjectServer server;
-    SelectorDatos selector;
-    Collection<DatoAlmacenado> datosGenerados;
-    ObjectContainer cliente1;
+    private static String directorioBDs = "../bases";
+    private static String rutabd = directorioBDs+"/dbTestSelector.yap";
+    private static ObjectServer server;
+    private static SelectorDatos selector;
+    private static Collection<DatoAlmacenado> datosGenerados;
+    private ObjectContainer cliente1;
 
     public SelectorDatosTest() {
+
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-
+        inicializarSelector();
+        datosGenerados = generarDatos();
+        selector.escribirDatos(datosGenerados);
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-
-        
+          server.close();
     }
 
     @Before
     public void setUp() {
-        inicializarSelector();
-        datosGenerados = generarDatos();        
+        
     }
 
-    public void inicializarSelector(){
+    public static void inicializarSelector(){
         new File(directorioBDs).mkdir();
         File serverPath = new File(rutabd);
         serverPath.delete();
@@ -73,12 +73,12 @@ public class SelectorDatosTest {
         selector = new SelectorDatos(server);
     }
 
-    public Collection<DatoAlmacenado> generarDatos(){
+    public static Collection<DatoAlmacenado> generarDatos(){
         Collection<DatoAlmacenado> datos = new LinkedList<DatoAlmacenado>();
         Date timeStamp;
         DatoAlmacenado dato = null;
         for (int idTR = 1; idTR <= 10; idTR++) {
-            for(float valor = 0; valor < 100; valor+=10){
+            for(float valor = 0.0f; valor < 100.0f; valor+=10.0f){
                 for (FactorClimatico factor : FactorClimatico.values()) {
                     timeStamp = Calendar.getInstance().getTime();
                     switch(factor){
@@ -115,10 +115,9 @@ public class SelectorDatosTest {
 
     }
 
-
     @Test
     public void escribirDatosAlmacenadosTest() {
-        selector.escribirDatos(datosGenerados);
+        
         cliente1 = server.openClient();
         List<DatoAlmacenado> datos = cliente1.query(DatoAlmacenado.class);
         assertTrue(datos.size() == 600);
@@ -129,16 +128,15 @@ public class SelectorDatosTest {
 
     @Test
     public void seleccionarPorTR(){
-        selector.escribirDatos(datosGenerados);
         cliente1 = server.openClient();
-        List<DatoAlmacenado> datos = cliente1.query(DatoAlmacenado.class);
-        assertTrue(datos.size() == 1200);
+        Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(1);
+        System.out.println(datosTR.size());
+        for (DatoAlmacenado datoAlmacenado : datosTR) {
+            System.out.println(datoAlmacenado.mostrar());
+        }
+        assertTrue(datosTR.size() == 60);
         cliente1.commit();
-        assertTrue(datos.size() == 1200);
+        assertTrue(datosTR.size() == 60);
         cliente1.close();
-        Map<FactorClimatico, Collection<DatoAlmacenado>> datosSeleccionadosTR
-                = selector.leerDatosDeTR(1);
-        assertTrue(datosSeleccionadosTR.values().size() == 10 * 6);
-
     }
 }
