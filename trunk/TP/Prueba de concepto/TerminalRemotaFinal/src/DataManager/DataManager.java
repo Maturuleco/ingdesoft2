@@ -27,6 +27,7 @@ public class DataManager extends Thread{
     private ObjectServer server;
     private BlockingQueue<DatoSensado> entrada;
     private BlockingQueue<Mensaje> salida;
+    private BlockingQueue<Mensaje> respuestaEnvio;
     private static final long sleepTime = 10000;
     private final static long frequency = 10000;
 
@@ -42,7 +43,9 @@ public class DataManager extends Thread{
         this.salida = salida;
     }
 
-
+    public void setRespuestaEnvio(BlockingQueue<Mensaje> respuestaEnvio) {
+        this.respuestaEnvio = respuestaEnvio;
+    }
 
     @Override
     public void run() {
@@ -62,8 +65,13 @@ public class DataManager extends Thread{
     }
 
     private boolean sensarEntradaDatos() {
-        DatoSensado cabeza = entrada.poll();
+        Mensaje respuesta = respuestaEnvio.poll();
+        if (respuesta != null) {
+            eliminar(respuesta);
+            return true;
+        }
 
+        DatoSensado cabeza = entrada.poll();
         if (cabeza != null) {
             guardar(cabeza);
             return true;
@@ -86,6 +94,15 @@ public class DataManager extends Thread{
         } finally {
             cliente.close();
         }
+    }
+
+    private void eliminar(Mensaje respuesta) {
+        ObjectContainer cliente = server.openClient();
+        for (DatoSensado dato : respuesta.getDatos()){
+            cliente.delete(dato);
+            cliente.commit();
+        }
+        cliente.close();
     }
 
 }

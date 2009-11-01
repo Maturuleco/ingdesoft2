@@ -36,7 +36,6 @@ public final class TareaEnvioDatosSensados extends TimerTask {
             send(resultado);
             for (DatoSensado datoSensado : resultado) {
                 System.out.println(datoSensado.toString());
-                cliente.delete(datoSensado);
             }
             cliente.commit();
         } finally {
