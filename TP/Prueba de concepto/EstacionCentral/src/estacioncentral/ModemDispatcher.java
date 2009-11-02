@@ -61,7 +61,11 @@ public class ModemDispatcher extends Thread {
                     dataSalida.add(sms);
 
                 }
+            } else {
+               System.out.println("El dispatcher rebota: "+contenido);
             }
+        } else {
+            System.out.println("El dispatcher rebota por hash: "+contenido);
         }
     }
 

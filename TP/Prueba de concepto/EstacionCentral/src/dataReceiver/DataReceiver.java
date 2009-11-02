@@ -52,12 +52,12 @@ public class DataReceiver extends Thread{
     private boolean sensarEntradaDatos() {
         Mensaje cabeza = entrada.poll();
         if (cabeza != null) {
+            System.out.println("El data Receiver Recive en su cola: "+cabeza.toString());
             for (DatoSensado dato : cabeza.getDatos()){
                 DatoAlmacenado datoAlm = new DatoAlmacenado(dato.getIdSensor(),
                         dato.getTimeStamp(),dato.getFactor(),dato.getValor(),
                         cabeza.getIdTR(),cabeza.getDataSource());
                 enviarValidator(datoAlm);
-                System.out.println("El receiver manda "+datoAlm.toString());
                 HeartbeatMessege heartbeat = new HeartbeatMessege(cabeza.getIdTR(),dato.getTimeStamp(), null, null);
                 enviarNetworkController(heartbeat);
             }
@@ -67,10 +67,12 @@ public class DataReceiver extends Thread{
     }
 
     public void enviarValidator(DatoAlmacenado m) {
+        System.out.println("El Data receiver manda al validador: "+m.toString());
         salidaValidator.add(m);
     }
 
     public void enviarNetworkController(HeartbeatMessege m) {
+        System.out.println("El Data receiver manda al Network: "+m.toString());
         salidaNetworkController.add(m);
     }
 

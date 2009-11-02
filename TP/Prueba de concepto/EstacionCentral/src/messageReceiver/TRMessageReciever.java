@@ -57,7 +57,7 @@ public class TRMessageReciever extends Thread {
 
     private void receive(MensajeGSM msj) {
         String contenido = new String(msj.getMensaje());
-        System.out.println("El reciver recibe "+contenido.toString());
+        System.out.println("El message receiver recibe del modem "+contenido);
 
         String[] cuerpo = contenido.split("#");
         // frag#num#msj#firma
@@ -72,7 +72,7 @@ public class TRMessageReciever extends Thread {
                 if (nuevo) {
                     try {
                         salidaDatos.put(mensaje);
-                        System.out.println("El reciver manda "+mensaje.toString());
+                        System.out.println("El Message receiver manda al data receiver "+mensaje.toString());
                     } catch (InterruptedException ex) {
                         Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -80,6 +80,8 @@ public class TRMessageReciever extends Thread {
             } catch (ParseException ex) {
                 Logger.getLogger(TRMessageReciever.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            System.out.println("El Messege Receiver rebota por desconocido: "+contenido);
         }
 
     }
@@ -111,9 +113,9 @@ public class TRMessageReciever extends Thread {
             mensaje = Mensaje.parse(partes[2]);
             long timeStamp = mensaje.getTimeStamp();
             String respuesta = "ACK#"+num+"#"+timeStamp;
-            System.out.println("El receiver manda"+respuesta);
             String hash = ValidatingTools.getHash(respuesta);
             MensajeGSM ack = new MensajeGSM(0, destino, respuesta+"#"+hash);
+            System.out.println("El Message receiver manda el ACK: "+ack);
             modemSalida.put(ack);
 
         } catch (InterruptedException ex) {
