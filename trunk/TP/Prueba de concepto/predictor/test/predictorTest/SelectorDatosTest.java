@@ -155,4 +155,19 @@ public class SelectorDatosTest {
             System.out.println(datoAlmacenado.getTimeStamp().getTime());
         }
     }
+
+    @Test
+    public void seleccionarDatosPorTR() {
+        Map<Integer, List<DatoAlmacenado>>datosPorTR = selector.datosPorTR();
+        List<DatoAlmacenado> datosDeTR;
+        for (Integer idTR : datosPorTR.keySet()) {
+            datosDeTR = datosPorTR.get(idTR);
+            assert(datosDeTR.size() == 60);
+            System.out.println("Datos TR " + idTR);
+            for (DatoAlmacenado datoAlmacenado : datosDeTR) {
+                System.out.println(datoAlmacenado.toString());
+            }
+        }
+
+    }
 }
