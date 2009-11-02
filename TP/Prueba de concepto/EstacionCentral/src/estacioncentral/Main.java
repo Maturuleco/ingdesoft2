@@ -128,7 +128,7 @@ public class Main {
         System.out.println("Prendiendo Componentes");
         new Thread(validator).start();
         System.out.println("Se prendio el validador");
-        new Thread(predictor).start();
+        //new Thread(predictor).start();
         System.out.println("Se prendio el predictor");
 
         modemDispatcher.start();

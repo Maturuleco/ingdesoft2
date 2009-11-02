@@ -49,8 +49,13 @@ public class ModemDispatcher extends Thread {
         String contenido = sms.getMensaje();
         String[] cuerpo = contenido.split("#");
         System.out.println("El dispatcher recive "+contenido);
-
-        if (ValidatingTools.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2])){
+        boolean pasaHash = false;
+        try{
+            pasaHash = ValidatingTools.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2]);
+        } catch (Exception e){
+            System.out.println("El modem dispatcher no pudo chequear el hash del mensaje "+contenido.toString());
+        }
+        if (pasaHash){
            if (ValidatingTools.validar(contenido, DataSource.terminal_remota)) {
                 if ( cuerpo[0].equalsIgnoreCase("Raise") ){
                     System.out.println("El dispatcher manda "+contenido);
@@ -67,6 +72,7 @@ public class ModemDispatcher extends Thread {
         } else {
             System.out.println("El dispatcher rebota por hash: "+contenido);
         }
+
     }
 
 }
