@@ -53,13 +53,19 @@ public class ModemDispatcher extends Thread {
             
             if (ValidatingTools.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2])){
                if (ValidatingTools.validar(contenido, DataSource.estacion_central)) {
-                    if ( cuerpo[0].equals("CONFIG") )
+                    if ( cuerpo[0].equalsIgnoreCase("CONFIG") )
                         configSalida.add(sms);
-                    else if ( cuerpo[0].equals("ACK") ) {
+                    else if ( cuerpo[0].equalsIgnoreCase("ACK") ) {
                         dataSalida.add(sms);
+                    } else {
+                        System.out.println("Tipo de mensaje desconocido: "+contenido);
                     }
+                } else {
+                   System.out.println("El Dispatcher rebota: "+contenido);
                 }
-            }            
+            } else {
+                System.out.println("El Dispatcher rebota por hash: "+contenido);
+            }
         }        
     }
     

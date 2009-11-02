@@ -31,9 +31,8 @@ public class StartUpManager extends Thread {
         MensajeGSM mensajeInicial = 
                 new MensajeGSM(0, Main.estacionCentral, mensaje, priority);
         try {
-            System.out.println("StartUp manda\n");
             salida.put(mensajeInicial);
-            System.out.println("Si, manda\n");
+            System.out.println("Se manda "+mensajeInicial);
         } catch (InterruptedException ex) { }
     }
 
