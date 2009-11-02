@@ -34,9 +34,11 @@ public final class TareaEnvioDatosSensados extends TimerTask {
         try {
             resultado = cliente.queryByExample(dato);
             send(resultado);
+/*
             for (DatoSensado datoSensado : resultado) {
                 System.out.println(datoSensado.toString());
             }
+ */
             cliente.commit();
         } finally {
             cliente.close();
@@ -49,7 +51,6 @@ public final class TareaEnvioDatosSensados extends TimerTask {
         Integer id = Main.idTR;
         Mensaje m = new Mensaje(id, model.DataSource.terminal_remota);
         m.setDatos(datos);
-        System.out.println("El DataManager Manda: " + m.toString() + "\n");
         salida.add(m);
     }
 }
