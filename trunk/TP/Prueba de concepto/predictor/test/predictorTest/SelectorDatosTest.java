@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DataSource;
 import model.DatoAlmacenado;
 import model.FactorClimatico;
@@ -31,15 +33,16 @@ import static org.junit.Assert.*;
  * @author Santiago Avendaño
  */
 public class SelectorDatosTest {
+
     private static String directorioBDs = "../bases";
-    private static String rutabd = directorioBDs+"/dbTestSelector.yap";
+    private static String rutabd = directorioBDs + "/dbTestSelector.yap";
     private static ObjectServer server;
     private static SelectorDatos selector;
     private static Collection<DatoAlmacenado> datosGenerados;
     private ObjectContainer cliente1;
+    private static Integer cantidadDatosEnBase;
 
     public SelectorDatosTest() {
-
     }
 
     @BeforeClass
@@ -51,15 +54,14 @@ public class SelectorDatosTest {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-          server.close();
+        server.close();
     }
 
     @Before
     public void setUp() {
-        
     }
 
-    public static void inicializarSelector(){
+    public static void inicializarSelector() {
         new File(directorioBDs).mkdir();
         File serverPath = new File(rutabd);
         serverPath.delete();
@@ -73,15 +75,22 @@ public class SelectorDatosTest {
         selector = new SelectorDatos(server);
     }
 
-    public static Collection<DatoAlmacenado> generarDatos(){
+    public static Collection<DatoAlmacenado> generarDatos() {
         Collection<DatoAlmacenado> datos = new LinkedList<DatoAlmacenado>();
         Date timeStamp;
         DatoAlmacenado dato = null;
+        cantidadDatosEnBase = 0;
         for (int idTR = 1; idTR <= 10; idTR++) {
-            for(float valor = 0.0f; valor < 100.0f; valor+=10.0f){
+            for (float valor = 0.0f; valor < 100.0f; valor += 10.0f) {
                 for (FactorClimatico factor : FactorClimatico.values()) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(SelectorDatosTest.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     timeStamp = Calendar.getInstance().getTime();
-                    switch(factor){
+
+                    switch (factor) {
                         case direccion_viento:
                             dato = new DatoAlmacenado(1, timeStamp, factor, valor, idTR, DataSource.terminal_remota);
                             break;
@@ -102,41 +111,48 @@ public class SelectorDatosTest {
                             break;
                     }
                     datos.add(dato);
+                    cantidadDatosEnBase++;
                 }
             }
         }
+        System.out.println("Se generaron: "+ cantidadDatosEnBase + " datos");
         return datos;
     }
 
-
-
     @After
     public void tearDown() {
-
     }
 
     @Test
-    public void escribirDatosAlmacenadosTest() {
-        
-        cliente1 = server.openClient();
-        List<DatoAlmacenado> datos = cliente1.query(DatoAlmacenado.class);
-        assertTrue(datos.size() == 600);
-        cliente1.commit();
-        assertTrue(datos.size() == 600);
-        cliente1.close();
+    public void seleccionarTodos() {
+        List<DatoAlmacenado> datos = selector.leerTodosLosDatos();
+        assertTrue(datos.size() == cantidadDatosEnBase);
+        System.out.println("Se recolectaron " + cantidadDatosEnBase + "datos de la BD");
     }
 
     @Test
-    public void seleccionarPorTR(){
-        cliente1 = server.openClient();
+    public void seleccionarPorTR() {
         Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(1);
-        System.out.println(datosTR.size());
-        for (DatoAlmacenado datoAlmacenado : datosTR) {
-            System.out.println(datoAlmacenado.mostrar());
+//        System.out.println(datosTR.size());
+//        for (DatoAlmacenado datoAlmacenado : datosTR) {
+//            System.out.println(datoAlmacenado.mostrar());
+//        }
+        assertTrue(datosTR.size() == 60);
+    }
+
+    @Test
+    public void seleccionarUltimos() {
+        Integer cantidad = 100000;
+        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatos(cantidad);
+        Integer cantidadTotal = selector.leerTodosLosDatos().size();
+        if (cantidadTotal < cantidad) {
+            assertTrue(datosOrdenados.size() == cantidadTotal);
+        } else {
+            assertTrue(datosOrdenados.size() == cantidad);
         }
-        assertTrue(datosTR.size() == 60);
-        cliente1.commit();
-        assertTrue(datosTR.size() == 60);
-        cliente1.close();
+        System.out.println(datosOrdenados.size());
+        for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
+            System.out.println(datoAlmacenado.getTimeStamp().getTime());
+        }
     }
 }
