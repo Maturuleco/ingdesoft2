@@ -41,6 +41,6 @@ public class ValidatingTools {
 
     public static Boolean checkHash(String hash, String Mensaje) {
         String recalculatedHash = getHash(Mensaje);
-        return recalculatedHash.equals(Mensaje);
+        return recalculatedHash.equals(hash);
     }
 }
