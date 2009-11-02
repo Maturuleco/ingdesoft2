@@ -13,6 +13,7 @@ import com.db4o.ext.Db4oIOException;
 import com.db4o.query.Query;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +144,25 @@ public class SelectorDatos {
         } else {
             return resultado.subList(0, resultado.size());
         }
+    }
 
+    public Map<Integer, List<DatoAlmacenado>> datosPorTR(){
+        abrirCliente();
+        Integer idTR;
+        List<DatoAlmacenado> listaAuxiliar;
+        Map<Integer, List<DatoAlmacenado>> resultado = new LinkedHashMap<Integer, List<DatoAlmacenado>>();
+        List<DatoAlmacenado> datoTotales = cliente.query(DatoAlmacenado.class);
+        for (DatoAlmacenado datoAlmacenado : datoTotales) {
+            idTR = datoAlmacenado.getIdTR();
+            if (resultado.containsKey(idTR)) {
+                resultado.get(idTR).add(datoAlmacenado);
+            } else {
+                listaAuxiliar = new LinkedList<DatoAlmacenado>();
+                listaAuxiliar.add(datoAlmacenado);
+                resultado.put(idTR, listaAuxiliar);
+            }
+        }
+        cerrarCliente();
+        return resultado;
     }
 }

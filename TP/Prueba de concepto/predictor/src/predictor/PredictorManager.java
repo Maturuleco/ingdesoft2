@@ -7,6 +7,7 @@ package predictor;
 
 import com.db4o.ObjectServer;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import model.DatoAlmacenado;
 import model.FactorClimatico;
@@ -34,13 +35,21 @@ public class PredictorManager implements Runnable {
     public void run() {
         while (keepTrying) {
             try {
-                Map<FactorClimatico,Collection<DatoAlmacenado>> datos = selectorDatos.leerTodosLosDatosPorFactor();
+                Map<Integer, List<DatoAlmacenado>> datosPorTR = selectorDatos.datosPorTR();
                 Collection<Regla> reglas = selectorReglas.getReglas();
+                List<DatoAlmacenado> datosTR;
                 Predictor predictor;
-                for (Regla regla : reglas) {
-                     predictor = new Predictor(regla, datos);
-                     new Thread(predictor).run();
+                for (Integer idTR : datosPorTR.keySet()) {
+                    datosTR = datosPorTR.get(idTR);
+                    Map<FactorClimatico,Collection<DatoAlmacenado>> datos
+                            = SelectorDatos.ordenarPorFactor(datosTR);
+
+                    for (Regla regla : reglas) {
+                        predictor = new Predictor(regla, datos);
+                        new Thread(predictor).run();
+                    }
                 }
+                
                 Thread.sleep(tiempoEspera);
             } catch (InterruptedException ex) { }
         }
