@@ -34,8 +34,8 @@ public class ModemGSM extends Thread {
 
     @Override
     public void run() {
-        MensajeGSM mensajeInicio = new MensajeGSM(0, 0, "Mensaje_de_Inicio_de_Sesion");
-        entrada.offer(mensajeInicio);
+//        MensajeGSM mensajeInicio = new MensajeGSM(0, 0, "Mensaje_de_Inicio_de_Sesion");
+//        entrada.offer(mensajeInicio);
         modemSender = new ModemSender(numero);
         modemSender.setEntradaDatos(entrada);
         modemReciver = new ModemReciver(folderPropia);

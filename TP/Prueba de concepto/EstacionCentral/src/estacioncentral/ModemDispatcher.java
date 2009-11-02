@@ -48,7 +48,7 @@ public class ModemDispatcher extends Thread {
     private void recive(MensajeGSM sms) {
         String contenido = sms.getMensaje();
         String[] cuerpo = contenido.split("#");
-        System.out.println("El dispatcher recive "+contenido);
+//        System.out.println("El dispatcher recive "+contenido);
         boolean pasaHash = false;
         try{
             pasaHash = ValidatingTools.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2]);
@@ -58,11 +58,11 @@ public class ModemDispatcher extends Thread {
         if (pasaHash){
            if (ValidatingTools.validar(contenido, DataSource.terminal_remota)) {
                 if ( cuerpo[0].equalsIgnoreCase("Raise") ){
-                    System.out.println("El dispatcher manda "+contenido);
+//                    System.out.println("El dispatcher manda "+contenido);
                     startupSalida.add(sms);
                 }
                 else{
-                    System.out.println("El dispatcher manda a datos "+contenido);
+//                    System.out.println("El dispatcher manda a datos "+contenido);
                     dataSalida.add(sms);
 
                 }

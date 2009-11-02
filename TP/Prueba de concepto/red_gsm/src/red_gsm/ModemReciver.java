@@ -7,7 +7,10 @@ package red_gsm;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class ModemReciver extends Thread {
 
-    private static final long timeToWait = 100;
+    private static final long timeToWait = 10;
     private File folderPropia;
     private BlockingQueue<MensajeGSM> salida;
 
@@ -31,7 +34,7 @@ public class ModemReciver extends Thread {
     }
 
     private void recive() {
-        try {
+
             File[] files = folderPropia.listFiles();
             int longitud = 0;
             if (files != null)
@@ -40,20 +43,34 @@ public class ModemReciver extends Thread {
                 File file = files[j];
                 //System.out.println( getName()+ "D:" + file.getName());
                 if(file.canRead()){
-                    FileReader fr = new FileReader(file);
+                FileReader fr = null;
+                try {
+                    fr = new FileReader(file);
                     BufferedReader br = new BufferedReader(fr);
                     String texto = br.readLine();
                     fr.close();
                     file.delete();
-                    
+
                     MensajeGSM mensaje = MensajeGSM.parse(texto);
                     salida.put(mensaje);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    System.out.println("\nERROR GSM\tNo se puede Parsear: "+ex.toString());
+                    Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        fr.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 }
 
             }
-        } catch (Exception e) {
-              e.printStackTrace(System.err);
-        }
+
     }
 
     @Override

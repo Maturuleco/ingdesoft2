@@ -7,6 +7,8 @@ package DataSender;
 
 
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import red_gsm.MensajeGSM;
 import terminalremotafinal.Main;
 
@@ -36,15 +38,20 @@ public class Sender extends Thread {
         while (keepTrying) {
             try {
                 modem.put(mensaje);
-                System.out.println("Se manda al Modem: "+mensaje.toString());
+                System.out.println("Se manda al Modem un mensaje");
                 //Espero y reintento
                 sleep(tiempoEspera);
-            } catch (InterruptedException ex) { }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Sender.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
+      //  System.out.println("Sender Stopped");
     }
     
     public void requestStop(){
         keepTrying = false;
+        //System.out.println("Sender Request Stop");
     }
 
     public void setModem(BlockingQueue<MensajeGSM> modem) {

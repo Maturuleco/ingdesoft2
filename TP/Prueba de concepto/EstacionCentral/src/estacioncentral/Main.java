@@ -128,8 +128,9 @@ public class Main {
         System.out.println("Prendiendo Componentes");
         new Thread(validator).start();
         System.out.println("Se prendio el validador");
-        //new Thread(predictor).start();
-        System.out.println("Se prendio el predictor");
+
+//        new Thread(predictor).start();
+//        System.out.println("Se prendio el predictor");
 
         modemDispatcher.start();
         System.out.println("Se prendio el modemDispatcher");
@@ -143,11 +144,11 @@ public class Main {
         dataReceiver.start();
         System.out.println("Se prendio el data receiver");
 
-        networkController.start();
-        System.out.println("Se prendio el network controller");
+//        networkController.start();
+//        System.out.println("Se prendio el network controller");
 
 
-        System.out.println("Se prendieron todos los componentes");
+//        System.out.println("Se prendieron todos los componentes");
     }
 
 }

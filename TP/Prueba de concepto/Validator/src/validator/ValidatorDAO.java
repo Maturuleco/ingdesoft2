@@ -30,7 +30,7 @@ public class ValidatorDAO {
         ObjectContainer cliente = server.openClient();
         try {
             for (DatoAlmacenado datoAlmacenado : datos) {
-                System.out.println("Se escribe en la base de Datos: "+datos);
+            System.out.println("\nBASE\tSe escribe en la base de Datos:\n"+datoAlmacenado.mostrar()+"\n");
                 cliente.store(datoAlmacenado);
             }
             cliente.commit();
@@ -50,6 +50,7 @@ public class ValidatorDAO {
         ObjectContainer cliente = server.openClient();
         try {
             cliente.store(dato);
+            System.out.println("\nBASE\tSe escribe en la base de Datos:\n"+dato.mostrar()+"\n");
             cliente.commit();
         } catch (DatabaseClosedException e) {
             System.out.println("la base que intenta ingresar se encuentra cerrada");

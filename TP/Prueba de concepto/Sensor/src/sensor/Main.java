@@ -114,6 +114,7 @@ public class Main {
                                     for (char ch : info.toCharArray()) {
                                         fos.write(ch);
                                     }
+                                    System.out.println("\nEl Sensor ha escrito: " + info);
                                     fos.close();
                                 }
                                 numSMS++;

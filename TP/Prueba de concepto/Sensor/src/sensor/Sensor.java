@@ -1,7 +1,11 @@
 package sensor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.FactorClimatico;
 
 public class Sensor implements Runnable {
@@ -30,7 +34,7 @@ public class Sensor implements Runnable {
         
         while(true){
             path = directory;
-            try {
+
                 if (numFreq == frequency){
                     numFreq=0;
                     File[] files = folder.listFiles();
@@ -38,23 +42,32 @@ public class Sensor implements Runnable {
                     // Solo se puede crear un mensaje nuevo
                     // si la carpeta no esta "llena"
                     if(files.length < 10){
-                        path +=  "dato"+ numSMS +".txt";
-                        
+                    FileOutputStream fos = null;
+                    try {
+                        path += "dato" + numSMS + ".txt";
                         File file = new File(path);
-                        FileOutputStream fos = new FileOutputStream(file);
+                        fos = new FileOutputStream(file);
                         SensorSMS sms = new SensorSMS(this);
                         for (char ch : sms.getInfo().toCharArray()) {
                             fos.write(ch);
                         }
+                        System.out.println("\nEl Sensor ha escrito: " + sms.getInfo());
                         fos.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Sensor.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            fos.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Sensor.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                     }
                     numSMS++;
                     if( numSMS > maxSize )
                         numSMS = 0;
                 }
-            } catch (Exception e) {
-              e.printStackTrace(System.err);
-            }
+
             numFreq++;
         }
     }
