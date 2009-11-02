@@ -30,6 +30,7 @@ public class ValidatorDAO {
         ObjectContainer cliente = server.openClient();
         try {
             for (DatoAlmacenado datoAlmacenado : datos) {
+                System.out.println("Se escribe en la base de Datos: "+datos);
                 cliente.store(datoAlmacenado);
             }
             cliente.commit();
