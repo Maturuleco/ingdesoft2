@@ -145,7 +145,6 @@ public class DataSender extends Thread {
     
     private Boolean recive(MensajeGSM msj) {
         String contenido = new String(msj.getMensaje());
-        
         String[] cuerpo = contenido.split("#");
         // Esto ya lo validé antes, pero está buno re-hacerlo.. capaz
         if ( cuerpo[0].equals("ACK") ) {
@@ -158,7 +157,6 @@ public class DataSender extends Thread {
                 // Cuando lo termino de transmitir se lo devuelvo
                 if (msjEnProceso == 0)
                     try {
-                        System.out.println("Se envia la respuesta de envio de "+mensajeActual.toString()+" al Data manager");
                         salida.put(mensajeActual);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);

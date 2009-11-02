@@ -69,6 +69,12 @@ public class Red {
                             }
                             // Me aseguro de que lo pueda mandar
                             numeroDest = mensaje.getDestino();
+                            //Este if es agregado para poder testear más fácil
+                            if (modems.get(numeroDest) == null){
+                                File dirModem = new File (path+numeroDest);
+                                modems.put(numeroDest, dirModem);
+                                mensajeModems.put(numeroDest, 0);
+                            }
                             // Si es mandado a mi o si conozco el destino 
                             // ya sé que lo voy a poder mandar, lo borro
                             if (numeroDest == 0 || modems.get(numeroDest) != null) {
@@ -106,6 +112,7 @@ public class Red {
                     fos.write(ch);
                 }
                 fos.close();
+                System.out.println("La red escribió: "+phrase);
                 numeroMsj++;
                 if (numeroMsj >= maxSize)
                     numeroMsj = 0;

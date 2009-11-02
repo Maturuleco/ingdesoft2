@@ -8,6 +8,8 @@ package red_gsm;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -15,7 +17,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ModemSender extends Thread {
 
-    private static final long timeToWait = 100;
+    private static final long timeToWait = 10;
     private static final int maxSize = 999999999;
     private int numero;
     private int numSms = 1;
@@ -59,6 +61,20 @@ public class ModemSender extends Thread {
         }
     }
     
+    @Override
+    public void run() {
+        while(true){
+            try {
+                MensajeGSM nuevoMensaje = entradaDatos.take();
+                send(nuevoMensaje);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ModemSender.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+    
+/*
     private boolean sensarEntradaSistema() {
         MensajeGSM cabeza = entradaDatos.poll();
         if (cabeza != null) {
@@ -67,6 +83,7 @@ public class ModemSender extends Thread {
         }
         return false;
     }
+
 
     @Override
     public void run() {
@@ -81,7 +98,6 @@ public class ModemSender extends Thread {
         }
         
     }
-    
-    
+*/  
     
 }
