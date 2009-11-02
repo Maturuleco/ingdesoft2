@@ -36,6 +36,7 @@ public class Sender extends Thread {
         while (keepTrying) {
             try {
                 modem.put(mensaje);
+                System.out.println("Se manda al Modem: "+mensaje.toString());
                 //Espero y reintento
                 sleep(tiempoEspera);
             } catch (InterruptedException ex) { }

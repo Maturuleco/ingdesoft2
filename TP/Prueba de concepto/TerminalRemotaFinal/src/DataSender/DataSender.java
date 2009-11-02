@@ -133,7 +133,6 @@ public class DataSender extends Thread {
                 
         formatPartes(partes);
         firmar(partes);
-        System.out.println("Se manda:"+ partes[0]);
         
         enviando = new Sender[partes.length];        
         for (int i = 0; i < partes.length; i++) {
@@ -159,6 +158,7 @@ public class DataSender extends Thread {
                 // Cuando lo termino de transmitir se lo devuelvo
                 if (msjEnProceso == 0)
                     try {
+                        System.out.println("Se envia la respuesta de envio de "+mensajeActual.toString()+" al Data manager");
                         salida.put(mensajeActual);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
