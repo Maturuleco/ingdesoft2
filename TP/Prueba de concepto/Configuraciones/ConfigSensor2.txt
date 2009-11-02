@@ -1,4 +1,4 @@
 Nombre:02
 FactorClimatico:T
-Frecuencia:70000
+Frecuencia:700
 Directorio:sensor2
