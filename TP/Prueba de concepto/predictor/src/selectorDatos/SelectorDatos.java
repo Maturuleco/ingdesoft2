@@ -10,9 +10,8 @@ import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
-import java.util.Calendar;
+import com.db4o.query.Query;
 import java.util.Collection;
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +80,7 @@ public class SelectorDatos {
         return ordenarPorFactor(resultado);
     }
 
-    public Collection<DatoAlmacenado> leerTodosLosDatos() {
+    public List<DatoAlmacenado> leerTodosLosDatos() {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
         ObjectSet<DatoAlmacenado> resultado = null;
         abrirCliente();
@@ -113,7 +112,7 @@ public class SelectorDatos {
         return result;
     }
 
-    public Collection<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
+    public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
         abrirCliente();
@@ -129,5 +128,21 @@ public class SelectorDatos {
             cerrarCliente();
         }
         return resultado;
+    }
+
+    public List<DatoAlmacenado> leerUltimosDatos(Integer cantidad){
+        abrirCliente();
+        List<DatoAlmacenado> resultado;
+        Query query = cliente.query();
+        query.constrain(DatoAlmacenado.class);
+        query.descend("timeStamp").orderDescending();
+        resultado = query.execute();
+        cerrarCliente();
+        if (resultado.size() >= cantidad) {
+            return resultado.subList(0, cantidad);
+        } else {
+            return resultado.subList(0, resultado.size());
+        }
+
     }
 }
