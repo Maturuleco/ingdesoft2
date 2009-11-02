@@ -142,6 +142,7 @@ public class Main {
         }
         dataManager.setEntrada(adapterManager);
         dataManager.setSalida(managerSender);
+        dataManager.setRespuestaEnvio(senderManager);
 
         dataSender.setEntrada(managerSender);
         dataSender.setSalida(senderManager);

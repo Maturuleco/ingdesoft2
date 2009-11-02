@@ -84,6 +84,7 @@ public class DataManager extends Thread{
         ObjectContainer cliente = server.openClient();
         try {
             cliente.store(m);
+            System.out.println("El DataManager guarda en la base: "+m.toString());
             cliente.commit();
         } catch (DatabaseClosedException e) {
             System.out.println("la base que intenta ingresar se encuentra cerrada");
@@ -97,6 +98,7 @@ public class DataManager extends Thread{
     }
 
     private void eliminar(Mensaje respuesta) {
+        System.out.println("El Data Mannager elimina: "+respuesta.toString());
         ObjectContainer cliente = server.openClient();
         for (DatoSensado dato : respuesta.getDatos()){
             cliente.delete(dato);

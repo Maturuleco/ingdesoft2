@@ -150,6 +150,7 @@ public class DataSender extends Thread {
         String[] cuerpo = contenido.split("#");
         // Esto ya lo validé antes, pero está buno re-hacerlo.. capaz
         if ( cuerpo[0].equals("ACK") ) {
+            System.out.println("Se recive el ACK: "+contenido);
             int id = Integer.valueOf(cuerpo[1]);
             if ( checkACK(id, Long.valueOf(cuerpo[2]))) {
                 enviando[id].requestStop();
@@ -157,13 +158,17 @@ public class DataSender extends Thread {
                 msjEnProceso--;
                 // Cuando lo termino de transmitir se lo devuelvo
                 if (msjEnProceso == 0)
-                    /* try {
+                    try {
                         salida.put(mensajeActual);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                 return true;
+            } else {
+                System.out.println("Se ignora el mensaje "+contenido+" por ser antiguo.");
             }
+        } else {
+            System.out.println("El DataSender rebota respuesta por deconocida: "+contenido);
         }
         return false;
     }
