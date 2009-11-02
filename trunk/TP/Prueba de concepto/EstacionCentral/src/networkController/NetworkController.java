@@ -37,6 +37,7 @@ public class NetworkController extends Thread{
     
     
     public void recibirMensaje(HeartbeatMessege m){
+        try{
         String tr = m.getTrName().toString();
         System.out.println("EL network recive "+tr);
         TimerTR timerTR = (TimerTR)timersTR.get(tr);
@@ -54,6 +55,9 @@ public class NetworkController extends Thread{
                 System.out.println("    I: " + timerTR.getTrName());
                 timerTR.start();
             }
+        } catch (Exception e){
+            System.out.println("El network controller no pudo manejar el mensaje: "+m.toString());
+        }
     }
 
     public void trRecuperada(String trName){
@@ -82,12 +86,18 @@ public class NetworkController extends Thread{
     private boolean recibirMensaje() {
         MensajeGSM levanto = entradaRaise.poll();
         if (levanto != null) {
+            System.out.println("El network controller detecta que se levanto la tr"+levanto.getOrigen());
             String[] mensaje = levanto.getMensaje().split("#");
+            try{
             trRecuperada(mensaje[1]);
+            } catch (Exception e){
+                System.out.println("El network controller no pudo avisar que la tr"+levanto.getOrigen()+" se levanto");
+            }
             return true;
         }
         HeartbeatMessege cabeza = entrada.poll();
         if (cabeza != null) {
+            System.out.println("El network controller recibe: "+cabeza.toString());
             recibirMensaje(cabeza);
             return true;
         }
