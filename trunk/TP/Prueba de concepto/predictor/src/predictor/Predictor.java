@@ -5,8 +5,13 @@
 package predictor;
 
 import excepciones.InsuficienciaDeDatosException;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Condicion;
@@ -32,7 +37,7 @@ public class Predictor implements Runnable {
     public Boolean analizar() {
         Boolean res = Boolean.FALSE;
         try {
-             res = analizarCondicionesPorFactor();
+            res = analizarCondicionesPorFactor();
         } catch (InsuficienciaDeDatosException ex) {
             Logger.getLogger(Predictor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,12 +48,11 @@ public class Predictor implements Runnable {
     public void run() {
         Boolean detectoAlerta = analizar();
         if (detectoAlerta) {
-            //TODO: escribir en un archivo
+            escribirPrediccion();
             System.out.println(Calendar.getInstance().getTime().toString());
             System.out.println(regla.getMensajePrediccion());
         } else {
-            //TODO: hacer algo
-            System.out.println("NO" + regla.getMensajePrediccion());
+            System.out.println("NO " + regla.getMensajePrediccion());
         }
     }
 
@@ -75,8 +79,8 @@ public class Predictor implements Runnable {
         for (FactorClimatico factor : FactorClimatico.values()) {
             condicionesFactor = condicionesPorFactor.get(factor);
             datosFactor = datos.get(factor);
-            if (datosFactor == null ||condicionesFactor == null) {
-                throw  new NullPointerException("Tanto el diccionario de " +
+            if (datosFactor == null || condicionesFactor == null) {
+                throw new NullPointerException("Tanto el diccionario de " +
                         "condicionesPorFactor como el de datosPorFactor deben " +
                         "tener definidas todas las claves correspondientes a los Factores ");
             }
@@ -86,7 +90,7 @@ public class Predictor implements Runnable {
                 //  1) debe haber un dato al que se le pueda aplicar la condicion
                 //  2) Todos deben todas las condiciones
                 if (datosFactor.isEmpty()) {
-                    throw new InsuficienciaDeDatosException("No hay suficientes datos para analizar la regla");
+                    return Boolean.FALSE;
                 } else {
                     if (!analizar(condicionesFactor, datosFactor)) {
                         return Boolean.FALSE;
@@ -96,5 +100,25 @@ public class Predictor implements Runnable {
         }
 
         return Boolean.TRUE;
+    }
+
+    private void escribirPrediccion() {
+        String directorio = "Predicciones";
+        Date ahora = Calendar.getInstance().getTime();
+        String nombre = String.valueOf(ahora.getTime());
+        nombre +=  regla.getMensajePrediccion();
+        try {
+            new File(directorio).mkdir();
+            FileWriter fw = new FileWriter(directorio+"/"+nombre+".txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter salida = new PrintWriter(bw);
+            salida.append(" ============ ALERTA ============ ");
+            salida.append("Fecha: " + ahora.toString() + "\n");
+            salida.append("Mensaje: " + regla.getMensajePrediccion() + "\n");
+            salida.append(" ================================ ");
+            salida.close();
+        } catch (java.io.IOException ioex) {
+            System.out.println("se presento el error: " + ioex.toString());
+        }
     }
 }
