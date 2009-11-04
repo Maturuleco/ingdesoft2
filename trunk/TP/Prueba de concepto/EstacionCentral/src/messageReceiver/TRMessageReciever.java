@@ -114,7 +114,7 @@ public class TRMessageReciever extends Thread {
             long timeStamp = mensaje.getTimeStamp();
             String respuesta = "ACK#"+num+"#"+timeStamp;
             String hash = ValidatingTools.getHash(respuesta);
-            MensajeGSM ack = new MensajeGSM(0, destino, respuesta+"#"+hash);
+            MensajeGSM ack = new MensajeGSM(0, destino, respuesta+"#"+hash, 0);
             System.out.println("ACK\tEl Message receiver manda el ACK: "+ack);
             modemSalida.put(ack);
 

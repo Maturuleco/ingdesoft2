@@ -76,7 +76,8 @@ public class testMain {
         dataSender.setModemSalida(modemSalida);
         dataSender.setSalida(salida);
 
-        MensajeGSM respuesta = new MensajeGSM(0, 01, "ACK" +"#" + 0 +"#"+ String.valueOf(m1.getTimeStamp()) +"#"+"firmaEC");
+        //TODO: ver que prioridad hay que setearle
+        MensajeGSM respuesta = new MensajeGSM(0, 01, "ACK" +"#" + 0 +"#"+ String.valueOf(m1.getTimeStamp()) +"#"+"firmaEC", 0);
 
         System.out.println("\nComenzando Test Data Sender\nSe inicia el data Sender");
         dataSender.start();
