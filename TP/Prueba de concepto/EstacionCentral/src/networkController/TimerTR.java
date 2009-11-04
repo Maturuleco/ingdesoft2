@@ -90,9 +90,4 @@ public class TimerTR implements Runnable {
     public boolean getTimerTRFall(){
         return fall;
     }
-
-    @Override
-    public String toString(){
-        return  "TR NAME: " +getTrName() + "/n";
-    }
 }
