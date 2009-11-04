@@ -60,8 +60,6 @@ public class MensajeGSM {
         this.fecha = fecha;
     }
 
-
-
     @Override
     public String toString(){
         String orig = origen.toString();
