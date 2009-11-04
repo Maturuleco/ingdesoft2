@@ -47,7 +47,12 @@ public class ModemReciver extends Thread {
                 try {
                     fr = new FileReader(file);
                     BufferedReader br = new BufferedReader(fr);
-                    String texto = br.readLine();
+                    String texto = "";
+                    String linea;
+                    while ( (linea= br.readLine()) != null) {
+                        texto += linea;
+                    }
+                    
                     fr.close();
                     file.delete();
 
