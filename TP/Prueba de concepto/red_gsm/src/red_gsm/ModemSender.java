@@ -36,7 +36,8 @@ public class ModemSender extends Thread {
 
     private void send(MensajeGSM mensaje)
     {
-        MensajeGSM msj = new MensajeGSM(numero, mensaje.getDestino(), mensaje.getMensaje());
+        //TODO: ver que prioridad hay que setearle
+        MensajeGSM msj = new MensajeGSM(numero, mensaje.getDestino(), mensaje.getMensaje(),0);
         String path = redDirectory;
         
         String phrase = msj.toString();
