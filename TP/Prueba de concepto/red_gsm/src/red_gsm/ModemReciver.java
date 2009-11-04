@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 public class ModemReciver extends Thread {
 
     private static final long timeToWait = 10;
+    private static final int bufferSize = 1000000;
     private File folderPropia;
     private BlockingQueue<MensajeGSM> salida;
 
@@ -46,7 +48,8 @@ public class ModemReciver extends Thread {
                 FileReader fr = null;
                 try {
                     fr = new FileReader(file);
-                    BufferedReader br = new BufferedReader(fr);
+                    
+                    BufferedReader br = new BufferedReader(fr, bufferSize);
                     String texto = "";
                     String linea;
                     while ( (linea= br.readLine()) != null) {
