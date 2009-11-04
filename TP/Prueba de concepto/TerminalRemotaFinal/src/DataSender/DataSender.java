@@ -151,9 +151,11 @@ public class DataSender extends Thread {
             System.out.println("Se recive el ACK: "+contenido);
             int id = Integer.valueOf(cuerpo[1]);
             if ( checkACK(id, Long.valueOf(cuerpo[2]))) {
-                enviando[id].requestStop();
-                enviando[id] = null;
-                msjEnProceso--;
+                if (enviando[id] != null) {
+                    enviando[id].requestStop();
+                    enviando[id] = null;
+                    msjEnProceso--;
+                }
                 // Cuando lo termino de transmitir se lo devuelvo
                 if (msjEnProceso == 0)
                     try {
