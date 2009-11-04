@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package estacioncentral;
 
 import com.db4o.Db4o;
@@ -31,6 +32,7 @@ public class Main {
 
     public static int numeroModem = 999;
     private static int trRegistradas = 10;
+
     private static PredictorManager predictor;
     private static ValidatorManager validator;
     private static DataReceiver dataReceiver;
@@ -38,6 +40,7 @@ public class Main {
     private static NetworkController networkController;
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
+    
     private static BlockingQueue<Mensaje> trReceiverToData =
             new LinkedBlockingQueue<Mensaje>();
     private static BlockingQueue<DatoAlmacenado> dataToValidator =
@@ -52,6 +55,8 @@ public class Main {
             new LinkedBlockingQueue<MensajeGSM>();
     private static BlockingQueue<MensajeGSM> dispatcherNetwork =
             new LinkedBlockingQueue<MensajeGSM>();
+
+
     private static ObjectServer validDataServer;
 
     /**
@@ -86,7 +91,7 @@ public class Main {
 
     }
 
-    private static void inicializarComponentes() {
+    private static void inicializarComponentes(){
         new File("resources").mkdir();
         File serverPath = new File("resources/ValidData.yap");
         serverPath.delete();
@@ -142,6 +147,8 @@ public class Main {
         networkController.start();
         System.out.println("Se prendio el network controller");
 
+
         System.out.println("Se prendieron todos los componentes");
     }
+
 }

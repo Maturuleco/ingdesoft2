@@ -25,14 +25,12 @@ public class Sender extends Thread {
     private BlockingQueue<MensajeGSM> modem;
     
     public Sender(String msj, BlockingQueue<MensajeGSM> m) {
-        //TODO: ver que prioridad hay que setearle
-        mensaje = new MensajeGSM(0, Main.estacionCentral, msj, 0);
+        mensaje = new MensajeGSM(0, Main.estacionCentral, msj);
         modem = m;
     }
     
     public Sender(String msj) {
-        //TODO: ver que prioridad hay que setearle
-        mensaje = new MensajeGSM(0, Main.estacionCentral, msj, 0);
+        mensaje = new MensajeGSM(0, Main.estacionCentral, msj);
     }
     
     @Override
