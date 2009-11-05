@@ -6,7 +6,8 @@ import red_gsm.MensajeGSM;
 
 public class NetworkController extends Thread {
 
-    private int duration = 8000;
+    //Le seteo la duracion a 2 minutos
+    private int duration = 120000;
     private HashMap timersTR = new HashMap();
     private static final long sleepTime = 1;
     private BlockingQueue<HeartbeatMessege> entrada;
