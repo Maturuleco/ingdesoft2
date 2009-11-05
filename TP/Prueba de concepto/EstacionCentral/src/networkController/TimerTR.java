@@ -40,8 +40,12 @@ public class TimerTR implements Runnable {
     }
 
     public void stop() {
+        setTimerTRFall(true);
+        repeticion = false;
         enEjecucion = false;
-        thread.stop();
+        //thread.stop();
+        thread.interrupt();
+
     }
 
     public void run() {
@@ -50,24 +54,16 @@ public class TimerTR implements Runnable {
         init();
         
         while( repeticion ){
-            // Esperamos el tiempo que nos hayan dicho en la configuracion
-            // del intervalo
             try {
                 esperar( intervalo );
-            } catch( InterruptedException e ) {
+            } catch( Exception e ) {
+                handler.timeout( this );
+                System.out.println("\n*********NC TR: "+getTrName()+" timeout********* "+e.getMessage()+"\n");
+                
+                stop();
                 return;
             }
-            // Cuando se cumple el intervalo, avisamos a las clases que
-            // esten pendientes.
-            handler.timeout( this );
-            
-            System.out.println("\n*********NC TR: "+getTrName()+" caida*********\n");
-            setTimerTRFall(true);
-            stop();
-
-            repeticion = false;
-            enEjecucion = false;
-        }
+       }
     }
 
     public boolean estaCorriendo() {
@@ -101,5 +97,12 @@ public class TimerTR implements Runnable {
     private void init() {
         if(thread == null)
             start();
+    }
+
+    void restart() {
+        setTimerTRFall(false);
+        thread.interrupt();
+        thread.run();
+
     }
 }
