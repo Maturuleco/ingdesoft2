@@ -28,10 +28,12 @@ public class Predictor implements Runnable {
 
     private Regla regla;
     private Map<FactorClimatico, Collection<DatoAlmacenado>> datos;
+    private String lugar;
 
-    public Predictor(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos) {
+    public Predictor(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos, String lugar) {
         this.regla = regla;
         this.datos = datos;
+        this.lugar = lugar;
     }
 
     public Boolean analizar() {
@@ -105,17 +107,20 @@ public class Predictor implements Runnable {
     private void escribirPrediccion() {
         String directorio = "Predicciones";
         Date ahora = Calendar.getInstance().getTime();
-        String nombre = String.valueOf(ahora.getTime());
+        String nombre = "Alerta";
+        nombre += String.valueOf(ahora.getTime());
+        nombre += lugar;
         nombre +=  regla.getMensajePrediccion();
         try {
             new File(directorio).mkdir();
             FileWriter fw = new FileWriter(directorio+"/"+nombre+".txt");
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter salida = new PrintWriter(bw);
-            salida.append(" ============ ALERTA ============ ");
+            salida.append(" ============ ALERTA ============\n");
             salida.append("Fecha: " + ahora.toString() + "\n");
+            salida.append("Lugar: " + lugar + "\n");
             salida.append("Mensaje: " + regla.getMensajePrediccion() + "\n");
-            salida.append(" ================================ ");
+            salida.append(" ================================");
             salida.close();
         } catch (java.io.IOException ioex) {
             System.out.println("se presento el error: " + ioex.toString());

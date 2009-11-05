@@ -45,7 +45,7 @@ public class PredictorManager implements Runnable {
                             = SelectorDatos.ordenarPorFactor(datosTR);
 
                     for (Regla regla : reglas) {
-                        predictor = new Predictor(regla, datos);
+                        predictor = new Predictor(regla, datos, "TR"+idTR.toString());
                         new Thread(predictor).run();
                     }
                 }
