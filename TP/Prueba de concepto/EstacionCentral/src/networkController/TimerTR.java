@@ -2,7 +2,7 @@ package networkController;
 
 public class TimerTR implements Runnable {
     private String trName;
-    private int intervalo = 1000;
+    private int intervalo = 16000;
     private boolean fall = false;
     private boolean repeticion = true;
     private boolean enEjecucion = false;
@@ -46,6 +46,8 @@ public class TimerTR implements Runnable {
 
     public void run() {
         repeticion = true;
+
+        init();
         
         while( repeticion ){
             // Esperamos el tiempo que nos hayan dicho en la configuracion
@@ -59,8 +61,8 @@ public class TimerTR implements Runnable {
             // esten pendientes.
             handler.timeout( this );
             
-            System.out.println("        C " + getTrName());
-            timerTRFall();
+            System.out.println("\n*********NC TR: "+getTrName()+" caida*********\n");
+            setTimerTRFall(true);
             stop();
 
             repeticion = false;
@@ -84,8 +86,8 @@ public class TimerTR implements Runnable {
         this.trName = trName;
     }
 
-    public void timerTRFall(){
-        fall = true;
+    public void setTimerTRFall(boolean value){
+        fall = value;
     }
     public boolean getTimerTRFall(){
         return fall;
@@ -94,5 +96,10 @@ public class TimerTR implements Runnable {
     @Override
     public String toString(){
  	return  "TR NAME: " +getTrName() + "/n";
+    }
+
+    private void init() {
+        if(thread == null)
+            start();
     }
 }

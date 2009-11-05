@@ -39,11 +39,13 @@ public class Red {
             fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String texto = br.readLine();
-
-            System.out.println("La red lee :" + texto);
+            if (texto != null) {
+                System.out.println("La red lee :" + texto);
+                mensaje = MensajeGSM.parse(texto);
+            }
             fr.close();
             
-            mensaje = MensajeGSM.parse(texto);
+            
         } catch (ParseException ex) {
             Logger.getLogger(Red.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
