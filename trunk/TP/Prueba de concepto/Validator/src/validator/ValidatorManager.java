@@ -15,7 +15,7 @@ import model.DatoAlmacenado;
  */
 public class ValidatorManager implements Runnable{
 
-    private static final long tiempoEspera = 1000;
+    private static final long tiempoEspera = 100;
     private volatile boolean keepTrying = true;
 
     private ValidatorDAO validadorDAO = null;
