@@ -25,7 +25,7 @@ public class SelectorReglas {
         Collection<Condicion> condiciones1 = new LinkedList<Condicion>();
         Collection<Condicion> condiciones2 = new LinkedList<Condicion>();
         condiciones1.add(new Condicion(FactorClimatico.temperatura, Comparador.menor, 0.0f));
-        Regla regla1 = new Regla(condiciones1, "se detecto frío polar");
+        Regla regla1 = new Regla(condiciones1, "SE DETECTO FRIO POLAR");
         reglas.add(regla1);
         return reglas;
     }

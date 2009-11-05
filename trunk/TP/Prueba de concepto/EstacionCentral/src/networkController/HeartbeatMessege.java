@@ -51,9 +51,9 @@ public class HeartbeatMessege {
 
     @Override
      public String toString(){
-        return " ID TR: " + this.idTR + 
-               " SENSOR NAME: " + this.sensorName + 
-               " TR TIME: " + this.trTimestamp + 
-               " SENSOR TIME: " + this.sensorTimestamp;
+        return " ID TR: " + this.idTR;
+ //              " SENSOR NAME: " + this.sensorName +
+ //              " TR TIME: " + this.trTimestamp +
+ //              " SENSOR TIME: " + this.sensorTimestamp;
     }
 }

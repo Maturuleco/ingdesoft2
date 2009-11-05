@@ -50,9 +50,9 @@ public class Predictor implements Runnable {
         if (detectoAlerta) {
             escribirPrediccion();
             System.out.println(Calendar.getInstance().getTime().toString());
-            System.out.println(regla.getMensajePrediccion());
+            System.out.println("<<" + regla.getMensajePrediccion()+ ">>");
         } else {
-            System.out.println("NO " + regla.getMensajePrediccion());
+            System.out.println("<<NO " + regla.getMensajePrediccion()+">>");
         }
     }
 
