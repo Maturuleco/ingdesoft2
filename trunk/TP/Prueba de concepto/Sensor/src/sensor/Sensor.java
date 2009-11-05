@@ -9,15 +9,14 @@ import java.util.logging.Logger;
 import model.FactorClimatico;
 
 public class Sensor implements Runnable {
-
+    private volatile boolean keepTrying = true;
     private static final int maxSize = 999999999;
-    
     private Integer name;
     private FactorClimatico factor;
     private long frequency;
     private String directory;
-    private Thread thread = null;   
-    
+    private Thread thread = null;
+
     public Sensor(String directory, Integer nombre, FactorClimatico factor, long frequency) {
         setName(nombre);
         setFactor(factor);
@@ -26,22 +25,22 @@ public class Sensor implements Runnable {
     }
 
     public void run() {
-        
+
         int numSMS = 0;
         int numFreq = 1;
         String path = directory;
-        File folder = new File (directory);
-        
-        while(true){
+        File folder = new File(directory);
+
+        while (keepTrying) {
             path = directory;
 
-                if (numFreq == frequency){
-                    numFreq=0;
-                    File[] files = folder.listFiles();
-                    
-                    // Solo se puede crear un mensaje nuevo
-                    // si la carpeta no esta "llena"
-                    if(files.length < 10){
+            if (numFreq == frequency) {
+                numFreq = 0;
+                File[] files = folder.listFiles();
+
+                // Solo se puede crear un mensaje nuevo
+                // si la carpeta no esta "llena"
+                if (files.length < 10) {
                     FileOutputStream fos = null;
                     try {
                         path += "dato" + numSMS + ".txt";
@@ -62,19 +61,23 @@ public class Sensor implements Runnable {
                             Logger.getLogger(Sensor.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    }
-                    numSMS++;
-                    if( numSMS > maxSize )
-                        numSMS = 0;
                 }
-
+                numSMS++;
+                if (numSMS > maxSize) {
+                    numSMS = 0;
+                }
+            }
             numFreq++;
         }
     }
-    
+
     public void start() {
-        thread = new Thread( this );
+        thread = new Thread(this);
         thread.start();
+    }
+
+    public void requestStop(){
+        keepTrying = false;
     }
     
     public String getDirectory() {
@@ -104,9 +107,8 @@ public class Sensor implements Runnable {
     public FactorClimatico getFactor() {
         return factor;
     }
-    
+
     public void setFactor(FactorClimatico factor) {
         this.factor = factor;
     }
-    
 }

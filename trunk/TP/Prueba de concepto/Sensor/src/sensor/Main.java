@@ -46,7 +46,7 @@ public class Main {
                      factor.toString() + "|" +
                      data.toString() + "|" +
                      d.getTime();
-       dato++;
+       dato--;
        dato = dato%50;
 
         return info;
