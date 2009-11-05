@@ -29,12 +29,17 @@ public class GeneradorDatosOrdenados implements GeneradorDatos{
     private Float actual;
     private Float escala;
     private FactorClimatico factor;
+    private Integer idTR;
+    private Integer idSensor;
 
-    public GeneradorDatosOrdenados( Orden orden, Float inicio, Float escala, Float fin) throws InstantiationException {
+    public GeneradorDatosOrdenados( Orden orden, Float inicio, Float escala, Float fin, Integer idTR, Integer idSensor)
+            throws InstantiationException {
         this.inicio = inicio;
         this.orden = orden;
         this.actual = inicio;
         this.escala = escala;
+        this.idTR = idTR;
+        this.idSensor = idSensor;
         factor = FactorClimatico.temperatura;
         this.fin = fin;
         switch(orden){
@@ -65,7 +70,7 @@ public class GeneradorDatosOrdenados implements GeneradorDatos{
             default:
                 throw new UnsupportedOperationException();
         }
-        return new DatoAlmacenado(1, ahora, factor, actual, 2, DataSource.terminal_remota);
+        return new DatoAlmacenado(idSensor, ahora, factor, actual, idTR, DataSource.terminal_remota);
     }
 
 }

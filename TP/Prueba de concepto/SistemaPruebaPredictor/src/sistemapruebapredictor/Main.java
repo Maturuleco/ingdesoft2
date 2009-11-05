@@ -19,7 +19,8 @@ import predictor.PredictorManager;
 public class Main {
 
     private static PredictorManager predictor;
-    private static CargadorDatos cargador;
+    private static CargadorDatos cargador1;
+    private static CargadorDatos cargador2;
     private static ObjectServer validDataServer;
 
     public static void main(String[] args) {
@@ -41,7 +42,8 @@ public class Main {
         predictor = new PredictorManager(validDataServer);
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
         try {
-            cargador = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(GeneradorDatosOrdenados.Orden.creciente, -10.0f, 1.0f, 30.0f));
+            cargador1 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(GeneradorDatosOrdenados.Orden.creciente, -10.0f, 1.0f, 30.0f,1,1));
+            cargador2 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(GeneradorDatosOrdenados.Orden.decreciente, -10.0f, 1.0f, -30.0f,3,1));
         } catch (InstantiationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,7 +53,9 @@ public class Main {
         System.out.println("Prendiendo Componentes");
         new Thread(predictor).start();
         System.out.println("Se prendio el predictor");
-        new Thread(cargador).start();
-        System.out.println("Se prendio el cargador");
+        new Thread(cargador1).start();
+        System.out.println("Se prendio el cargador1");
+        new Thread(cargador2).start();
+        System.out.println("Se prendio el cargador2");
     }
 }

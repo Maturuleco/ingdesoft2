@@ -11,12 +11,21 @@ import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
 import com.db4o.query.Query;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.DatoAlmacenado;
 import model.FactorClimatico;
 
@@ -37,7 +46,7 @@ public class SelectorDatos {
         cliente = server.openClient();
     }
 
-    private void cerrarCliente(){
+    private void cerrarCliente() {
         cliente.close();
     }
 
@@ -131,7 +140,7 @@ public class SelectorDatos {
         return resultado;
     }
 
-    public List<DatoAlmacenado> leerUltimosDatos(Integer cantidad){
+    public List<DatoAlmacenado> leerUltimosDatos(Integer cantidad) {
         abrirCliente();
         List<DatoAlmacenado> resultado;
         Query query = cliente.query();
@@ -146,12 +155,17 @@ public class SelectorDatos {
         }
     }
 
-    public Map<Integer, List<DatoAlmacenado>> datosPorTR(){
+    public Map<Integer, List<DatoAlmacenado>> datosPorTR() {
         abrirCliente();
         Integer idTR;
         List<DatoAlmacenado> listaAuxiliar;
         Map<Integer, List<DatoAlmacenado>> resultado = new LinkedHashMap<Integer, List<DatoAlmacenado>>();
-        List<DatoAlmacenado> datoTotales = cliente.query(DatoAlmacenado.class);
+
+        Query query = cliente.query();
+        query.constrain(DatoAlmacenado.class);
+        query.descend("timeStamp").orderAscending();
+        List<DatoAlmacenado> datoTotales = query.execute();
+        escribirDatosAlmacenados(datoTotales);
         for (DatoAlmacenado datoAlmacenado : datoTotales) {
             idTR = datoAlmacenado.getIdTR();
             if (resultado.containsKey(idTR)) {
@@ -164,5 +178,29 @@ public class SelectorDatos {
         }
         cerrarCliente();
         return resultado;
+    }
+
+    private void escribirDatosAlmacenados(List<DatoAlmacenado> datos) {
+        String extension = ".txt";
+        String nombre = "DatosValidos";
+        File filepath = new File(nombre + extension);
+        filepath.delete();
+        try {
+            filepath.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(SelectorDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            FileWriter fw = new FileWriter(filepath);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter salida = new PrintWriter(bw);
+            salida.append(" ============ DATOS ALAMACENADO VALIDOS============ \n");
+            for (DatoAlmacenado datoAlmacenado : datos) {
+                salida.append(datoAlmacenado.toString() + "\n");
+            }
+            salida.close();
+        } catch (java.io.IOException ioex) {
+            System.out.println("se presento el error: " + ioex.toString());
+        }
     }
 }
