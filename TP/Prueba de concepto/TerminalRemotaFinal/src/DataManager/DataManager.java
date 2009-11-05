@@ -29,7 +29,7 @@ public class DataManager extends Thread{
     private BlockingQueue<Mensaje> salida;
     private BlockingQueue<Mensaje> respuestaEnvio;
     private static final long sleepTime = 10000;
-    private final static long frequency = 10000;
+    private final static long frequency = 3000;
 
     public DataManager () {
         server = Db4o.openServer("DataBuffer"+Main.idTR+".yap", 0);
