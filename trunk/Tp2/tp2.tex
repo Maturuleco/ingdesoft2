@@ -1,0 +1,40 @@
+
+\documentclass[11pt|a4paper]{article}
+\author{Matías Pérez}
+\title{Trabjo Práctico is2}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+
+\usepackage[spanish]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+
+\pagenumbering{roman}
+
+%\setlength{\topmargin}{0}
+\setlength{\textwidth}{12cm}
+\setlength{\evensidemargin}{0.1cm}
+%\oddsidemargin 0.0
+%\evensidemargin 1.0
+%\textwidth 6.0
+%\headheight 1.0
+%\topmargin 0.5
+%\textheight 9.0
+%\footheight{1.0}
+
+\hyphenation{biggest-satelit bi-gestsatelit biggestsa-telit biggestsate-lit}
+
+\newcommand{\nr}[1]{\romannumeral #1}
+\newcommand{\linea}[0]{\begin{flushleft}\line(1,0){340}\end{flushleft}}
+
+\newenvironment{seccion}[1]{\section*{\underline{#1}}\linea \begin{flushleft}}{\end{flushleft}}
+
+\begin{document}
+
+\include{userStories}
+
+
+\end{document}
+

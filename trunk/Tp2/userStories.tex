@@ -1,0 +1,260 @@
+
+\thispagestyle{empty}
+
+\vspace{4cm plus 1cm minus 1cm}
+
+\section{User Stories}
+
+%CU 1.recibiendo INFORMACIÓN de sensores
+%Requerimiento: REQ 1
+%Actor: sensor
+%Descripción: el sistema recibe datos de los sensores (por medio de las TRs) 
+\linea \subsection*{Recibiendo información de sensores}
+Un dato que se sensa en un sensor de una Terminal Remota debe llegar a los modelos que lo requieran y a la central provincial a la que pertenezca.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 2.Enviando datos a ec
+%Requerimiento: REQ 1
+%Actor: Timer de TR
+%Descripción: Cada un minuto cada TR manda los datos recopilados hacia la EC
+\linea \subsection*{Enviando datos a ec}
+Todo dato recopilado por una terminal remota debe llegar a la estacion provincial que pertenezca.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 3.recibiendo y analizando sms
+%Requerimiento: REQ 1
+%Actor: Servidor GSM
+%Descripción: La EC recibe un SMS (por medio del servidor GSM) y valida que este haya sido enviado por una TR.
+\linea \subsection*{Recibiendo y analizando sms}
+Todo mensaje recibido por una estacion provincial debe ser verificado.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 4.almacenando INFORMACIÓN de sensores
+%Requerimientos: REQ 1
+%Actor: abstracto
+%Descripción: Se almacenan en el sistema los datos que llegaron a la EC.
+\linea \subsection*{Almacenando informacion de sensores}
+Todo dato que arriba a una estacion provincial no puede ser perdido.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 5.Actualizando agenda de sensores
+%Requerimiento: REQ 2
+%Actor: Estación Central
+%Descripción: el sistema define los intervalos de tiempo que debe esperar un sensor para samplear los datos y enviarlos a la estación central.
+\linea \subsection*{Actualizando agenda de sensores}
+Una estacion central debe ser capaz de definir la frecuencia de los sensores que tiene asignados.
+%%%%%%%
+% Duda: muchos modelos usan los sensores, la frecuencia de los mismos se ve afectada por todos o por uno solo ?? 
+% Y si es por todos: cómo se debe tratar las inconsistencias ??
+%%%%%%%
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 6.administrando energia de trs
+%Requerimiento: REQ 3
+%Actor: componente externa
+%Descripción: el sistema selecciona la fuente de energía según los datos de contexto que le provee la componente externa
+\linea \subsection*{Administrando energía de TRs}
+Las terminales remotas deben poder administrar su propia energía automáticamente.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 7.Modificando Reglas del modelo matemático
+%Requerimiento: REQ 6
+%Actor: Operario
+%Descripción: el operario modifica o ingresa nuevas reglas al sistema y este las integra al modelo de datos.
+\linea \subsection*{Modificando Reglas del modelo matemático}
+Como JONATHAN quiero poder modificar las reglas del modelo matemático.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 8.aplicando Reglas de modelo matemático
+%Requerimiento: REQ 6
+%Actor: Estación Central
+%Descripción: el sistema se encarga de aplicar las reglas definidas para obtener información predictiva a partir de los datos almacenados.
+\linea \subsection*{Aplicando reglas del modelo matemático}
+Las reglas de los modelos matemáticos se deben poder aplicar con distintos métodos.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 9.detectando (posible) caída de tr
+%Requerimiento: REQ 4
+%Actor: Estación Central
+%Descripción: el sistema se encargará de detectar, cuando ocurra, si una TR está caída.
+\linea \subsection*{Detectando (posible) caída de terminal remota}
+El sistema debe encargarse de detectar automáticamente cuando una termianl se cae.
+\subsubsection*{Caso de Aceptación}
+%% El sistema ¿quien? ¿La estacion prov que sea?
+Completar...
+
+%CU 10.subsanando caída de tr
+%Requerimiento: REQ 4
+%Actor: abstracto
+%Descripción: una vez detectada la caída de una TR, el sistema determina que estrategia usar para subsanar la caída de una TR. 
+\linea \subsection*{Subsanando caída de terminal remota}
+Dada una caida detectada de una terminal remota el sistema debe determinar una estretegia para subsanar la misma.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 11.generando tr VIRTUAL
+%Requerimiento: REQ 4
+%Actor: abstracto
+%Descripción: el sistema “generará” una nueva estación remota virtual, triangulado entre las tres TRs más cercanas a la TR caída.
+\linea \subsection*{Generando teminal virtual}
+Cuando sea necesario el sistema debe ser capaz de generar una terminal remota virtual 
+%% ¿Lo que sigue va en el caso de aceptación.?
+mediante la triagulacion de las tres terminales más cercanas.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 12.Obteniendo INFORMACIÓN de sistema biggestsatelit
+%Requerimiento: REQ 4
+%Actor: abstracto
+%Descripción: el sistema usará información provista por el sistema BiggestSatelit para subsanar la caída de una TR.
+\linea \subsection*{Obteniendo información de sistema BiggestSatelit}
+Cuando sea necesario el sistema debe poder utilizar la informacion provista por el sistema BiggestSatelit
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 13. detectando RECUPERACIÓN de tr
+%Requerimiento: REQ 4
+%Actor: TR
+%Descripción: el sistema detectará la recuperación de una TR y dejará de realizar las acciones que se estaban ejecutando para subsanar la caída de una TR.
+\linea \subsection*{Detectando recuperacion de terminal}
+El sistema debe ser capaz de detectar la recuperación de una terminal caida y actuar en consecuencia.
+\subsubsection*{Caso de Aceptación}
+%% actuar en concecuencia ?
+Completar...
+
+%CU 14.informando la utilizaciÓn del sistema biggestsatelit 
+%Requerimiento: REQ 5
+%Actor: Ministerio de Infraestructura
+%Descripción: el sistema almacenará y permitirá recuperar la información pertinente sobre el uso del sistema BiggestSatelit, cuando el ministerio de Infraestructura lo requiera.
+\linea \subsection*{Informando la utilización del sistema BiggestSatelit}
+El sistema deberá llebar constancia detallada del uso del sistema BiggestSatelit y se deberá informar al ministerio de Infraestructura cuando este lo requiera.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 15. detectando anomalía en datos recolectados
+%Requerimiento: REQ 8
+%Actor: abstracto
+%Descripción: el sistema detectará un dato anómalo contrastándolo con los datos históricos.
+\linea \subsection*{Detectando anomalía en datos recolectados}
+Ante un dato anómalo el sistema debe ser capaz de detectarlo.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 16. notificando anomalía en datos 
+%Requerimiento: REQ 8
+%Actor: abstracto
+%Descripción: el sistema deberá informar la detección de un dato anómalo a los expertos para que estos determinen si debe incorporarse este dato al modelo o no. 
+\linea \subsection*{Notificando anomalía en datos}
+Ante un dato anómalo detectado por el sistema, tal hecho debe ser informado a los expertos relacionados a tal fin.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 17. aplicando DECISIÓN sobre anomalía
+%Requerimiento: REQ 8
+%Actor: experto
+%Descripción: el experto tomará una decisión (aceptar o no) sobre un dato anómalo y este será registrado o descartado (en el sistema) según esta decisión.
+\linea \subsection*{Aplicando Desición sobre anomalía}
+Ante la respuesta de un experto sobre un dato, el mismo deberá encargarse a aplicar la misma.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 18. recolectando datos de sistema eólico
+%Requerimiento: REQ 9
+%Actor: sistema eólico
+%Descripción: el sistema incorporará e integrará los datos producidos por el sistema eólico, con los datos propios, priorizando aquellos que se consideren que tengan mayor precisión.
+\linea \subsection*{Recolectando datos de sistema eólico}
+El sistema se debe se capaz de integrarse con el sistema eólico para compartir información.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 19. Visualizando INFORMACIÓN de monitoreo
+%Requerimiento: REQ 10
+%Actor: operario
+%Descripción: el usuario ingresará a la herramienta de monitoreo, donde podrá visualizar el estado de las TRs, sensores y nivel de tráfico en un mapa. 
+\linea \subsection*{Visualizando información de monitoreo}
+Los administradores del sistema deben poder visualizar el estado de las terminales, sensores y nivel de tráfico en un mapa.
+\subsubsection*{Caso de Aceptación}
+%% Ver que onda la sitribución del sistema
+Completar...
+
+%CU 20. configurando NOTIFICACIÓN de alarmas 
+%Requerimiento: REQ 11
+%Actor: operario
+%Descripción: el operario podrá cambiar la configuración de envió de notificaciones ante fallas.
+\linea \subsection*{Configurando notificación de alarmas}
+Los operarios del sistema deben poder cambiar la configuración de envio de notificaciones ante fallas.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 21. notificando Problemas en la RED  
+%Requerimiento: REQ 11
+%Actor: abstracto
+%Descripción: el sistema deberá informar mediante un mail la caída de una TR o demoras en determinado segmento de la red, a los usuarios determinados.
+\linea \subsection*{Notificando problemas en la red}
+El sistema debe informar mediante un mail la caída de una terminal o demoras en un determinado segmento.
+\subsubsection*{Caso de Aceptación}
+%%  a quién?
+Completar...
+
+%CU 22. calculando tráfico de red 
+%Requerimiento: REQ 10 y 11
+%Actor: abstracto
+%Descripción: el sistema deberá obtener el nivel de tráfico en cada segmento en la red para poder determinar si se producen demoras.
+\linea \subsection*{Calculando tráfico de red}
+El sistema debe poder informar el nivel de tráfico en cada segmento de la red.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 23.detectando demora en tráfico de red
+%Requerimiento: REQ 10 y 11
+%Actor: abstracto
+%Descripción: el sistema deberá obtener mediante la información de tráfico en cada segmento de la red y las capacidades de tráficos que estos poseen, si se están produciendo demoras en los envíos de datos.
+\linea \subsection*{Detectando demora en tráfico de red}
+El sistema debe ser capaz de detectar una demora de tráfico en la red.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 24.Actualizando información de la pagina web
+%Requerimiento: REQ 12
+%Actor: Estación Central
+%Descripción: el sistema actualizará la información mostrada en el sitio Web del Ministerio de Infraestructura.
+\linea \subsection*{Actualizando información de la página web}
+El sistema deberá mantener actualizada la información que se muestra en el sitio web del Ministerio de Infraestructura.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 25. PROVEYENDO INFORMACIÓN a cliente externo 
+%Requerimiento: REQ 13
+%Actor: cliente externo
+%Descripción: el cliente externo solicitará un conjunto de datos que le interese y el sistema deberá proveérselos.
+\linea \subsection*{Proveyendo información a cliente externo}
+Ante un pedido de informacion por parte de un cliente externo, el sistema debe ser capaz de satisfacer el mismo.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 26. cargando modelos de clientes externos 
+%Requerimiento: REQ 13
+%Actor: operario
+%Descripción: el cliente proveerá un modelo propio desarrollado por él (similar a nuestro modelo de reglas), el operario se encargará de cargarlo y el sistema deberá integrarlo, para poder aplicarlo sobre los datos almacenados.
+\linea \subsection*{Cargando modelos de clientes externos}
+Los operarios del sistema deben poder cargar modelos de clientes externos en el sistema para que este los ejecute.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
+%CU 27. aplicando modelos de clientes externos
+%Requerimiento: REQ 13
+%Actor: Estación Central
+%Descripción: el sistema deberá aplicar las reglas definidas por el modelo del cliente sobre los datos y obtener la información predictiva que está comunicada al mismo. 
+\linea \subsection*{Aplicando modelos de clientes externos}
+El sistema debre ser capaz de aplicar las reglas definidas por modelos de clientes externos al sistema.
+\subsubsection*{Caso de Aceptación}
+Completar...
+
