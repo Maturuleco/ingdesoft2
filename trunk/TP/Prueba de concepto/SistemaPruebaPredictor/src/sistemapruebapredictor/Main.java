@@ -55,7 +55,7 @@ public class Main {
         System.out.println("Se prendio el predictor");
         new Thread(cargador1).start();
         System.out.println("Se prendio el cargador1");
-        new Thread(cargador2).start();
-        System.out.println("Se prendio el cargador2");
+//        new Thread(cargador2).start();
+//        System.out.println("Se prendio el cargador2");
     }
 }
