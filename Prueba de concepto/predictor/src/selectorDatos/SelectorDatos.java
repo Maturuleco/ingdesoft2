@@ -140,7 +140,7 @@ public class SelectorDatos {
         return resultado;
     }
 
-    public List<DatoAlmacenado> leerUltimosDatos(Integer cantidad) {
+    public List<DatoAlmacenado> leerUltimosDatosCantidad(Integer cantidad) {
         abrirCliente();
         List<DatoAlmacenado> resultado;
         Query query = cliente.query();
@@ -155,6 +155,35 @@ public class SelectorDatos {
         }
     }
 
+    public List<DatoAlmacenado> leerUltimosDatosTiempo(int seg) {
+       
+        abrirCliente();
+        List<DatoAlmacenado> resultado;
+        Query query = cliente.query();
+        query.constrain(DatoAlmacenado.class);
+        query.descend("timeStamp").orderDescending();
+        resultado = query.execute();
+        cerrarCliente();
+
+        Date limiteInferior = restarTiempo(seg);
+        int hasta = 0;
+        for (DatoAlmacenado datoAlmacenado : resultado) {
+            if (datoAlmacenado.getTimeStamp().before(limiteInferior)){
+                break;
+            } else {
+                hasta++;
+            }
+        }
+        return resultado.subList(0, hasta);
+    }
+
+    private Date restarTiempo(Integer seg){
+        Calendar timestamp = Calendar.getInstance();
+        timestamp.add(Calendar.SECOND,-seg);
+        Date timestampDesde = timestamp.getTime();
+        return timestampDesde;
+    }
+
     public Map<Integer, List<DatoAlmacenado>> datosPorTR() {
         abrirCliente();
         Integer idTR;
@@ -165,7 +194,7 @@ public class SelectorDatos {
         query.constrain(DatoAlmacenado.class);
         query.descend("timeStamp").orderAscending();
         List<DatoAlmacenado> datoTotales = query.execute();
-        escribirDatosAlmacenados(datoTotales);
+        mostrarDatosAlmacenados(datoTotales);
         for (DatoAlmacenado datoAlmacenado : datoTotales) {
             idTR = datoAlmacenado.getIdTR();
             if (resultado.containsKey(idTR)) {
@@ -180,7 +209,7 @@ public class SelectorDatos {
         return resultado;
     }
 
-    private void escribirDatosAlmacenados(List<DatoAlmacenado> datos) {
+    private void mostrarDatosAlmacenados(List<DatoAlmacenado> datos) {
         String extension = ".txt";
         String nombre = "DatosValidos";
         File filepath = new File(nombre + extension);
@@ -194,13 +223,13 @@ public class SelectorDatos {
             FileWriter fw = new FileWriter(filepath);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter salida = new PrintWriter(bw);
-            salida.append(" ============ DATOS ALAMACENADO VALIDOS============ \n");
+            salida.append(" ============ DATOS ALMACENADOS VALIDOS============ \n");
             for (DatoAlmacenado datoAlmacenado : datos) {
                 salida.append(datoAlmacenado.toString() + "\n");
             }
             salida.close();
         } catch (java.io.IOException ioex) {
-            System.out.println("se presento el error: " + ioex.toString());
+            System.out.println("se presentó el error: " + ioex.toString());
         }
     }
 }

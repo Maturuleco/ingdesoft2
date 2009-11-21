@@ -24,6 +24,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import selectorDatos.SelectorDatos;
 import static org.junit.Assert.*;
@@ -124,6 +125,7 @@ public class SelectorDatosTest {
     }
 
     @Test
+    @Ignore
     public void seleccionarTodos() {
         List<DatoAlmacenado> datos = selector.leerTodosLosDatos();
         assertTrue(datos.size() == cantidadDatosEnBase);
@@ -131,19 +133,18 @@ public class SelectorDatosTest {
     }
 
     @Test
+    @Ignore
     public void seleccionarPorTR() {
         Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(1);
-//        System.out.println(datosTR.size());
-//        for (DatoAlmacenado datoAlmacenado : datosTR) {
-//            System.out.println(datoAlmacenado.mostrar());
-//        }
         assertTrue(datosTR.size() == 60);
     }
 
     @Test
-    public void seleccionarUltimos() {
-        Integer cantidad = 100000;
-        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatos(cantidad);
+//    @Ignore
+    public void seleccionarUltimosCantidad() {
+        Integer cantidad = 35;
+        System.out.println("======Ultimos por cantidad(" + cantidad +")======");
+        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatosCantidad(cantidad);
         Integer cantidadTotal = selector.leerTodosLosDatos().size();
         if (cantidadTotal < cantidad) {
             assertTrue(datosOrdenados.size() == cantidadTotal);
@@ -157,16 +158,27 @@ public class SelectorDatosTest {
     }
 
     @Test
+    public void seleccionarUltimosTiempo() {
+        System.out.println("======Ultimos por tiempo ======");
+        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatosTiempo(1);
+        System.out.println("TimeStamp: " + Calendar.getInstance().getTime().getTime());
+        for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
+            System.out.println(datoAlmacenado.getTimeStamp().getTime());
+        }
+        
+    }
+
+    @Test
     public void seleccionarDatosPorTR() {
         Map<Integer, List<DatoAlmacenado>>datosPorTR = selector.datosPorTR();
         List<DatoAlmacenado> datosDeTR;
         for (Integer idTR : datosPorTR.keySet()) {
             datosDeTR = datosPorTR.get(idTR);
             assert(datosDeTR.size() == 60);
-            System.out.println("Datos TR " + idTR);
-            for (DatoAlmacenado datoAlmacenado : datosDeTR) {
-                System.out.println(datoAlmacenado.toString());
-            }
+//            System.out.println("Datos TR " + idTR);
+//            for (DatoAlmacenado datoAlmacenado : datosDeTR) {
+//                System.out.println(datoAlmacenado.toString());
+//            }
         }
 
     }
