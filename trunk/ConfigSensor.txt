@@ -1,5 +1,0 @@
-Nombre:01
-FactorClimatico:T
-Frecuencia:1000
-Directorio:adapter1
-
