@@ -1,1 +1,0 @@
-java -jar ..\Sensor\dist\sensor.jar ..\Configuraciones\ConfigSensor1.txt

@@ -1,4 +1,0 @@
-Nombre:05
-FactorClimatico:P
-Frecuencia:1000
-Directorio:sensor5
