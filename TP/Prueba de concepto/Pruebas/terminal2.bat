@@ -1,1 +1,0 @@
-java -jar ..\TerminalRemotaFinal\dist\TerminalRemotaFinal.jar ..\Configuraciones\ConfigTr2.txt

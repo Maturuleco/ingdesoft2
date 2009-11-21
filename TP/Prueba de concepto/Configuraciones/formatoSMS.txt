@@ -1,1 +1,0 @@
-NumeroOrigen;NumeroDestino;TimeStamp;CuerpoDelMensaje

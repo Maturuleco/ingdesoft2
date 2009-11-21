@@ -1,4 +1,0 @@
-Nombre:01
-FactorClimatico:T
-Frecuencia:10000
-Directorio:sensor1
