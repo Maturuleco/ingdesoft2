@@ -1,27 +1,27 @@
 package networkController;
 
+import model.HeartbeatMessege;
+import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.MensajeNetworkController;
+import model.MensajeRaise;
 import red_gsm.MensajeGSM;
 
 public class NetworkController extends Thread {
 
-    //Le seteo la duracion a 2 minutos
-    private int duration = 120000;
-    private HashMap timersTR = new HashMap();
-    private static final long sleepTime = 1;
+    private static final long delay = 120000; // el tiempo esperado para decidir que una TR se cae, 2'
+    
+    private Timer timer = new Timer();
+    private HashMap<Integer, TimerTaskTR> timersTR = new HashMap<Integer, TimerTaskTR>();
+    private HashMap<Integer, Boolean> trCaidas = new HashMap<Integer, Boolean>();
+    private HashMap<Integer, Long> trUltMensaje = new HashMap<Integer, Long>();
+
     private BlockingQueue<HeartbeatMessege> entrada;
     private BlockingQueue<MensajeGSM> entradaRaise;
-
-    public NetworkController(int trCount) {
-        String name;
-        for (int i = 0; i < trCount; i++) {
-            name = String.valueOf(i);
-            TimerTR timer = new TimerTR(name, duration, this);
-            timersTR.put(name, timer);
-        }
-
-    }
 
     public void setEntrada(BlockingQueue<HeartbeatMessege> entrada) {
         this.entrada = entrada;
@@ -31,89 +31,87 @@ public class NetworkController extends Thread {
         this.entradaRaise = entradaRaise;
     }
 
-    public void recibirMensaje(HeartbeatMessege m) {
-        try {
-            String tr = m.getTrName().toString();
-
-            TimerTR timerTR = (TimerTR) timersTR.get(tr);
-
-            if (!timerTR.getTimerTRFall()) {
-                if (timerTR.estaCorriendo()) {
-                    System.out.println("NC      Restart: " + timerTR.getTrName());
-                    timerTR.setIntervalo(duration);
-                    timerTR.restart();
-                } else {
-                    System.out.println("NC    Init: " + timerTR.getTrName());
-                    timerTR.setIntervalo(duration);
-                    timerTR.start();
-                }
-            } else {
-                System.out.println("NC    recup: " + timerTR.getTrName());
-                timerTR.setIntervalo(duration);
-                timerTR.restart();
-            }
-        } catch (Exception e) {
-            System.out.println("NC No se pudo manejar el mensaje: " + m.toString());
-        }
-    }
-
-    public void trRecuperada(String trName) {
-        TimerTR timerTR = (TimerTR) timersTR.get(trName);
-        if (timerTR.getTimerTRFall()) {
-            // AVISAR A QUIEN CORRESPONDA QUE LA TR SE RECUPERO
-            System.out.println("NC      Recuperacion de TR: " + timerTR.getTrName());
-            timerTR.setIntervalo(duration);
-            timerTR.setTimerTRFall(false);
-            timerTR.run();
-        }
-    }
-
     @Override
     public void run() {
         while (true) {
-             
             recibirMensaje();
-
         }
     }
 
     private boolean recibirMensaje() {
-        
-        //if (levanto != null) {
-        if (entradaRaise.size() > 0) {
-            MensajeGSM levanto = entradaRaise.poll();
 
-            System.out.println("NC Se recibio mensaje RAISE de la TR " + levanto.getOrigen());
-            String[] mensaje = levanto.getMensaje().split("#");
+        if (entradaRaise.size() > 0) {
             try {
-                trRecuperada(mensaje[1]);
-            } catch (Exception e) {
-                System.out.println("NC No se pudo avisar que la TR: " + levanto.getOrigen() + " se levanto");
+                MensajeGSM levanto = entradaRaise.poll();
+                MensajeRaise mensajeRaise = new MensajeRaise(levanto.getMensaje());
+                System.out.println("NC Recibio mensaje RAISE de la TR " + mensajeRaise.getIdTR());
+                procesarMensajeNC(mensajeRaise);
+            } catch (ParseException ex) {
+                Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
             }
             return true;
-        } else {
-            HeartbeatMessege cabeza = entrada.poll();
-            
-            if (cabeza != null) {
-                System.out.println("NC Se recibio mensaje HEART de la TR " + cabeza.getTrName());
-                System.out.println("NC    entrada size: " + entrada.size());
+        } else if(entrada.size() > 0) {
+            HeartbeatMessege mensajeHeartbeat = entrada.poll();
+            System.out.println("NC Recibio mensaje HEART de la TR " + mensajeHeartbeat.getIdTR());
+            procesarMensajeNC(mensajeHeartbeat);
+            actualizarEstadoRedTelemetrica(mensajeHeartbeat);
+            return true;
+        }
+        return false;
+    }
 
-                recibirMensaje(cabeza);
-                return true;
+    public synchronized void timeout(Integer nombreTR) {
+        // AVISAR A QUIEN CORRESPONDA QUE LA TR ESTA CAIDA
+        System.out.println("NC TR " + nombreTR + " caida");
+        trCaidas.put(nombreTR, true);
+    }
+
+    private void procesarMensajeNC(MensajeNetworkController mensaje) {
+        Integer nombreTR = mensaje.getIdTR();
+        
+        Long fechaUltMensajeRecibido = trUltMensaje.get(nombreTR);
+        Long fechaMensajeRaise = mensaje.getFecha().getTime();
+
+        // Si no es un mensaje viejo
+        if( fechaUltMensajeRecibido == null || fechaUltMensajeRecibido < fechaMensajeRaise){
+            trUltMensaje.put(nombreTR, fechaMensajeRaise);
+
+            // Si es un mensaje de REGISTRO EN LA RED
+            if( !timersTR.containsKey(nombreTR) ){
+                registrarTR(nombreTR);
+                iniciarMonitoreoDeTR(nombreTR);
             }
-            return false;
+            startTimerTR(nombreTR);
+
         }
     }
 
-    public void timeout(TimerTR t) {
-        // AVISAR A QUIEN CORRESPONDA QUE LA TR ESTA CAIDA
+    private void registrarTR(Integer nombreTR) {
+        // TODO: avisar existencia de nueva TR
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public int getDuration() {
-        return duration;
+    private void iniciarMonitoreoDeTR(Integer nombreTR) {
+       TimerTaskTR timerTask = new TimerTaskTR(this, nombreTR);
+       timersTR.put(nombreTR, timerTask);
+       trCaidas.put(nombreTR, false);
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    private void startTimerTR(Integer nombreTR) {
+
+        if( trCaidas.get(nombreTR) ){
+            System.out.println("NC    RECU TR: " + nombreTR);
+            trCaidas.put(nombreTR, false);
+        } else {
+            // Para que el timerTask anterior se corte
+            timersTR.get(nombreTR).cancel();
+        }
+        timer.schedule(timersTR.get(nombreTR), delay);
     }
+
+    private void actualizarEstadoRedTelemetrica(HeartbeatMessege mensajeHeartbeat) {
+        // TODO: Ralizar en iteraciones siguientes ;)
+    }
+
+    
 }

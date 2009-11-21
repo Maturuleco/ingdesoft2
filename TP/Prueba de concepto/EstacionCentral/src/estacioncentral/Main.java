@@ -19,7 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import model.DatoAlmacenado;
 import model.Mensaje;
-import networkController.HeartbeatMessege;
+import model.HeartbeatMessege;
 import red_gsm.ComparadorMsjGSM;
 import red_gsm.MensajeGSM;
 import red_gsm.ModemGSM;
@@ -119,7 +119,7 @@ public class Main {
         modemGSM = new ModemGSM(numeroModem);
         System.out.println("Se creo el Modem");
 
-        networkController = new NetworkController(trRegistradas);
+        networkController = new NetworkController();
         System.out.println("Se creo el Network Controller");
 
     }
