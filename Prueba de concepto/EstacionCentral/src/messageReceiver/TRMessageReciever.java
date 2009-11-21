@@ -57,7 +57,7 @@ public class TRMessageReciever extends Thread {
 
     private void receive(MensajeGSM msj) {
         String contenido = new String(msj.getMensaje());
-        System.out.println("RECEPCION\tEl message receiver recibe un mensaje");
+        //System.out.println("RECEPCION\tEl message receiver recibe un mensaje");
 
         String[] cuerpo = contenido.split("#");
         // frag#num#msj#firma
@@ -115,7 +115,7 @@ public class TRMessageReciever extends Thread {
             String respuesta = "ACK#"+num+"#"+timeStamp;
             String hash = ValidatingTools.getHash(respuesta);
             MensajeGSM ack = new MensajeGSM(0, destino, respuesta+"#"+hash, 0);
-            System.out.println("ACK\tEl Message receiver manda el ACK: "+ack);
+            //System.out.println("ACK\tEl Message receiver manda el ACK: "+ack);
             modemSalida.put(ack);
 
         } catch (InterruptedException ex) {
