@@ -81,7 +81,7 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor );
+        predictor = new Predictor(regla,datosOrdenadosPorFactor, "lugar" );
         assertTrue(predictor.analizar());
     }
 
@@ -94,7 +94,7 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor );
+        predictor = new Predictor(regla,datosOrdenadosPorFactor, "lugar" );
         assertFalse(predictor.analizar());
     }
 
@@ -107,7 +107,7 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor );
+        predictor = new Predictor(regla,datosOrdenadosPorFactor , "lugar");
         assertFalse(predictor.analizar());
     }
 }
