@@ -1,7 +1,6 @@
 package red_gsm;
 
 import java.text.ParseException;
-import java.util.Comparator;
 import java.util.Date;
 
 public class MensajeGSM {
