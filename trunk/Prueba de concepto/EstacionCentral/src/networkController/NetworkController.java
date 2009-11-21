@@ -88,7 +88,7 @@ public class NetworkController extends Thread {
 
     private void registrarTR(Integer nombreTR) {
         // TODO: avisar existencia de nueva TR
-        throw new UnsupportedOperationException("Not yet implemented");
+        
     }
 
     private void iniciarMonitoreoDeTR(Integer nombreTR) {
@@ -101,11 +101,11 @@ public class NetworkController extends Thread {
 
         if( trCaidas.get(nombreTR) ){
             System.out.println("NC    RECU TR: " + nombreTR);
-            trCaidas.put(nombreTR, false);
         } else {
             // Para que el timerTask anterior se corte
             timersTR.get(nombreTR).cancel();
         }
+        iniciarMonitoreoDeTR(nombreTR);
         timer.schedule(timersTR.get(nombreTR), delay);
     }
 

@@ -31,7 +31,6 @@ import red_gsm.ModemGSM;
 public class Main {
 
     public static int numeroModem = 999;
-    private static int trRegistradas = 10;
 
     private static PredictorManager predictor;
     private static ValidatorManager validator;
