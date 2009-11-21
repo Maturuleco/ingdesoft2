@@ -1,6 +1,0 @@
-idTR:02
-numeroModem:002
-NumeroEstacionCentral:999
-Sensor1:default|sensor5|01|1000
-Sensor2:default|sensor6|02|10000
-Sensor3:default|sensor7|03|1000
