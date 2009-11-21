@@ -17,7 +17,7 @@ public class MensajeRaise extends MensajeNetworkController {
              throw new ParseException(mensaje, 0);
         }
         setIdTR(Integer.valueOf(campos[1]));
-        setFecha(new Date(campos[2]));
+        setFecha(new Date(Long.valueOf(campos[2])));
 
     }
 

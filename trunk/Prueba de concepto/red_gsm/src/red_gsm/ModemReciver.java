@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package red_gsm;
 
 import java.io.BufferedReader;
@@ -37,25 +36,26 @@ public class ModemReciver extends Thread {
 
     private void recive() {
 
-            File[] files = folderPropia.listFiles();
-            int longitud = 0;
-            if (files != null)
-                longitud = files.length;
-            for (int j = 0; j < longitud; j++) {
-                File file = files[j];
-                //System.out.println( getName()+ "D:" + file.getName());
-                if(file.canRead()){
+        File[] files = folderPropia.listFiles();
+        int longitud = 0;
+        if (files != null) {
+            longitud = files.length;
+        }
+        for (int j = 0; j < longitud; j++) {
+            File file = files[j];
+            //System.out.println( getName()+ "D:" + file.getName());
+            if (file.canRead()) {
                 FileReader fr = null;
                 try {
                     fr = new FileReader(file);
-                    
+
                     BufferedReader br = new BufferedReader(fr, bufferSize);
                     String texto = "";
                     String linea;
-                    while ( (linea= br.readLine()) != null) {
+                    while ((linea = br.readLine()) != null) {
                         texto += linea;
                     }
-                    
+
                     fr.close();
                     file.delete();
 
@@ -64,7 +64,7 @@ public class ModemReciver extends Thread {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
-                    System.out.println("\nERROR GSM\tNo se puede Parsear: "+ex.toString());
+                    System.out.println("\nERROR GSM\tNo se puede Parsear: " + ex.toString());
                     Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,15 +75,15 @@ public class ModemReciver extends Thread {
                         Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                }
-
             }
+
+        }
 
     }
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             recive();
             try {
                 sleep(timeToWait);
@@ -92,7 +92,4 @@ public class ModemReciver extends Thread {
             }
         }
     }
-    
-    
-
 }
