@@ -13,7 +13,7 @@ import predictor.Predictor;
  */
 public class Evaluador {
 
-    private Particionador particionador = new Particionador(2);
+    private Particionador particionador = new Particionador(3);
 
     // TODO: implementar bien
     public Integer evaluar(Collection<Predictor> predictores) {

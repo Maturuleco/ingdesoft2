@@ -34,7 +34,6 @@ public class CargadorDatos implements Runnable {
             try {
                 dato = generador.generarDato();
                 escribirDatosValidos(dato);
-                System.out.println("Guarde un dato en la base: "+ dato.toString());
                 Thread.sleep(tiempoEspera);
             } catch (InterruptedException ex) {
                 
