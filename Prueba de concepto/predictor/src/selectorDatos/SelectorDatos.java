@@ -19,7 +19,6 @@ import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,6 +88,7 @@ public class SelectorDatos {
         return resultado;
     }
 
+    // TODO: implementar leerDatosDeTR (Collection<Integer> trs)
     public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
