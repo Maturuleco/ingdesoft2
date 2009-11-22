@@ -21,15 +21,13 @@ public abstract class Predictor implements Runnable {
     private static final String NOMBRE_DIRECTORIO_PREDICCIONES = "Predicciones";
     private static final String PREFIJO_ARCHIVO_ALERTA = "Alerta";
 
-    protected String lugar;
     protected Regla regla;
 
     public Predictor(){
         
     }
 
-    public Predictor(Regla regla, String lugar) {
-        this.lugar = lugar;
+    public Predictor(Regla regla) {
         this.regla = regla;
     }
 
@@ -40,7 +38,7 @@ public abstract class Predictor implements Runnable {
         Boolean detectoAlerta = analizar();
         if (detectoAlerta) {
             escribirPrediccion();
-            System.out.println(Calendar.getInstance().getTime().toString());
+            System.out.println(timeStamp().toString());
             System.out.println("<<" + regla.getMensajePrediccion()+ ">>");
         } else {
             System.out.println("<<NO " + regla.getMensajePrediccion()+">>");
@@ -56,7 +54,6 @@ public abstract class Predictor implements Runnable {
         Date ahora = Calendar.getInstance().getTime();
         String nombre = PREFIJO_ARCHIVO_ALERTA;
         nombre += String.valueOf(ahora.getTime());
-        nombre += lugar;
         nombre +=  regla.getMensajePrediccion();
         return nombre;
     }
@@ -69,7 +66,6 @@ public abstract class Predictor implements Runnable {
             PrintWriter salida = new PrintWriter(bw);
             salida.append(" ============ ALERTA ============\n");
             salida.append("Fecha: " + timeStamp().toString() + "\n");
-            salida.append("Lugar: " + lugar + "\n");
             salida.append("Mensaje: " + regla.getMensajePrediccion() + "\n");
             salida.append(" ================================");
             salida.close();
