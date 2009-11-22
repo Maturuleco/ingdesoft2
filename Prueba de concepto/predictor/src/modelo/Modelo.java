@@ -15,6 +15,11 @@ public class Modelo {
     private String nombreModelo;
     private Collection<Regla> reglas;
 
+    public Modelo(String nombreModelo, Collection<Regla> reglas) {
+        this.nombreModelo = nombreModelo;
+        this.reglas = reglas;
+    }
+
     public Collection<Regla> getReglas() {
         return reglas;
     }

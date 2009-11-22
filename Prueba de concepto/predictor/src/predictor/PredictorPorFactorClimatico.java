@@ -16,11 +16,11 @@ import modelo.Regla;
  *
  * @author Santiago Avendaño <santiavenda2@gmail.com>
  */
-public class PredictorPorTipo extends Predictor {
+public class PredictorPorFactorClimatico extends Predictor {
 
     private Map<FactorClimatico, Collection<DatoAlmacenado>> datos;
 
-    public PredictorPorTipo(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos, String lugar) {
+    public PredictorPorFactorClimatico(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos) {
         super(regla);
         this.datos = datos;
     }
