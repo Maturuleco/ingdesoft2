@@ -21,7 +21,7 @@ public class PredictorPorTipo extends Predictor {
     private Map<FactorClimatico, Collection<DatoAlmacenado>> datos;
 
     public PredictorPorTipo(Regla regla, Map<FactorClimatico, Collection<DatoAlmacenado>> datos, String lugar) {
-        super(regla, lugar);
+        super(regla);
         this.datos = datos;
     }
 

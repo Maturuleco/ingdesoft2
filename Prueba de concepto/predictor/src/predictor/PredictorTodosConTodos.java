@@ -21,8 +21,8 @@ public class PredictorTodosConTodos extends Predictor {
     public PredictorTodosConTodos() {
     }
 
-    public PredictorTodosConTodos(Regla regla, Collection<DatoAlmacenado> datos, String lugar) {
-        super(regla, lugar);
+    public PredictorTodosConTodos(Regla regla, Collection<DatoAlmacenado> datos) {
+        super(regla);
         datosAlmacenados = datos;
     }
 
