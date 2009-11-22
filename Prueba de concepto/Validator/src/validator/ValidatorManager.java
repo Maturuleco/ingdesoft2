@@ -46,7 +46,6 @@ public class ValidatorManager implements Runnable{
                     } else {
                         validadorDAO.escribirDatosOutlier(dato);
                     }
-//                    System.out.println(dato.toString()+": guarde un dato en la base");
                     Thread.sleep(tiempoEspera);
                 }
             } catch (InterruptedException ex) { }
