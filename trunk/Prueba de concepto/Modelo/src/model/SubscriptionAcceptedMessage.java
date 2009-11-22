@@ -11,4 +11,10 @@ package model;
  */
 public class SubscriptionAcceptedMessage {
     private TRsSubscriberMessage mensajeAceptado;
+
+    public SubscriptionAcceptedMessage(TRsSubscriberMessage mensajeAceptado) {
+        this.mensajeAceptado = mensajeAceptado;
+    }
+
+    
 }

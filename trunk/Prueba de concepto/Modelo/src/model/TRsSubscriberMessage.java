@@ -19,4 +19,36 @@ public class TRsSubscriberMessage {
     private List<Integer> TRs;
     private List<FactorClimatico> factoresClimaticos;
 
+    public List<Integer> getTRs() {
+        return TRs;
+    }
+
+    public void setTRs(List<Integer> TRs) {
+        this.TRs = TRs;
+    }
+
+    public List<FactorClimatico> getFactoresClimaticos() {
+        return factoresClimaticos;
+    }
+
+    public void setFactoresClimaticos(List<FactorClimatico> factoresClimaticos) {
+        this.factoresClimaticos = factoresClimaticos;
+    }
+
+    public Integer getIdEC() {
+        return idEC;
+    }
+
+    public void setIdEC(Integer idEC) {
+        this.idEC = idEC;
+    }
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
 }
