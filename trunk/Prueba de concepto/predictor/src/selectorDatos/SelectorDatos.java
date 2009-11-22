@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DatoAlmacenado;
-import model.FactorClimatico;
 
 /**
  *
@@ -72,24 +71,6 @@ public class SelectorDatos {
 
     }
 
-    public Map<FactorClimatico, Collection<DatoAlmacenado>> leerTodosLosDatosPorFactor() {
-        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
-        ObjectSet<DatoAlmacenado> resultado = null;
-        abrirCliente();
-        try {
-            resultado = cliente.queryByExample(prototipo);
-        } catch (DatabaseClosedException e) {
-            System.out.println("la base de datos se encuentra cerrada");
-            System.out.println(e.getMessage());
-        } catch (Db4oIOException e) {
-            System.out.println("Error de I/O");
-            System.out.println(e.getMessage());
-        } finally {
-            cerrarCliente();
-        }
-        return ordenarPorFactor(resultado);
-    }
-
     public List<DatoAlmacenado> leerTodosLosDatos() {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
         ObjectSet<DatoAlmacenado> resultado = null;
@@ -106,20 +87,6 @@ public class SelectorDatos {
             cerrarCliente();
         }
         return resultado;
-    }
-
-    public static Map<FactorClimatico, Collection<DatoAlmacenado>> ordenarPorFactor(Collection<DatoAlmacenado> datos) {
-        Map<FactorClimatico, Collection<DatoAlmacenado>> result = new EnumMap<FactorClimatico, Collection<DatoAlmacenado>>(FactorClimatico.class);
-
-        for (FactorClimatico factor : FactorClimatico.values()) {
-            result.put(factor, new LinkedList<DatoAlmacenado>());
-        }
-
-        for (DatoAlmacenado datoAlmacenado : datos) {
-            result.get(datoAlmacenado.getFactor()).add(datoAlmacenado);
-        }
-
-        return result;
     }
 
     public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {

@@ -22,7 +22,7 @@ import predictor.Predictor;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Regla;
-import predictor.PredictorPorTipo;
+import predictor.PredictorPorFactorClimatico;
 import predictor.PredictorTodosConTodos;
 import selectorDatos.SelectorDatos;
 
@@ -82,9 +82,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor, "lugar" );
+        predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
         assertTrue(predictor.analizar());
-        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
+        predictor = new PredictorTodosConTodos(regla, datos);
         assertTrue(predictor.analizar());
     }
 
@@ -97,9 +97,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor, "lugar" );
+        predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor );
         assertFalse(predictor.analizar());
-        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
+        predictor = new PredictorTodosConTodos(regla, datos);
         assertFalse(predictor.analizar());
     }
 
@@ -112,9 +112,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor , "lugar");
+        predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
         assertFalse(predictor.analizar());
-        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
+        predictor = new PredictorTodosConTodos(regla, datos);
         assertFalse(predictor.analizar());
     }
 }
