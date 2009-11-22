@@ -7,7 +7,6 @@ package predictorTest;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
 import model.DataSource;
@@ -23,6 +22,8 @@ import predictor.Predictor;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Regla;
+import predictor.PredictorPorTipo;
+import predictor.PredictorTodosConTodos;
 import selectorDatos.SelectorDatos;
 
 /**
@@ -56,7 +57,7 @@ public class PredictorTest {
         Condicion condicionMenorIgual10 = new Condicion(FactorClimatico.temperatura, Comparador.meneq, 10f);
         Condicion condicionMenorIgual11 = new Condicion(FactorClimatico.temperatura, Comparador.meneq, 11f);
         Condicion condicionMayorIgual10 = new Condicion(FactorClimatico.temperatura, Comparador.mayeq, 10f);
-        Condicion condicionMayorIgual9 = new Condicion(FactorClimatico.temperatura, Comparador.mayeq, 10f);
+        Condicion condicionMayorIgual9 = new Condicion(FactorClimatico.temperatura, Comparador.mayeq, 9f);
 
         condiciones.add(condicionIgual);
         condiciones.add(condicionMayor);
@@ -81,7 +82,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor, "lugar" );
+        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor, "lugar" );
+        assertTrue(predictor.analizar());
+        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
         assertTrue(predictor.analizar());
     }
 
@@ -94,7 +97,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor, "lugar" );
+        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor, "lugar" );
+        assertFalse(predictor.analizar());
+        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
         assertFalse(predictor.analizar());
     }
 
@@ -107,7 +112,9 @@ public class PredictorTest {
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
         datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
-        predictor = new Predictor(regla,datosOrdenadosPorFactor , "lugar");
+        predictor = new PredictorPorTipo(regla,datosOrdenadosPorFactor , "lugar");
+        assertFalse(predictor.analizar());
+        predictor = new PredictorTodosConTodos(regla, datos, "lugar");
         assertFalse(predictor.analizar());
     }
 }
