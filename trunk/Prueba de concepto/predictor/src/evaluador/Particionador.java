@@ -14,20 +14,26 @@ import predictor.Predictor;
  */
 public class Particionador {
 
-    private int cantidadPorPaquete = 2;
+    private int tamanioParticion = 2;
 
-    public Collection<Collection<Predictor>> particionar(Collection<Predictor> predictores) {
-        Collection<Collection<Predictor>> resultado = new LinkedList<Collection<Predictor>>();
-        Collection<Predictor> paquete = new LinkedList<Predictor>();
+    public Particionador(int tamanioParticion) {
+        this.tamanioParticion = tamanioParticion;
+        if (tamanioParticion <= 0)
+            throw new IllegalArgumentException("El tamaño de la particion debe ser mayor a 0");
+    }
+
+    public Collection<Collection<PredictorThread>> particionar(Collection<Predictor> predictores, Contador contador) {
+        Collection<Collection<PredictorThread>> resultado = new LinkedList<Collection<PredictorThread>>();
+        Collection<PredictorThread> paquete = new LinkedList<PredictorThread>();
         for (Predictor predictor : predictores) {
-            if (paquete.size() == cantidadPorPaquete) {
+            if (paquete.size() == tamanioParticion) {
                 resultado.add(paquete);
-                paquete = new LinkedList<Predictor>();
+                paquete = new LinkedList<PredictorThread>();
             }
-            paquete.add(predictor);
+            paquete.add(new PredictorThread(predictor, contador));
         }
-        if (paquete.size() == cantidadPorPaquete) {
-                resultado.add(paquete);
+        if (paquete.size() <= tamanioParticion) {
+            resultado.add(paquete);
         }
         return resultado;
     }

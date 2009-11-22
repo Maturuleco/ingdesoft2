@@ -8,11 +8,11 @@ import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
 import estrategia.Estrategia;
 import estrategia.EstrategiaAgruparPorFactor;
+import evaluador.Evaluador;
 import java.util.Collection;
 import java.util.List;
 import model.DatoAlmacenado;
 import modelo.Modelo;
-import modelo.Regla;
 import selectorDatos.SelectorDatos;
 
 /**
@@ -26,6 +26,7 @@ public class PredictorManager implements Runnable {
     private SelectorDatos selectorDatos;
     private CargadorModelo cargadorModelos;
     private Estrategia estrategia = new EstrategiaAgruparPorFactor();
+    private Evaluador evaluador = new Evaluador();
 
     public PredictorManager(ObjectServer server) {
         selectorDatos = new SelectorDatos(server);
@@ -37,14 +38,17 @@ public class PredictorManager implements Runnable {
         while (keepTrying) {
             try {
                 List<DatoAlmacenado> datos = selectorDatos.leerTodosLosDatos();
-                List<Predictor> predictores ;
                 Collection<Modelo> modelos = cargadorModelos.getModelos();
+                List<Predictor> predictores;
+
                 for (Modelo modelo : modelos) {
                     predictores = estrategia.obtenerPredictores(modelo, datos);
+                    evaluador.evaluar(predictores);
                 }
 
                 Thread.sleep(tiempoEspera);
             } catch (InterruptedException ex) {
+                System.out.println("El thread Predictor Manager fue interrumpido");
             }
         }
     }

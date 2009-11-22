@@ -7,6 +7,7 @@ package predictorTest;
 
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
 import model.DataSource;
@@ -24,7 +25,6 @@ import modelo.Condicion;
 import modelo.Regla;
 import predictor.PredictorPorFactorClimatico;
 import predictor.PredictorTodosConTodos;
-import selectorDatos.SelectorDatos;
 
 /**
  *
@@ -66,7 +66,7 @@ public class PredictorTest {
         condiciones.add(condicionMenorIgual11);
         condiciones.add(condicionMayorIgual10);
         condiciones.add(condicionMayorIgual9);
-        regla = new Regla(condiciones, "Se detectó un huracan");
+        regla = new Regla("regla prueba",condiciones);
     }
 
     @After
@@ -81,13 +81,26 @@ public class PredictorTest {
         DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 10.0f,1,DataSource.terminal_remota);
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
         assertTrue(predictor.analizar());
         predictor = new PredictorTodosConTodos(regla, datos);
         assertTrue(predictor.analizar());
     }
 
+    private Map<FactorClimatico, Collection<DatoAlmacenado>> agruparDatosPorFactor(Collection<DatoAlmacenado> datos) {
+        Map<FactorClimatico, Collection<DatoAlmacenado>> result = new EnumMap<FactorClimatico, Collection<DatoAlmacenado>>(FactorClimatico.class);
+
+        for (FactorClimatico factor : FactorClimatico.values()) {
+            result.put(factor, new LinkedList<DatoAlmacenado>());
+        }
+
+        for (DatoAlmacenado datoAlmacenado : datos) {
+            result.get(datoAlmacenado.getFactor()).add(datoAlmacenado);
+        }
+
+        return result;
+    }
     /*
      * Hay una regla sobre la temperatura, pero el dato sobre temperatura no la cumple
      */
@@ -96,7 +109,7 @@ public class PredictorTest {
         DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.temperatura, 5.0f,1, DataSource.terminal_remota);
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor );
         assertFalse(predictor.analizar());
         predictor = new PredictorTodosConTodos(regla, datos);
@@ -111,7 +124,7 @@ public class PredictorTest {
         DatoAlmacenado dato1 = new DatoAlmacenado(1, Calendar.getInstance().getTime(), FactorClimatico.humedad, 10.0f,1,DataSource.terminal_remota);
         datos = new LinkedList<DatoAlmacenado>();
         datos.add(dato1);
-        datosOrdenadosPorFactor = SelectorDatos.ordenarPorFactor(datos);
+        datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
         assertFalse(predictor.analizar());
         predictor = new PredictorTodosConTodos(regla, datos);

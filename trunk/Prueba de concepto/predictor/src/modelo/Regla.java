@@ -18,14 +18,18 @@ import model.FactorClimatico;
  * @author Santiago Avendaño
  */
 public class Regla {
+    private String nombre;
     private Collection<Condicion> condiciones;
-    private String mensajePrediccion;
     private Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor;
 
-    public Regla(Collection<Condicion> condiciones, String prediccion) {
+    public Regla(String nombre,Collection<Condicion> condiciones) {
+        this.nombre = nombre;
         this.condiciones = condiciones;
-        this.mensajePrediccion = prediccion;
         this.condicionesPorFactor = ordenarCondicionesPorFactor();
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public Collection<Condicion> getCondiciones() {
@@ -34,14 +38,6 @@ public class Regla {
 
     public void setCondiciones(Collection<Condicion> condiciones) {
         this.condiciones = condiciones;
-    }
-
-    public String getMensajePrediccion() {
-        return mensajePrediccion;
-    }
-
-    public void setMensajePrediccion(String prediccion) {
-        this.mensajePrediccion = prediccion;
     }
 
     public Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor(){
@@ -72,7 +68,6 @@ public class Regla {
                 fr.append("\n");
             }
             fr.append("p:");
-            fr.append(mensajePrediccion);
             fr.close();
         } catch (IOException e) {
             System.out.println("IOException:");
