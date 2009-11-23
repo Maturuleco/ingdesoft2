@@ -10,6 +10,8 @@ import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
+import com.db4o.query.Constraint;
+import com.db4o.query.Constraints;
 import com.db4o.query.Predicate;
 import com.db4o.query.Query;
 import java.io.BufferedWriter;
@@ -88,19 +90,20 @@ public class SelectorDatos {
         }
         return resultado;
     }
-    // TODO: implementar leerDatosDeTR (Collection<Integer> trs)
+
     public Collection<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
-        ObjectSet<DatoAlmacenado> resultado = null;
+        ObjectSet<DatoAlmacenado> resultado;
         abrirCliente();
         resultado = cliente.query(new Predicate<DatoAlmacenado>() {
             @Override
             public boolean match(DatoAlmacenado dato) {
-                return  trs.contains(dato.getIdTR());
+                return trs.contains(dato.getIdTR());
             }
         });
+        cerrarCliente();
         return resultado;
     }
-
+    
     public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
