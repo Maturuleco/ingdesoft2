@@ -7,6 +7,7 @@ package predictorTest;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
+import com.db4o.query.Query;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -141,6 +142,7 @@ public class SelectorDatosTest {
     }
 
     @Test
+    @Ignore
     public void seleccionarPorTRs() {
         Collection<Integer> trs = new TreeSet<Integer>();
         trs.add(1);
