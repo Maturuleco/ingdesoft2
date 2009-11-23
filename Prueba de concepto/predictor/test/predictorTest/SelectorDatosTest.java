@@ -152,6 +152,15 @@ public class SelectorDatosTest {
     }
 
     @Test
+    public void seleccionarPorTRsOpt() {
+        Collection<Integer> trs = new TreeSet<Integer>();
+        trs.add(1);
+        trs.add(2);
+        Collection<DatoAlmacenado> datosTROpt = selector.leerDatosDeTROpt(trs);
+        assertTrue(datosTROpt.size() == 120);
+    }
+
+    @Test
     @Ignore
     public void seleccionarUltimosCantidad() {
         Integer cantidad = 35;
