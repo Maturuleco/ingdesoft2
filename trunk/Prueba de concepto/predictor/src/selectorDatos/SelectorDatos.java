@@ -10,6 +10,7 @@ import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
+import com.db4o.query.Predicate;
 import com.db4o.query.Query;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -87,8 +88,19 @@ public class SelectorDatos {
         }
         return resultado;
     }
-
     // TODO: implementar leerDatosDeTR (Collection<Integer> trs)
+    public Collection<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
+        ObjectSet<DatoAlmacenado> resultado = null;
+        abrirCliente();
+        resultado = cliente.query(new Predicate<DatoAlmacenado>() {
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return  trs.contains(dato.getIdTR());
+            }
+        });
+        return resultado;
+    }
+
     public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
@@ -123,7 +135,7 @@ public class SelectorDatos {
     }
 
     public List<DatoAlmacenado> leerUltimosDatosTiempo(int seg) {
-       
+
         abrirCliente();
         List<DatoAlmacenado> resultado;
         Query query = cliente.query();
@@ -135,7 +147,7 @@ public class SelectorDatos {
         Date limiteInferior = restarTiempo(seg);
         int hasta = 0;
         for (DatoAlmacenado datoAlmacenado : resultado) {
-            if (datoAlmacenado.getTimeStamp().before(limiteInferior)){
+            if (datoAlmacenado.getTimeStamp().before(limiteInferior)) {
                 break;
             } else {
                 hasta++;
@@ -144,9 +156,9 @@ public class SelectorDatos {
         return resultado.subList(0, hasta);
     }
 
-    private Date restarTiempo(Integer seg){
+    private Date restarTiempo(Integer seg) {
         Calendar timestamp = Calendar.getInstance();
-        timestamp.add(Calendar.SECOND,-seg);
+        timestamp.add(Calendar.SECOND, -seg);
         Date timestampDesde = timestamp.getTime();
         return timestampDesde;
     }

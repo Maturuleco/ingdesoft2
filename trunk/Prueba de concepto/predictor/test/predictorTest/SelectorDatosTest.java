@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DataSource;
@@ -140,7 +141,16 @@ public class SelectorDatosTest {
     }
 
     @Test
-//    @Ignore
+    public void seleccionarPorTRs() {
+        Collection<Integer> trs = new TreeSet<Integer>();
+        trs.add(1);
+        trs.add(2);
+        Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(trs);
+        assertTrue(datosTR.size() == 120);
+    }
+
+    @Test
+    @Ignore
     public void seleccionarUltimosCantidad() {
         Integer cantidad = 35;
         System.out.println("======Ultimos por cantidad(" + cantidad +")======");
@@ -158,6 +168,7 @@ public class SelectorDatosTest {
     }
 
     @Test
+    @Ignore
     public void seleccionarUltimosTiempo() {
         System.out.println("======Ultimos por tiempo ======");
         List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatosTiempo(1);
@@ -169,6 +180,7 @@ public class SelectorDatosTest {
     }
 
     @Test
+    @Ignore
     public void seleccionarDatosPorTR() {
         Map<Integer, List<DatoAlmacenado>>datosPorTR = selector.datosPorTR();
         List<DatoAlmacenado> datosDeTR;
