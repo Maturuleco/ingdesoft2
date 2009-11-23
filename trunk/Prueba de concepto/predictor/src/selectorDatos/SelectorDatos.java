@@ -92,9 +92,10 @@ public class SelectorDatos {
     }
 
     public Collection<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
-        ObjectSet<DatoAlmacenado> resultado;
+        ObjectSet<DatoAlmacenado> resultado = null;
         abrirCliente();
         resultado = cliente.query(new Predicate<DatoAlmacenado>() {
+
             @Override
             public boolean match(DatoAlmacenado dato) {
                 return trs.contains(dato.getIdTR());
@@ -103,7 +104,29 @@ public class SelectorDatos {
         cerrarCliente();
         return resultado;
     }
-    
+
+    public Collection<DatoAlmacenado> leerDatosDeTROpt(final Collection<Integer> trs) {
+        abrirCliente();
+        Query query = queryDatosDeTRs(trs);
+        ObjectSet<DatoAlmacenado> resultado = query.execute();
+        cerrarCliente();
+        return resultado;
+    }
+
+    private Query queryDatosDeTRs(final Collection<Integer> trs) {
+        Query query = cliente.query();
+//        Constraints constraintSet = query.constraints();
+        query.constrain(DatoAlmacenado.class);
+        Query queryName = query.descend("idTR");
+        for (Integer idTR : trs) {
+            queryName.constraints().or(queryName.constrain(idTR));
+        }
+        for (Constraint c : queryName.constraints().toArray()) {
+            System.out.println(c.toString()+"\n");
+        }
+        return query;
+    }
+
     public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
         DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
         ObjectSet<DatoAlmacenado> resultado = null;
