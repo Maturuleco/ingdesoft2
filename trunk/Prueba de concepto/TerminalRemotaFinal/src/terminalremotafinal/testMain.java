@@ -79,7 +79,7 @@ public class testMain {
         MensajeGSM respuesta = new MensajeGSM(0, 01, "ACK" +"#" + 0 +"#"+ String.valueOf(m1.getTimeStamp()) +"#"+"firmaEC");
 
         System.out.println("\nComenzando Test Data Sender\nSe inicia el data Sender");
-        dataSender.start();
+        new Thread(dataSender).start();
         System.out.println("\nSe envia el Mensaje");
         try {
             entrada.put(m1);

@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Santiago Avendaño
  */
-public class Mensaje {
+public class Mensaje implements MensajeGeneral{
     private int priority = 0;
     long timeStamp;
     Integer idTR;
@@ -82,7 +82,8 @@ public class Mensaje {
         return true;
     }
 
-    @Override public String toString(){
+    @Override 
+    public String toString(){
         String id = Integer.toString(idTR);
         String ds = dataSource.toString();
         String ts = Long.toString(timeStamp);

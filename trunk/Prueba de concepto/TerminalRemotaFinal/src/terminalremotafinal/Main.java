@@ -36,6 +36,9 @@ public class Main {
 
     public static int estacionCentral;
     public static int idTR;
+    // TODO Poner estos campos en el arch de config
+    public static int latitud = 14;
+    public static int longitud = 15;
     private static int numeroModem;
     private static List<Adapter> adapters = new LinkedList<Adapter>();
     private static DataSender dataSender;
@@ -175,13 +178,14 @@ public class Main {
         System.out.println("Comenzando ejecucion de Dispatcher\n");
         dataManager.start();
         System.out.println("Comenzando ejecucion de Data Manager\n");
-        dataSender.start();
+        new Thread(dataSender).start();
         System.out.println("Comenzando ejecucion de Data Sender\n");
         for (Adapter adapter : adapters) {
             System.out.println("Comenzando ejecucion de Adapter "+adapter.getName().toString()+"\n");
             adapter.start();
         }
-        startUpManager.start();
+        System.out.println("Comenzando la ejecución del StartUpManager");
+        new Thread(startUpManager).start();
     }
 
     /**

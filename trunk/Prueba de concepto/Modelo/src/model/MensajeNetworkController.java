@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class MensajeNetworkController {
 
-    private Integer idTR;
-    private Date fecha;
+    protected Integer idTR;
+    protected Date fecha;
 
      public Date getFecha() {
         return fecha;

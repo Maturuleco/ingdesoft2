@@ -39,8 +39,21 @@ public class ValidatingTools {
         return hash;
     }
 
-    public static Boolean checkHash(String hash, String Mensaje) {
-        String recalculatedHash = getHash(Mensaje);
+    public static Boolean checkHash(String[] msj) {
+        String hash = msj[msj.length-1];
+        String mensaje = recuperarMensaje(msj);
+        String recalculatedHash = getHash(mensaje);
         return recalculatedHash.equals(hash);
+    }
+    
+    private static String recuperarMensaje(String[] msj) {
+        if (msj.length < 1)
+            return "";
+        String res = msj[0];
+        for (int i = 1; i < msj.length-1; i++) {
+            res += "#" + msj[i];
+        }
+        return res;
+
     }
 }
