@@ -71,7 +71,25 @@ public class SelectorDatos {
         }
     }
 
-    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Date desde, Date hasta, Collection<FactorClimatico> factores) {
+    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Collection<FactorClimatico> factores, Integer segundos) {
+        Predicate<DatoAlmacenado> predicado = predicadoDatosTodos();
+        if (idTRs != null) {
+            predicado = predicadoDatosDeTR(idTRs);
+        }
+        if (factores != null) {
+            predicado = conjuncion(predicado, predicadorDatosFactor(factores));
+        }
+        if (segundos != null) {
+            Date hasta = Calendar.getInstance().getTime();
+            Date desde = SelectorDatos.restarSegundos(hasta, segundos);
+            predicado = conjuncion(predicado, predicadoDatosDesde(desde));
+            predicado = conjuncion(predicado, predicadoDatosHasta(hasta));
+        }
+
+        return select(predicado);
+    }
+
+    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Collection<FactorClimatico> factores, Date desde, Date hasta) {
         Predicate<DatoAlmacenado> predicado = predicadoDatosTodos();
         if (idTRs != null) {
             predicado = predicadoDatosDeTR(idTRs);
@@ -156,8 +174,9 @@ public class SelectorDatos {
         };
     }
 
-    private Predicate<DatoAlmacenado> predicadorDatosFactor(final Collection<FactorClimatico> factores){
-        return new Predicate<DatoAlmacenado>(){
+    private Predicate<DatoAlmacenado> predicadorDatosFactor(final Collection<FactorClimatico> factores) {
+        return new Predicate<DatoAlmacenado>() {
+
             @Override
             public boolean match(DatoAlmacenado dato) {
                 return factores.contains(dato.getFactor());

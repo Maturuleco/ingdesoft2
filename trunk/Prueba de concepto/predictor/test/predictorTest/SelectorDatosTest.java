@@ -147,7 +147,7 @@ public class SelectorDatosTest {
         Collection<FactorClimatico> factores = new TreeSet<FactorClimatico>();
         factores.add(FactorClimatico.humedad);
         factores.add(FactorClimatico.lluvias);
-        Collection<DatoAlmacenado> datosFactor = selector.seleccionar(null, null, null, factores);
+        Collection<DatoAlmacenado> datosFactor = selector.seleccionar(null, factores, null, null);
         assertTrue(datosFactor.size() == 200);
     }
 
@@ -159,7 +159,7 @@ public class SelectorDatosTest {
         Collection<FactorClimatico> factores = new TreeSet<FactorClimatico>();
         factores.add(FactorClimatico.humedad);
         factores.add(FactorClimatico.lluvias);
-        Collection<DatoAlmacenado> datosTRFactor = selector.seleccionar(trs, null, null, factores);
+        Collection<DatoAlmacenado> datosTRFactor = selector.seleccionar(trs, factores, null, null);
         assertTrue(datosTRFactor.size() == 40);
     }
 
@@ -168,7 +168,7 @@ public class SelectorDatosTest {
         //System.out.println("======Ultimos por tiempo ======");
         Date ahora = Calendar.getInstance().getTime();
         Date desde = SelectorDatos.restarSegundos(ahora, 5);
-        List<DatoAlmacenado> datosOrdenados = selector.seleccionar(null, desde, ahora, null);
+        List<DatoAlmacenado> datosOrdenados = selector.seleccionar(null, null, desde, ahora);
         //System.out.println("TimeStamp Desde: " + desde.getTime());
         //System.out.println("TimeStamp Hasta: " + ahora.getTime());
         for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
