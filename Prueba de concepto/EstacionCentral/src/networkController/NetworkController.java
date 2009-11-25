@@ -43,7 +43,8 @@ public class NetworkController extends Thread {
         if (entradaRaise.size() > 0) {
             try {
                 MensajeGSM levanto = entradaRaise.poll();
-                MensajeRaise mensajeRaise = new MensajeRaise(levanto.getMensaje());
+                String contenido = levanto.getMensaje().split("#")[2];
+                MensajeRaise mensajeRaise = MensajeRaise.parse(contenido);
                 System.out.println("NC Recibio mensaje RAISE de la TR " + mensajeRaise.getIdTR());
                 procesarMensajeNC(mensajeRaise);
             } catch (ParseException ex) {

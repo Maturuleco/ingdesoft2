@@ -1,7 +1,6 @@
 /*
  * Esta clase recibe los Sms, los valida y los reparte en el sistema
  */
-
 package estacioncentral;
 
 import java.util.concurrent.BlockingQueue;
@@ -14,6 +13,7 @@ import red_gsm.MensajeGSM;
  * @author Mar
  */
 public class ModemDispatcher extends Thread {
+
     private BlockingQueue<MensajeGSM> modemEntrada;
     private BlockingQueue<MensajeGSM> startupSalida;
     private BlockingQueue<MensajeGSM> dataSalida;
@@ -39,40 +39,38 @@ public class ModemDispatcher extends Thread {
             try {
                 MensajeGSM respuesta = modemEntrada.take();
                 recive(respuesta);
-            } catch (InterruptedException ex) { }
+            } catch (InterruptedException ex) {
+            }
         }
     }
-
-
 
     private void recive(MensajeGSM sms) {
         String contenido = sms.getMensaje();
         String[] cuerpo = contenido.split("#");
 //        System.out.println("El dispatcher recive "+contenido);
         boolean pasaHash = false;
-        try{
-            pasaHash = ValidatingTools.checkHash(cuerpo[3], cuerpo[0]+"#"+cuerpo[1]+"#"+cuerpo[2]);
-        } catch (Exception e){
-            System.out.println("El modem dispatcher no pudo chequear el hash del mensaje "+contenido.toString());
+        try {
+            pasaHash = ValidatingTools.checkHash(cuerpo);
+        } catch (Exception e) {
+            System.out.println("El modem dispatcher no pudo chequear el hash del mensaje " + contenido.toString());
         }
-        if (pasaHash){
-           if (ValidatingTools.validar(contenido, DataSource.terminal_remota)) {
-                if ( cuerpo[0].equalsIgnoreCase("Raise") ){
-//                    System.out.println("El dispatcher manda "+contenido);
+        if (pasaHash) {
+            if (ValidatingTools.validar(contenido, DataSource.terminal_remota) 
+                    && cuerpo[0].equalsIgnoreCase("L") || cuerpo[0].equalsIgnoreCase("M")) {
+                
+                if (cuerpo[2].split("\\|")[0].equalsIgnoreCase("Raise")) {
+//                        System.out.println("El dispatcher manda "+contenido);
                     startupSalida.add(sms);
-                }
-                else{
-//                    System.out.println("El dispatcher manda a datos "+contenido);
+                } else {
+//                        System.out.println("El dispatcher manda a datos "+contenido);
                     dataSalida.add(sms);
-
                 }
             } else {
-               System.out.println("El dispatcher rebota: "+contenido);
+                System.out.println("El dispatcher rebota: " + contenido);
             }
         } else {
-            System.out.println("El dispatcher rebota por hash: "+contenido);
+            System.out.println("El dispatcher rebota por hash: " + contenido);
         }
-
     }
-
+    
 }

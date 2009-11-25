@@ -6,41 +6,27 @@
  * manda el mismo mensaje por la cola de salida.
  * 
  */
-
 package DataSender;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Mensaje;
-import model.ValidatingTools;
+import model.MensajeGeneral;
 import red_gsm.MensajeGSM;
-
 
 /**
  *
  * @author Tas
  * 
  */
+public class DataSender extends Comunication.MessajeSender implements Runnable {
 
-public class DataSender extends Thread {
     private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;
-    private BlockingQueue<Mensaje> salida;
+    private BlockingQueue<? super Mensaje> salida;
     private BlockingQueue<Mensaje> entrada;
     private static final long sleepTime = 1000;
-    
-    private Mensaje mensajeActual;
-    private int msjEnProceso = 0;
-    private long timeStampMsjActual;
-    private Sender[] enviando;
-        
-    public DataSender () {
-    }
-
-    public void setEntrada(BlockingQueue<Mensaje> entrada) {
-        this.entrada = entrada;
-    }
 
     public void setModemEntrada(BlockingQueue<MensajeGSM> modemEntrada) {
         this.modemEntrada = modemEntrada;
@@ -50,34 +36,41 @@ public class DataSender extends Thread {
         this.modemSalida = modemSalida;
     }
 
-    public void setSalida(BlockingQueue<Mensaje> salida) {
+    public void setEntrada(BlockingQueue<Mensaje> entrada) {
+        this.entrada = entrada;
+    }
+
+    public void setSalida(BlockingQueue<? super Mensaje> salida) {
         this.salida = salida;
     }
+
     
     @Override
     public void run() {
         while (true) {
             if (msjEnProceso == 0) {
-                if (! sensarEntradaDatos() ) {
+                if (!sensarEntradaDatos()) {
                     try {
                         // Duermo un segundo
-                        sleep(sleepTime);
-                    } catch (InterruptedException ex) {}
+                        Thread.sleep(sleepTime);
+                    } catch (InterruptedException ex) {
+                    }
                 }
             }
-            while (msjEnProceso != 0){
+            while (msjEnProceso != 0) {
                 sensarEntradaModem();
                 try {
                     // Duermo 1/2 segundo
-                    sleep(500);
-                    } catch (InterruptedException ex) {}
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                }
             }
             // Esto está para ir leyendo los posibles mensajes con delay
             // que me lleguen de comunicaciones pasadas
             sensarEntradaModem();
         }
     }
-    
+
     private boolean sensarEntradaDatos() {
         Mensaje cabeza = entrada.poll();
         if (cabeza != null) {
@@ -86,96 +79,46 @@ public class DataSender extends Thread {
         }
         return false;
     }
-    
+
     private void sensarEntradaModem() {
         MensajeGSM respuesta = modemEntrada.poll();
-        if (respuesta != null)
+        if (respuesta != null) {
             recive(respuesta);
+        }
     }
 
-    private void formatPartes(String[] partes) {
-        for (int i = 0; i < partes.length-1; i++) {
-            String msj = partes[i];
-            // Le pongo un Id al Mensaje en su cuerpo
-            // Tb le pongo una M (more) para decir que
-            // no es la última fracción
-            msj = "M#"+i+"#"+msj;
-            partes[i] = msj;
+    protected Boolean checkMsj(String[] cuerpo) {
+        if (cuerpo.length != 4)
+            return false;
+        Long timeStamp = Long.valueOf(cuerpo[2]);
+        // Checkeo de que el ACK sea un ACK y que no sea de un mensaje viejo
+        return (timeStampMsjActual == timeStamp && cuerpo[0].equals("ACK"));
+    }
+
+    @Override
+    protected synchronized Boolean phisicalSend(MensajeGSM msj) {
+        try {
+            modemSalida.put(msj);   
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        // Hago uno para el último
-        int i = partes.length - 1;
-        String msj = partes[i];
-        // L de Last
-        msj = "L#"+i+"#"+msj;
-        partes[i] = msj;
+        return true;
     }
-    
-    private String[] fraccionar(String msj) {
-        // TODO: los msj SMS tienen 160 caracteres!
-        String[] partes = new String[1];
-        partes[0] = msj;
-        return partes;
-    }
-    
-    private void firmar(String[] mensajes){
-        for (int i = 0; i < mensajes.length; i++){
-            String hash = ValidatingTools.getHash(mensajes[i]);
-            mensajes[i] += "#"+hash;
-        }
-    }
-    
-    private void send(Mensaje m)
-    {
-        mensajeActual = m;
-        timeStampMsjActual = m.getTimeStamp();
-        String mensaje = m.toString();
-        String[] partes = fraccionar(mensaje);
-                
-        formatPartes(partes);
-        firmar(partes);
-        
-        enviando = new Sender[partes.length];        
-        for (int i = 0; i < partes.length; i++) {
-            Sender s = new Sender(partes[i], modemSalida);
-            enviando[i] = s;
-            msjEnProceso++;
-            s.start();
-        }
-    }
-    
-    private Boolean recive(MensajeGSM msj) {
-        String contenido = new String(msj.getMensaje());
-        String[] cuerpo = contenido.split("#");
-        // Esto ya lo validé antes, pero está buno re-hacerlo.. capaz
-        if ( cuerpo[0].equals("ACK") ) {
-            System.out.println("Se recive el ACK: "+contenido);
-            int id = Integer.valueOf(cuerpo[1]);
-            if ( checkACK(id, Long.valueOf(cuerpo[2]))) {
-                if (enviando[id] != null) {
-                    enviando[id].requestStop();
-                    enviando[id] = null;
-                    msjEnProceso--;
-                }
-                // Cuando lo termino de transmitir se lo devuelvo
-                if (msjEnProceso == 0)
-                    try {
-                        salida.put(mensajeActual);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                return true;
+
+    @Override
+    protected void transmitionFinished(MensajeGeneral mensaje) {
+        try {
+            // TODO: Mejorar este casteo !!!
+            if (mensaje.getClass() == Mensaje.class) {
+                Mensaje msj = (Mensaje) mensaje;
+                salida.put(msj);
             } else {
-                System.out.println("Se ignora el mensaje "+contenido+" por ser antiguo.");
+                System.out.println("\n\n-----------A DATA SENDER LE LLEGA UN MENSAJE QUE NO ES DE TIPO MENSAJE----------\n\n");
             }
-        } else {
-            System.out.println("El DataSender rebota respuesta por deconocida: "+contenido);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
     }
-    
-    private Boolean checkACK(int id, long timeStamp) {
-        // Checkeo de que el ACK no sea de un mensaje viejo
-        return (timeStampMsjActual == timeStamp);
-    }
-    
+
 }

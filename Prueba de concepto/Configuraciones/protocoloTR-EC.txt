@@ -4,8 +4,10 @@ num: numero de mensaje
 msj: el mensaje en sí
 firma: un hash del archivo
 
-TR a EC: Raise#idTR#timeStamp#firma
+TR a EC: frag#num#Raise|idTR|timeStamp|latitud|longitud#firma
 Este el el mensaje cuando se levanta la TR
+
+EC a TR: ACKUP#idTR#timeStamp#firma
 
 EC a TR: ACK#num#timeStamp#firma
 ACK = "ACK"
