@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DatoAlmacenado;
+import model.FactorClimatico;
 
 /**
  *
@@ -70,7 +71,7 @@ public class SelectorDatos {
         }
     }
 
-    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Date desde, Date hasta) {
+    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Date desde, Date hasta, Collection<FactorClimatico> factores) {
         Predicate<DatoAlmacenado> predicado = predicadoDatosTodos();
         if (idTRs != null) {
             predicado = predicadoDatosDeTR(idTRs);
@@ -78,9 +79,11 @@ public class SelectorDatos {
         if (desde != null) {
             predicado = conjuncion(predicado, predicadoDatosDesde(desde));
         }
-
         if (hasta != null) {
             predicado = conjuncion(predicado, predicadoDatosHasta(hasta));
+        }
+        if (factores != null) {
+            predicado = conjuncion(predicado, predicadorDatosFactor(factores));
         }
         return select(predicado);
     }
@@ -149,6 +152,15 @@ public class SelectorDatos {
             @Override
             public boolean match(DatoAlmacenado dato) {
                 return dato.getTimeStamp().before(hasta);
+            }
+        };
+    }
+
+    private Predicate<DatoAlmacenado> predicadorDatosFactor(final Collection<FactorClimatico> factores){
+        return new Predicate<DatoAlmacenado>(){
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return factores.contains(dato.getFactor());
             }
         };
     }
