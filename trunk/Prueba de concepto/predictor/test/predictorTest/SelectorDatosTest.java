@@ -128,7 +128,7 @@ public class SelectorDatosTest {
 
     @Test
     public void seleccionarTodos() {
-        List<DatoAlmacenado> datos = selector.seleccionar(null, null, null);
+        List<DatoAlmacenado> datos = selector.seleccionar(null, null, null, null);
         assertTrue(datos.size() == cantidadDatosEnBase);
         System.out.println("Se recolectaron " + cantidadDatosEnBase + "datos de la BD");
     }
@@ -138,23 +138,44 @@ public class SelectorDatosTest {
         Collection<Integer> trs = new TreeSet<Integer>();
         trs.add(1);
         trs.add(2);
-        Collection<DatoAlmacenado> datosTR = selector.seleccionar(trs, null, null);
+        Collection<DatoAlmacenado> datosTR = selector.seleccionar(trs, null, null, null);
         assertTrue(datosTR.size() == 120);
     }
 
     @Test
+    public void seleccionarPorFactor() {
+        Collection<FactorClimatico> factores = new TreeSet<FactorClimatico>();
+        factores.add(FactorClimatico.humedad);
+        factores.add(FactorClimatico.lluvias);
+        Collection<DatoAlmacenado> datosFactor = selector.seleccionar(null, null, null, factores);
+        assertTrue(datosFactor.size() == 200);
+    }
+
+    @Test
+    public void seleccionarPorTRsYFactor() {
+        Collection<Integer> trs = new TreeSet<Integer>();
+        trs.add(1);
+        trs.add(2);
+        Collection<FactorClimatico> factores = new TreeSet<FactorClimatico>();
+        factores.add(FactorClimatico.humedad);
+        factores.add(FactorClimatico.lluvias);
+        Collection<DatoAlmacenado> datosTRFactor = selector.seleccionar(trs, null, null, factores);
+        assertTrue(datosTRFactor.size() == 40);
+    }
+
+    @Test
     public void seleccionarUltimosTiempo() {
-        System.out.println("======Ultimos por tiempo ======");
+        //System.out.println("======Ultimos por tiempo ======");
         Date ahora = Calendar.getInstance().getTime();
         Date desde = SelectorDatos.restarSegundos(ahora, 5);
-        List<DatoAlmacenado> datosOrdenados = selector.seleccionar(null, desde, ahora);
-        System.out.println("TimeStamp Desde: " + desde.getTime());
-        System.out.println("TimeStamp Hasta: " + ahora.getTime());
+        List<DatoAlmacenado> datosOrdenados = selector.seleccionar(null, desde, ahora, null);
+        //System.out.println("TimeStamp Desde: " + desde.getTime());
+        //System.out.println("TimeStamp Hasta: " + ahora.getTime());
         for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
             Long timeStamp = datoAlmacenado.getTimeStamp().getTime();
             assertTrue("El dato debe ser posterior a " + desde, timeStamp >= desde.getTime());
             assertTrue("El dato debe ser posterior a " + ahora, timeStamp <= ahora.getTime());
-            System.out.println(timeStamp);
+            //System.out.println(timeStamp);
         }
 
     }
