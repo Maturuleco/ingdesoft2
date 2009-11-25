@@ -118,7 +118,7 @@ public class SelectorDatosTest {
                 }
             }
         }
-        System.out.println("Se generaron: "+ cantidadDatosEnBase + " datos");
+        System.out.println("Se generaron: " + cantidadDatosEnBase + " datos");
         return datos;
     }
 
@@ -127,81 +127,45 @@ public class SelectorDatosTest {
     }
 
     @Test
-    @Ignore
     public void seleccionarTodos() {
-        List<DatoAlmacenado> datos = selector.leerTodosLosDatos();
+        List<DatoAlmacenado> datos = selector.seleccionar(null, null, null);
         assertTrue(datos.size() == cantidadDatosEnBase);
         System.out.println("Se recolectaron " + cantidadDatosEnBase + "datos de la BD");
     }
 
     @Test
-    @Ignore
-    public void seleccionarPorTR() {
-        Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(1);
-        assertTrue(datosTR.size() == 60);
-    }
-
-    @Test
-    @Ignore
     public void seleccionarPorTRs() {
         Collection<Integer> trs = new TreeSet<Integer>();
         trs.add(1);
         trs.add(2);
-        Collection<DatoAlmacenado> datosTR = selector.leerDatosDeTR(trs);
+        Collection<DatoAlmacenado> datosTR = selector.seleccionar(trs, null, null);
         assertTrue(datosTR.size() == 120);
     }
 
     @Test
-    public void seleccionarPorTRsOpt() {
-        Collection<Integer> trs = new TreeSet<Integer>();
-        trs.add(1);
-        trs.add(2);
-        Collection<DatoAlmacenado> datosTROpt = selector.leerDatosDeTROpt(trs);
-        assertTrue(datosTROpt.size() == 120);
-    }
-
-    @Test
-    @Ignore
-    public void seleccionarUltimosCantidad() {
-        Integer cantidad = 35;
-        System.out.println("======Ultimos por cantidad(" + cantidad +")======");
-        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatosCantidad(cantidad);
-        Integer cantidadTotal = selector.leerTodosLosDatos().size();
-        if (cantidadTotal < cantidad) {
-            assertTrue(datosOrdenados.size() == cantidadTotal);
-        } else {
-            assertTrue(datosOrdenados.size() == cantidad);
-        }
-        System.out.println(datosOrdenados.size());
-        for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
-            System.out.println(datoAlmacenado.getTimeStamp().getTime());
-        }
-    }
-
-    @Test
-    @Ignore
     public void seleccionarUltimosTiempo() {
         System.out.println("======Ultimos por tiempo ======");
-        List<DatoAlmacenado> datosOrdenados = selector.leerUltimosDatosTiempo(1);
-        System.out.println("TimeStamp: " + Calendar.getInstance().getTime().getTime());
+        Date ahora = Calendar.getInstance().getTime();
+        Date desde = SelectorDatos.restarSegundos(ahora, 5);
+        List<DatoAlmacenado> datosOrdenados = selector.seleccionar(null, desde, ahora);
+        System.out.println("TimeStamp Desde: " + desde.getTime());
+        System.out.println("TimeStamp Hasta: " + ahora.getTime());
         for (DatoAlmacenado datoAlmacenado : datosOrdenados) {
-            System.out.println(datoAlmacenado.getTimeStamp().getTime());
+            Long timeStamp = datoAlmacenado.getTimeStamp().getTime();
+            assertTrue("El dato debe ser posterior a " + desde, timeStamp >= desde.getTime());
+            assertTrue("El dato debe ser posterior a " + ahora, timeStamp <= ahora.getTime());
+            System.out.println(timeStamp);
         }
-        
+
     }
 
     @Test
-    @Ignore
     public void seleccionarDatosPorTR() {
-        Map<Integer, List<DatoAlmacenado>>datosPorTR = selector.datosPorTR();
+        Map<Integer, List<DatoAlmacenado>> datosPorTR = selector.datosPorTR();
         List<DatoAlmacenado> datosDeTR;
         for (Integer idTR : datosPorTR.keySet()) {
             datosDeTR = datosPorTR.get(idTR);
-            assert(datosDeTR.size() == 60);
-//            System.out.println("Datos TR " + idTR);
-//            for (DatoAlmacenado datoAlmacenado : datosDeTR) {
-//                System.out.println(datoAlmacenado.toString());
-//            }
+            assert (datosDeTR.size() == 60);
         }
 
     }
