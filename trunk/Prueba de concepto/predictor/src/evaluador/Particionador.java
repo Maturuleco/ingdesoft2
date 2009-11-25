@@ -6,7 +6,9 @@ package evaluador;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import predictor.Predictor;
+import predictor.ResultadoAnalisis;
 
 /**
  *
@@ -22,7 +24,7 @@ public class Particionador {
             throw new IllegalArgumentException("El tamaño de la particion debe ser mayor a 0");
     }
 
-    public Collection<Collection<PredictorThread>> particionar(Collection<Predictor> predictores, Contador contador) {
+    public Collection<Collection<PredictorThread>> particionar(Collection<Predictor> predictores, ConcurrentLinkedQueue<ResultadoAnalisis> resultados) {
         Collection<Collection<PredictorThread>> resultado = new LinkedList<Collection<PredictorThread>>();
         Collection<PredictorThread> paquete = new LinkedList<PredictorThread>();
         for (Predictor predictor : predictores) {
@@ -30,7 +32,7 @@ public class Particionador {
                 resultado.add(paquete);
                 paquete = new LinkedList<PredictorThread>();
             }
-            paquete.add(new PredictorThread(predictor, contador));
+            paquete.add(new PredictorThread(predictor, resultados));
         }
         if (paquete.size() <= tamanioParticion) {
             resultado.add(paquete);

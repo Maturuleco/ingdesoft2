@@ -11,7 +11,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import predictor.Predictor;
+import predictor.ResultadoAnalisis;
 
 /**
  *
@@ -23,22 +25,20 @@ public class PredictorThread extends Thread {
     private static final String PREFIJO_ARCHIVO_ALERTA = "Alerta";
 
     private Predictor predictor;
-    private Contador contador;
+    private ConcurrentLinkedQueue<ResultadoAnalisis> resultados;
 
-    public PredictorThread(Predictor predictor, Contador contador) {
+    public PredictorThread(Predictor predictor, ConcurrentLinkedQueue<ResultadoAnalisis> resultados) {
         this.predictor = predictor;
-        this.contador = contador;
+        this.resultados = resultados;
     }
 
     @Override
     public void run() {
-        if (predictor.analizar()) {
-            contador.incrementar();
-        }
+        resultados.add(predictor.analizar());
         System.out.println("Finalice de evaluar regla:" + predictor.getRegla().getNombre());
     }
 
-     private void escribirPrediccion() {
+    private void escribirPrediccion() {
         String nombreArchivo = obtenerNombreArchivoPrediccion();
         escribirPrediccionEnArchivo(nombreArchivo);
     }
@@ -57,15 +57,11 @@ public class PredictorThread extends Thread {
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter salida = new PrintWriter(bw);
             salida.append(" ============ ALERTA ============\n");
-            salida.append("Fecha: " + timeStamp().toString() + "\n");
+            salida.append("Fecha: " + new Date().toString() + "\n");
             salida.append(" ================================");
             salida.close();
         } catch (java.io.IOException ioex) {
             System.out.println("se presento el error: " + ioex.toString());
         }
-    }
-
-    private Date timeStamp(){
-        return Calendar.getInstance().getTime();
     }
 }
