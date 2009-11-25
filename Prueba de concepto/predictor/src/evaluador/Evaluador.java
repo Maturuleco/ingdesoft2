@@ -5,7 +5,9 @@
 package evaluador;
 
 import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import predictor.Predictor;
+import predictor.ResultadoAnalisis;
 
 /**
  *
@@ -16,15 +18,13 @@ public class Evaluador {
     private Particionador particionador = new Particionador(3);
 
     // TODO: implementar bien
-    public Integer evaluar(Collection<Predictor> predictores) {
-        Contador contador = new Contador();
-        Collection<Collection<PredictorThread>> particiones = particionador.particionar(predictores,contador);
+    public ConcurrentLinkedQueue<ResultadoAnalisis> evaluar(Collection<Predictor> predictores) {
+        ConcurrentLinkedQueue<ResultadoAnalisis> resultados = new ConcurrentLinkedQueue<ResultadoAnalisis>();
+        Collection<Collection<PredictorThread>> particiones = particionador.particionar(predictores,resultados);
         for (Collection<PredictorThread> particion : particiones) {
-            synchronized(contador) {
                 evaluarSinParticionar(particion);
-            }
         }
-        return contador.getCantidad();
+        return resultados;
     }
 
     private void evaluarSinParticionar(Collection<PredictorThread> particion) {

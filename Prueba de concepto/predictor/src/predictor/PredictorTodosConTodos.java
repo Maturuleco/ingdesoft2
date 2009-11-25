@@ -28,20 +28,24 @@ public class PredictorTodosConTodos extends Predictor {
 
     // Analiza que el dato cumpla todas las condiciones
     @Override
-    public Boolean analizar() {
+    public ResultadoAnalisis analizar() {
         Collection<Condicion> condiciones = regla.getCondiciones();
+        ResultadoAnalisis respuesta = new ResultadoAnalisis();
         for (Condicion condicion : condiciones) {
-            if ( hayDatoConTipo(datosAlmacenados, condicion.getFactor())) {
+            if (hayDatoConTipo(datosAlmacenados, condicion.getFactor())) {
                 for (DatoAlmacenado datoAlmacenado : datosAlmacenados) {
                     if (!condicion.aplicar(datoAlmacenado)) {
-                        return Boolean.FALSE;
+                        respuesta.setVerifiqueTodos(Boolean.FALSE);
+                        return respuesta;
                     }
                 }
             } else {
-                return Boolean.FALSE;
+                respuesta.setVerifiqueTodos(Boolean.FALSE);
+                return respuesta;
             }
         }
-        return Boolean.TRUE;
+        respuesta.setVerifiqueTodos(Boolean.TRUE);
+        return respuesta;
     }
 
     private Boolean hayDatoConTipo(Collection<DatoAlmacenado> datos, FactorClimatico factor) {

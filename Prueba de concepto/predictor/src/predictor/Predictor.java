@@ -25,6 +25,6 @@ public abstract class Predictor{
         return regla;
     }
 
-    public abstract Boolean analizar();
+    public abstract ResultadoAnalisis analizar();
 
 }

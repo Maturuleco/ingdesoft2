@@ -26,10 +26,11 @@ public class PredictorPorFactorClimatico extends Predictor {
     }
 
     @Override
-    public Boolean analizar() {
-        Boolean res = Boolean.FALSE;
-        res = analizarCondicionesPorFactor();
-        return res;
+    public ResultadoAnalisis analizar() {
+        ResultadoAnalisis respuesta = new ResultadoAnalisis();
+        Boolean verificoTodo = analizarCondicionesPorFactor();
+        respuesta.setVerifiqueTodos(verificoTodo);
+        return respuesta;
     }
 
     // Analiza que todos los datos cumplan todas las condiciones
