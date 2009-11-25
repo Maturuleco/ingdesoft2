@@ -10,8 +10,6 @@ import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
-import com.db4o.query.Constraint;
-import com.db4o.query.Constraints;
 import com.db4o.query.Predicate;
 import com.db4o.query.Query;
 import java.io.BufferedWriter;
@@ -70,15 +68,29 @@ public class SelectorDatos {
         } finally {
             cerrarCliente();
         }
-
     }
 
-    public List<DatoAlmacenado> leerTodosLosDatos() {
-        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, null, null);
+    public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Date desde, Date hasta) {
+        Predicate<DatoAlmacenado> predicado = predicadoDatosTodos();
+        if (idTRs != null) {
+            predicado = predicadoDatosDeTR(idTRs);
+        }
+        if (desde != null) {
+            predicado = conjuncion(predicado, predicadoDatosDesde(desde));
+        }
+
+        if (hasta != null) {
+            predicado = conjuncion(predicado, predicadoDatosHasta(hasta));
+        }
+        return select(predicado);
+    }
+
+    private List<DatoAlmacenado> select(Predicate<DatoAlmacenado> predicado) {
         ObjectSet<DatoAlmacenado> resultado = null;
         abrirCliente();
+
         try {
-            resultado = cliente.queryByExample(prototipo);
+            resultado = cliente.query(predicado);
         } catch (DatabaseClosedException e) {
             System.out.println("la base de datos se encuentra cerrada");
             System.out.println(e.getMessage());
@@ -91,102 +103,82 @@ public class SelectorDatos {
         return resultado;
     }
 
-    public Collection<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
-        ObjectSet<DatoAlmacenado> resultado = null;
-        abrirCliente();
-        resultado = cliente.query(new Predicate<DatoAlmacenado>() {
+    public List<DatoAlmacenado> leerTodosLosDatos() {
+        return select(predicadoDatosTodos());
+    }
+
+    public List<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
+        return select(predicadoDatosDeTR(trs));
+    }
+
+    private Predicate<DatoAlmacenado> predicadoDatosTodos() {
+        return new Predicate<DatoAlmacenado>() {
+
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return true;
+            }
+        };
+    }
+
+    private Predicate<DatoAlmacenado> predicadoDatosDeTR(final Collection<Integer> trs) {
+        return new Predicate<DatoAlmacenado>() {
 
             @Override
             public boolean match(DatoAlmacenado dato) {
                 return trs.contains(dato.getIdTR());
             }
-        });
-        cerrarCliente();
-        return resultado;
+        };
     }
 
-    public Collection<DatoAlmacenado> leerDatosDeTROpt(final Collection<Integer> trs) {
-        abrirCliente();
-        Query query = queryDatosDeTRs(trs);
-        ObjectSet<DatoAlmacenado> resultado = query.execute();
-        cerrarCliente();
-        return resultado;
-    }
+    private Predicate<DatoAlmacenado> predicadoDatosDesde(final Date desde) {
 
-    private Query queryDatosDeTRs(final Collection<Integer> trs) {
-        Query query = cliente.query();
-//        Constraints constraintSet = query.constraints();
-        query.constrain(DatoAlmacenado.class);
-        Query queryName = query.descend("idTR");
-        for (Integer idTR : trs) {
-            queryName.constraints().or(queryName.constrain(idTR));
-        }
-        for (Constraint c : queryName.constraints().toArray()) {
-            System.out.println(c.toString()+"\n");
-        }
-        return query;
-    }
+        return new Predicate<DatoAlmacenado>() {
 
-    public List<DatoAlmacenado> leerDatosDeTR(Integer idTR) {
-        DatoAlmacenado prototipo = new DatoAlmacenado(null, null, null, null, idTR, null);
-        ObjectSet<DatoAlmacenado> resultado = null;
-        abrirCliente();
-        try {
-            resultado = cliente.queryByExample(prototipo);
-        } catch (DatabaseClosedException e) {
-            System.out.println("la base de datos se encuentra cerrada");
-            System.out.println(e.getMessage());
-        } catch (Db4oIOException e) {
-            System.out.println("Error de I/O");
-            System.out.println(e.getMessage());
-        } finally {
-            cerrarCliente();
-        }
-        return resultado;
-    }
-
-    public List<DatoAlmacenado> leerUltimosDatosCantidad(Integer cantidad) {
-        abrirCliente();
-        List<DatoAlmacenado> resultado;
-        Query query = cliente.query();
-        query.constrain(DatoAlmacenado.class);
-        query.descend("timeStamp").orderDescending();
-        resultado = query.execute();
-        cerrarCliente();
-        if (resultado.size() >= cantidad) {
-            return resultado.subList(0, cantidad);
-        } else {
-            return resultado.subList(0, resultado.size());
-        }
-    }
-
-    public List<DatoAlmacenado> leerUltimosDatosTiempo(int seg) {
-
-        abrirCliente();
-        List<DatoAlmacenado> resultado;
-        Query query = cliente.query();
-        query.constrain(DatoAlmacenado.class);
-        query.descend("timeStamp").orderDescending();
-        resultado = query.execute();
-        cerrarCliente();
-
-        Date limiteInferior = restarTiempo(seg);
-        int hasta = 0;
-        for (DatoAlmacenado datoAlmacenado : resultado) {
-            if (datoAlmacenado.getTimeStamp().before(limiteInferior)) {
-                break;
-            } else {
-                hasta++;
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return dato.getTimeStamp().after(desde);
             }
-        }
-        return resultado.subList(0, hasta);
+        };
     }
 
-    private Date restarTiempo(Integer seg) {
-        Calendar timestamp = Calendar.getInstance();
-        timestamp.add(Calendar.SECOND, -seg);
-        Date timestampDesde = timestamp.getTime();
-        return timestampDesde;
+    private Predicate<DatoAlmacenado> predicadoDatosHasta(final Date hasta) {
+
+        return new Predicate<DatoAlmacenado>() {
+
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return dato.getTimeStamp().before(hasta);
+            }
+        };
+    }
+
+    public static Date restarSegundos(Date timeStamp, Integer seg) {
+        Calendar timeStampRes = Calendar.getInstance();
+        timeStampRes.setTime(timeStamp);
+        timeStampRes.add(Calendar.SECOND, -seg);
+        return timeStampRes.getTime();
+    }
+
+    private Predicate<DatoAlmacenado> conjuncion(final Predicate<DatoAlmacenado> p1, final Predicate<DatoAlmacenado> p2) {
+        return new Predicate<DatoAlmacenado>() {
+
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return p1.match(dato) && p2.match(dato);
+            }
+        };
+    }
+
+    private Predicate<DatoAlmacenado> disyuncion(final Predicate<DatoAlmacenado> p1, final Predicate<DatoAlmacenado> p2) {
+        return new Predicate<DatoAlmacenado>() {
+
+            @Override
+            public boolean match(DatoAlmacenado dato) {
+                return p1.match(dato) || p2.match(dato);
+            }
+        };
+
     }
 
     public Map<Integer, List<DatoAlmacenado>> datosPorTR() {
@@ -196,10 +188,8 @@ public class SelectorDatos {
         Map<Integer, List<DatoAlmacenado>> resultado = new LinkedHashMap<Integer, List<DatoAlmacenado>>();
 
         Query query = cliente.query();
-        query.constrain(DatoAlmacenado.class);
         query.descend("timeStamp").orderAscending();
         List<DatoAlmacenado> datoTotales = query.execute();
-        mostrarDatosAlmacenados(datoTotales);
         for (DatoAlmacenado datoAlmacenado : datoTotales) {
             idTR = datoAlmacenado.getIdTR();
             if (resultado.containsKey(idTR)) {
