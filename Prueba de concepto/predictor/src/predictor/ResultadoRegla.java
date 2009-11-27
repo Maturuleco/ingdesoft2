@@ -9,7 +9,7 @@ package predictor;
  *
  * @author Santiago Avendaño
  */
-public class ResultadoAnalisis {
+public class ResultadoRegla {
     private Boolean verifiqueTodos;
 
     public Boolean getVerifiqueTodos() {

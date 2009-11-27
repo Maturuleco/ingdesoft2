@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import predictor.Predictor;
-import predictor.ResultadoAnalisis;
+import predictor.ResultadoRegla;
 
 /**
  *
@@ -25,9 +25,9 @@ public class PredictorThread extends Thread {
     private static final String PREFIJO_ARCHIVO_ALERTA = "Alerta";
 
     private Predictor predictor;
-    private ConcurrentLinkedQueue<ResultadoAnalisis> resultados;
+    private ConcurrentLinkedQueue<ResultadoRegla> resultados;
 
-    public PredictorThread(Predictor predictor, ConcurrentLinkedQueue<ResultadoAnalisis> resultados) {
+    public PredictorThread(Predictor predictor, ConcurrentLinkedQueue<ResultadoRegla> resultados) {
         this.predictor = predictor;
         this.resultados = resultados;
     }

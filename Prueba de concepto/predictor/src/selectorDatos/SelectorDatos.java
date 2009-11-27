@@ -124,14 +124,6 @@ public class SelectorDatos {
         return resultado;
     }
 
-    public List<DatoAlmacenado> leerTodosLosDatos() {
-        return select(predicadoDatosTodos());
-    }
-
-    public List<DatoAlmacenado> leerDatosDeTR(final Collection<Integer> trs) {
-        return select(predicadoDatosDeTR(trs));
-    }
-
     private Predicate<DatoAlmacenado> predicadoDatosTodos() {
         return new Predicate<DatoAlmacenado>() {
 
@@ -212,16 +204,12 @@ public class SelectorDatos {
 
     }
 
-    public Map<Integer, List<DatoAlmacenado>> datosPorTR() {
-        abrirCliente();
+    public Map<Integer, List<DatoAlmacenado>> agruparDatosPorTR(Collection<DatoAlmacenado> datos) {
         Integer idTR;
         List<DatoAlmacenado> listaAuxiliar;
         Map<Integer, List<DatoAlmacenado>> resultado = new LinkedHashMap<Integer, List<DatoAlmacenado>>();
 
-        Query query = cliente.query();
-        query.descend("timeStamp").orderAscending();
-        List<DatoAlmacenado> datoTotales = query.execute();
-        for (DatoAlmacenado datoAlmacenado : datoTotales) {
+        for (DatoAlmacenado datoAlmacenado : datos) {
             idTR = datoAlmacenado.getIdTR();
             if (resultado.containsKey(idTR)) {
                 resultado.get(idTR).add(datoAlmacenado);
@@ -231,7 +219,6 @@ public class SelectorDatos {
                 resultado.put(idTR, listaAuxiliar);
             }
         }
-        cerrarCliente();
         return resultado;
     }
 

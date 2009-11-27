@@ -16,7 +16,6 @@ import modelo.Modelo;
 import modelo.Regla;
 import predictor.Predictor;
 import predictor.PredictorPorFactorClimatico;
-import predictor.PredictorTodosConTodos;
 
 /**
  *

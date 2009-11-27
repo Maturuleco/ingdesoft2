@@ -83,9 +83,9 @@ public class PredictorTest {
         datos.add(dato1);
         datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
-        assertTrue(predictor.analizar());
+        assertTrue(predictor.analizar().getVerifiqueTodos());
         predictor = new PredictorTodosConTodos(regla, datos);
-        assertTrue(predictor.analizar());
+        assertTrue(predictor.analizar().getVerifiqueTodos());
     }
 
     private Map<FactorClimatico, Collection<DatoAlmacenado>> agruparDatosPorFactor(Collection<DatoAlmacenado> datos) {
@@ -111,9 +111,9 @@ public class PredictorTest {
         datos.add(dato1);
         datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor );
-        assertFalse(predictor.analizar());
+        assertFalse(predictor.analizar().getVerifiqueTodos());
         predictor = new PredictorTodosConTodos(regla, datos);
-        assertFalse(predictor.analizar());
+        assertFalse(predictor.analizar().getVerifiqueTodos());
     }
 
     /*
@@ -126,8 +126,8 @@ public class PredictorTest {
         datos.add(dato1);
         datosOrdenadosPorFactor = agruparDatosPorFactor(datos);
         predictor = new PredictorPorFactorClimatico(regla,datosOrdenadosPorFactor);
-        assertFalse(predictor.analizar());
+        assertFalse(predictor.analizar().getVerifiqueTodos());
         predictor = new PredictorTodosConTodos(regla, datos);
-        assertFalse(predictor.analizar());
+        assertFalse(predictor.analizar().getVerifiqueTodos());
     }
 }

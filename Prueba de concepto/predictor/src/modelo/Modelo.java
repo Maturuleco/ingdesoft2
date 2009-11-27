@@ -4,6 +4,7 @@
  */
 package modelo;
 
+import java.awt.geom.Area;
 import java.util.Collection;
 
 /**
@@ -14,12 +15,12 @@ public class Modelo {
 
     private String nombreModelo;
     private Collection<Regla> reglas;
+    private Area area;
 
-    //TODO: implementar el area
-
-    public Modelo(String nombreModelo, Collection<Regla> reglas) {
+    public Modelo(String nombreModelo, Collection<Regla> reglas, Area area) {
         this.nombreModelo = nombreModelo;
         this.reglas = reglas;
+        this.area = area;
     }
 
     public Collection<Regla> getReglas() {
@@ -32,6 +33,10 @@ public class Modelo {
 
     public void setNombreModelo(String nombreModelo) {
         this.nombreModelo = nombreModelo;
+    }
+
+    public Area getArea() {
+        return area;
     }
 
 }

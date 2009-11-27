@@ -4,13 +4,16 @@
  */
 package predictor;
 
+import areaController.AreaController;
 import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
 import predictorFactory.PredictorFactory;
 import predictorFactory.PredictorAgruparPorFactorFactory;
 import evaluador.Evaluador;
+import java.awt.geom.Area;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import model.DatoAlmacenado;
 import modelo.Modelo;
 import selectorDatos.SelectorDatos;
@@ -25,7 +28,8 @@ public class PredictorManager implements Runnable {
     private volatile boolean keepTrying = true;
     private SelectorDatos selectorDatos;
     private CargadorModelo cargadorModelos;
-    private PredictorFactory estrategia = new PredictorAgruparPorFactorFactory();
+    private AreaController controladorAreas = new AreaController();
+    private PredictorFactory predictorFactory = new PredictorAgruparPorFactorFactory();
     private Evaluador evaluador = new Evaluador();
 
     public PredictorManager(ObjectServer server) {
@@ -35,15 +39,28 @@ public class PredictorManager implements Runnable {
 
     @Override
     public void run() {
+        Collection<Modelo> modelos;
+        List<DatoAlmacenado> datosTotales;
+        Map< Integer, List<DatoAlmacenado>> datosTotalesAgrupadosPorTR;
+        List<Predictor> predictores;
+        Area areaInfluenciaModelo;
+        Collection<Integer> trsSeleccionadas;
+
+
         while (keepTrying) {
             try {
-                List<DatoAlmacenado> datos = selectorDatos.leerTodosLosDatos();
-                Collection<Modelo> modelos = cargadorModelos.getModelos();
-                List<Predictor> predictores;
+                modelos = cargadorModelos.getModelos();
 
                 for (Modelo modelo : modelos) {
-                    predictores = estrategia.obtenerPredictores(modelo, datos);
-                    evaluador.evaluar(predictores);
+                    
+                    areaInfluenciaModelo = modelo.getArea();
+                    trsSeleccionadas = controladorAreas.buscarTerminalesRemotas(areaInfluenciaModelo);
+                    datosTotales = selectorDatos.seleccionar(trsSeleccionadas, null, Integer.SIZE);
+                    datosTotalesAgrupadosPorTR = selectorDatos.agruparDatosPorTR(datosTotales);
+                    for (Integer idTR : trsSeleccionadas) {
+                        predictores = predictorFactory.obtenerPredictores(modelo, datosTotalesAgrupadosPorTR.get(idTR));
+                        evaluador.evaluar(predictores);
+                    }
                 }
 
                 Thread.sleep(tiempoEspera);

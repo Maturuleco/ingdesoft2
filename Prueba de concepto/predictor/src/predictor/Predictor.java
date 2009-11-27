@@ -25,6 +25,6 @@ public abstract class Predictor{
         return regla;
     }
 
-    public abstract ResultadoAnalisis analizar();
+    public abstract ResultadoRegla analizar();
 
 }

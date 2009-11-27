@@ -9,14 +9,15 @@ import evaluador.Particionador;
 import evaluador.PredictorThread;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import predictor.Predictor;
-import predictor.PredictorPorFactorClimatico;
 import predictor.PredictorTodosConTodos;
+import predictor.ResultadoRegla;
 import static org.junit.Assert.*;
 
 /**
@@ -59,7 +60,7 @@ public class ParticionadorTest {
 
     @Test
     public void cantidadDeParticiones() {
-        Collection<Collection<PredictorThread>> particiones = particionador.particionar(predictores, new Contador());
+        Collection<Collection<PredictorThread>> particiones = particionador.particionar(predictores, new ConcurrentLinkedQueue<ResultadoRegla>());
         Integer particionesObtenidas = particiones.size();
         System.out.println("Particiones Obtenidas: " + particionesObtenidas.toString());
         System.out.println("Particiones Esperadas: " + particionesEsperadas);
