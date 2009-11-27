@@ -7,7 +7,7 @@ package analizador;
 
 import java.util.Collection;
 import modelo.Modelo;
-import predictor.ResultadoAnalisis;
+import predictor.ResultadoRegla;
 
 /**
  *
@@ -15,7 +15,7 @@ import predictor.ResultadoAnalisis;
  */
 public class Analizador {
 
-    public void analizar(Modelo modelo, Collection<ResultadoAnalisis> resultados){
+    public void analizar(Modelo modelo, Collection<ResultadoRegla> resultados){
 
     }
 }

@@ -4,10 +4,15 @@
  */
 package evaluador;
 
+import java.awt.geom.Area;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import model.DatoAlmacenado;
+import modelo.Modelo;
 import predictor.Predictor;
-import predictor.ResultadoAnalisis;
+import predictor.ResultadoRegla;
 
 /**
  *
@@ -17,9 +22,20 @@ public class Evaluador {
 
     private Particionador particionador = new Particionador(3);
 
+    public ConcurrentLinkedQueue<ResultadoRegla> evaluar(Modelo modelo){
+        ConcurrentLinkedQueue<ResultadoRegla> resultados = new ConcurrentLinkedQueue<ResultadoRegla>();
+
+        List<DatoAlmacenado> datosTotales;
+        Map< Integer, List<DatoAlmacenado>> datosTotalesAgrupadosPorTR;
+        List<Predictor> predictores;
+        Area areaInfluenciaModelo;
+        Collection<Integer> trsSeleccionadas;
+        return resultados;
+    }
+
     // TODO: implementar bien
-    public ConcurrentLinkedQueue<ResultadoAnalisis> evaluar(Collection<Predictor> predictores) {
-        ConcurrentLinkedQueue<ResultadoAnalisis> resultados = new ConcurrentLinkedQueue<ResultadoAnalisis>();
+    public ConcurrentLinkedQueue<ResultadoRegla> evaluar(Collection<Predictor> predictores) {
+        ConcurrentLinkedQueue<ResultadoRegla> resultados = new ConcurrentLinkedQueue<ResultadoRegla>();
         Collection<Collection<PredictorThread>> particiones = particionador.particionar(predictores,resultados);
         for (Collection<PredictorThread> particion : particiones) {
                 evaluarSinParticionar(particion);

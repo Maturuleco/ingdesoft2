@@ -21,7 +21,7 @@ public class CargadorModelo {
 
     public Collection<Modelo> getModelos(){
         Collection<Modelo> modelos = new LinkedList<Modelo>();
-        Modelo modelo1 = new Modelo("FRIO POLAR", getReglas());
+        Modelo modelo1 = new Modelo("FRIO POLAR", getReglas(), null);
         modelos.add(modelo1);
         return modelos;
     }

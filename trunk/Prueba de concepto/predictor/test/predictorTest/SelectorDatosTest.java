@@ -182,7 +182,7 @@ public class SelectorDatosTest {
 
     @Test
     public void seleccionarDatosPorTR() {
-        Map<Integer, List<DatoAlmacenado>> datosPorTR = selector.datosPorTR();
+        Map<Integer, List<DatoAlmacenado>> datosPorTR = selector.agruparDatosPorTR(null);
         List<DatoAlmacenado> datosDeTR;
         for (Integer idTR : datosPorTR.keySet()) {
             datosDeTR = datosPorTR.get(idTR);

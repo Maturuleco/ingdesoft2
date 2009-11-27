@@ -28,9 +28,9 @@ public class PredictorTodosConTodos extends Predictor {
 
     // Analiza que el dato cumpla todas las condiciones
     @Override
-    public ResultadoAnalisis analizar() {
+    public ResultadoRegla analizar() {
         Collection<Condicion> condiciones = regla.getCondiciones();
-        ResultadoAnalisis respuesta = new ResultadoAnalisis();
+        ResultadoRegla respuesta = new ResultadoRegla();
         for (Condicion condicion : condiciones) {
             if (hayDatoConTipo(datosAlmacenados, condicion.getFactor())) {
                 for (DatoAlmacenado datoAlmacenado : datosAlmacenados) {
