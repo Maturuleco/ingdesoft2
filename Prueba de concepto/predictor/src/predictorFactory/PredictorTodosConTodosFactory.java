@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package estrategia;
+package predictorFactory;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,7 +18,7 @@ import predictor.PredictorTodosConTodos;
  *
  * @author Santiago Avendaño <santiavenda2@gmail.com>
  */
-public class EstrategiaTodosConTodos implements Estrategia {
+public class PredictorTodosConTodosFactory implements PredictorFactory {
 
     @Override
     public List<Predictor> obtenerPredictores(Modelo modelo, Collection<DatoAlmacenado> datos) {
