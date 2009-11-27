@@ -6,8 +6,8 @@ package predictor;
 
 import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
-import estrategia.Estrategia;
-import estrategia.EstrategiaAgruparPorFactor;
+import predictorFactory.PredictorFactory;
+import predictorFactory.PredictorAgruparPorFactorFactory;
 import evaluador.Evaluador;
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +25,7 @@ public class PredictorManager implements Runnable {
     private volatile boolean keepTrying = true;
     private SelectorDatos selectorDatos;
     private CargadorModelo cargadorModelos;
-    private Estrategia estrategia = new EstrategiaAgruparPorFactor();
+    private PredictorFactory estrategia = new PredictorAgruparPorFactorFactory();
     private Evaluador evaluador = new Evaluador();
 
     public PredictorManager(ObjectServer server) {

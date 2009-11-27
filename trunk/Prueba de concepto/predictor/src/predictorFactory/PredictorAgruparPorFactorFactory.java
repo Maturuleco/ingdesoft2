@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package estrategia;
+package predictorFactory;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -22,7 +22,7 @@ import predictor.PredictorTodosConTodos;
  *
  * @author Santiago Avendaño
  */
-public class EstrategiaAgruparPorFactor implements Estrategia{
+public class PredictorAgruparPorFactorFactory implements PredictorFactory{
 
     @Override
     public List<Predictor> obtenerPredictores(Modelo modelo, Collection<DatoAlmacenado> datos) {
