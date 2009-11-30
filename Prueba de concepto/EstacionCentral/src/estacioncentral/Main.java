@@ -57,6 +57,7 @@ public class Main {
 
 
     private static ObjectServer validDataServer;
+    private static ObjectServer resultadosServer;
 
     /**
      * @param args the command line arguments
@@ -92,16 +93,21 @@ public class Main {
 
     private static void inicializarComponentes(){
         new File("resources").mkdir();
-        File serverPath = new File("resources/ValidData.yap");
-        serverPath.delete();
+        File serverValidDataPath = new File("resources/ValidData.yap");
+        serverValidDataPath.delete();
+        File serverResultadosPath = new File("resources/Resultados.yap");
+        serverResultadosPath.delete();
         try {
-            serverPath.createNewFile();
+            serverValidDataPath.createNewFile();
+            serverResultadosPath.createNewFile();
         } catch (IOException ex) {
             System.out.println("No se pudo crear el archivo");
         }
-        validDataServer = Db4o.openServer(serverPath.getAbsolutePath(), 0);
-        System.out.println("Se creo la base Valid Data en la ruta:" + serverPath.getAbsolutePath());
-        predictor = new PredictorManager(validDataServer);
+        validDataServer = Db4o.openServer(serverValidDataPath.getAbsolutePath(), 0);
+        System.out.println("Se creo la base Valid Data en la ruta:" + serverValidDataPath.getAbsolutePath());
+        resultadosServer = Db4o.openServer(serverResultadosPath.getAbsolutePath(), 0);
+        System.out.println("Se creo la base Resultados en la ruta:" + serverResultadosPath.getAbsolutePath());
+        predictor = new PredictorManager(validDataServer, resultadosServer);
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
         validator = new ValidatorManager(validDataServer);
         System.out.println("Se creo el Validator y se le le asigno el server de ValidData");

@@ -5,9 +5,9 @@
 
 package analizador;
 
+import evaluador.ResultadoEvaluacion;
 import java.util.Collection;
 import modelo.Modelo;
-import predictor.ResultadoRegla;
 
 /**
  *
@@ -15,7 +15,15 @@ import predictor.ResultadoRegla;
  */
 public class Analizador {
 
-    public void analizar(Modelo modelo, Collection<ResultadoRegla> resultados){
+    private AnalizadorDAO analizadorDAO = new AnalizadorDAO();
 
+    public AnalizadorDAO getAnalizadorDAO() {
+        return analizadorDAO;
     }
+
+    public void analizar(Modelo modelo, Collection<ResultadoEvaluacion> resultados){
+        analizadorDAO.escribirResultados(resultados);
+    }
+
+
 }

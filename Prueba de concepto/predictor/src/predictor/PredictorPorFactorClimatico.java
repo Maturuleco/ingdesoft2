@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package predictor;
 
 import java.util.Collection;
@@ -25,22 +24,18 @@ public class PredictorPorFactorClimatico extends Predictor {
         this.datos = datos;
     }
 
-    @Override
-    public ResultadoRegla analizar() {
-        ResultadoRegla respuesta = new ResultadoRegla();
-        Boolean verificoTodo = analizarCondicionesPorFactor();
-        respuesta.setVerifiqueTodos(verificoTodo);
-        return respuesta;
-    }
-
     // Analiza que todos los datos cumplan todas las condiciones
     // Controlando por factor
-    private Boolean analizarCondicionesPorFactor() {
+    @Override
+    public ResultadoRegla analizar() {
         Map<FactorClimatico, Collection<Condicion>> condicionesPorFactor;
 
         condicionesPorFactor = regla.condicionesPorFactor();
         Collection<Condicion> condicionesFactor;
         Collection<DatoAlmacenado> datosFactor;
+        Integer condicionesVerificadas = 0;
+        Integer condicionesNoAnalizadas = 0;
+        Integer condicionesNoVerificadas = 0;
         for (FactorClimatico factor : FactorClimatico.values()) {
             condicionesFactor = condicionesPorFactor.get(factor);
             datosFactor = datos.get(factor);
@@ -55,28 +50,32 @@ public class PredictorPorFactorClimatico extends Predictor {
                 //  1) debe haber un dato al que se le pueda aplicar la condicion
                 //  2) Todos deben todas las condiciones
                 if (datosFactor.isEmpty()) {
-                    return Boolean.FALSE;
+                    condicionesNoAnalizadas += condicionesFactor.size();
                 } else {
-                    if (!analizar(condicionesFactor, datosFactor)) {
-                        return Boolean.FALSE;
+                    for (Condicion condicion : condicionesFactor) {
+                        if (analizar(condicion, datosFactor)) {
+                            condicionesVerificadas++;
+                        } else {
+                            condicionesNoVerificadas++;
+                        }
                     }
                 }
             }
         }
 
-        return Boolean.TRUE;
+        return new ResultadoRegla(condicionesVerificadas, condicionesNoAnalizadas, condicionesNoVerificadas);
     }
 
     // Analiza que el dato cumpla todas las condiciones
-    private Boolean analizar(Collection<Condicion> condiciones, Collection<DatoAlmacenado> datosAlmacenados) {
+    private Boolean analizar(Condicion condicion, Collection<DatoAlmacenado> datosAlmacenados) {
         for (DatoAlmacenado datoAlmacenado : datosAlmacenados) {
-            for (Condicion condicion : condiciones) {
-                if (!condicion.aplicar(datoAlmacenado)) {
-                    return Boolean.FALSE;
-                }
+            if (!condicion.aplicar(datoAlmacenado)) {
+                return Boolean.FALSE;
             }
         }
         return Boolean.TRUE;
     }
-
 }
+
+
+

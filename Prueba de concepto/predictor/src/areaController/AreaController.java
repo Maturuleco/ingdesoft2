@@ -6,7 +6,6 @@
 package areaController;
 
 import java.awt.geom.Area;
-import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,8 +16,8 @@ import java.util.TreeSet;
 public class AreaController {
 
     // TODO: implementar bien. esta es la prima aproximacion
-    public Collection<Integer> buscarTerminalesRemotas(Area area){
-        Collection<Integer> resultado = new TreeSet<Integer>();
+    public Set<Integer> buscarTerminalesRemotas(Area area){
+        Set<Integer> resultado = new TreeSet<Integer>();
         resultado.add(1);
         resultado.add(2);
         resultado.add(3);
