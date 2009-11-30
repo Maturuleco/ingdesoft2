@@ -30,22 +30,22 @@ public class PredictorTodosConTodos extends Predictor {
     @Override
     public ResultadoRegla analizar() {
         Collection<Condicion> condiciones = regla.getCondiciones();
-        ResultadoRegla respuesta = new ResultadoRegla();
+        Integer condicionesVerificadas = 0;
+        Integer condicionesNoAnalizadas = 0;
+        Integer condicionesNoVerificadas = 0;
+
         for (Condicion condicion : condiciones) {
             if (hayDatoConTipo(datosAlmacenados, condicion.getFactor())) {
-                for (DatoAlmacenado datoAlmacenado : datosAlmacenados) {
-                    if (!condicion.aplicar(datoAlmacenado)) {
-                        respuesta.setVerifiqueTodos(Boolean.FALSE);
-                        return respuesta;
-                    }
+                if (analizar(condicion, datosAlmacenados)) {
+                    condicionesVerificadas++;
+                } else {
+                    condicionesNoVerificadas++;
                 }
             } else {
-                respuesta.setVerifiqueTodos(Boolean.FALSE);
-                return respuesta;
+                condicionesNoAnalizadas++;
             }
         }
-        respuesta.setVerifiqueTodos(Boolean.TRUE);
-        return respuesta;
+        return new ResultadoRegla(condicionesVerificadas, condicionesNoAnalizadas, condicionesNoVerificadas);
     }
 
     private Boolean hayDatoConTipo(Collection<DatoAlmacenado> datos, FactorClimatico factor) {
@@ -55,5 +55,14 @@ public class PredictorTodosConTodos extends Predictor {
             }
         }
         return Boolean.FALSE;
+    }
+
+    private Boolean analizar(Condicion condicion, Collection<DatoAlmacenado> datos) {
+        for (DatoAlmacenado datoAlmacenado : datos) {
+            if (!condicion.aplicar(datoAlmacenado)) {
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
     }
 }

@@ -32,7 +32,7 @@ public class GeneradorDatosOrdenados implements GeneradorDatos{
     private Integer idTR;
     private Integer idSensor;
 
-    public GeneradorDatosOrdenados( Orden orden, Float inicio, Float escala, Float fin, Integer idTR, Integer idSensor)
+    public GeneradorDatosOrdenados( FactorClimatico factor,Orden orden, Float inicio, Float escala, Float fin, Integer idTR, Integer idSensor)
             throws InstantiationException {
         this.inicio = inicio;
         this.orden = orden;
@@ -40,7 +40,7 @@ public class GeneradorDatosOrdenados implements GeneradorDatos{
         this.escala = escala;
         this.idTR = idTR;
         this.idSensor = idSensor;
-        factor = FactorClimatico.temperatura;
+        this.factor = factor;
         this.fin = fin;
         switch(orden){
             case creciente:

@@ -36,11 +36,6 @@ public class ValidatorManager implements Runnable{
             try {
                 DatoAlmacenado dato = entradaDatos.poll();
                 if (dato != null) {
-                /*
-                    //TODO: completar cuando lleguen datos
-                    Date timeStamp = Calendar.getInstance().getTime();
-                    DatoAlmacenado dato = new DatoAlmacenado(1, timeStamp, FactorClimatico.temperatura, 20.0F, 1, DataSource.terminal_remota);
-                */
                     if (validador.validar(dato)){
                         validadorDAO.escribirDatosValidos(dato);
                     } else {

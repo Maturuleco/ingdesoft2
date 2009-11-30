@@ -34,8 +34,10 @@ public class PredictorThread extends Thread {
 
     @Override
     public void run() {
-        resultados.add(predictor.analizar());
+        ResultadoRegla resultado= predictor.analizar();
+        resultados.add(resultado);
         System.out.println("Finalice de evaluar regla:" + predictor.getRegla().getNombre());
+        System.out.println("Resultado: " + resultado.toString());
     }
 
     private void escribirPrediccion() {

@@ -4,7 +4,6 @@
  */
 package predictorTest;
 
-import evaluador.Contador;
 import evaluador.Particionador;
 import evaluador.PredictorThread;
 import java.util.Collection;
