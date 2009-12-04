@@ -139,8 +139,6 @@ public class Mensaje implements MensajeGeneral{
         public int compare(Mensaje m1, Mensaje m2) {
             return (m1.getPriority() - m2.getPriority());
         }
-
     }
-    
     
 }
