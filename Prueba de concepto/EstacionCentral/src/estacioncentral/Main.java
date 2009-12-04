@@ -143,7 +143,7 @@ public class Main {
         modemGSM.start();
         System.out.println("Se prendio el modem");
 
-        messageReceiver.start();
+        new Thread(messageReceiver).start();
         System.out.println("Se prendio el receiver");
 
         dataReceiver.start();
