@@ -149,7 +149,7 @@ public class Main {
         dataReceiver.start();
         System.out.println("Se prendio el data receiver");
 
-        networkController.start();
+        new Thread(networkController).start();
         System.out.println("Se prendio el network controller");
 
 
