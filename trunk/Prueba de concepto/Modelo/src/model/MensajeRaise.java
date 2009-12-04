@@ -5,15 +5,16 @@
 
 package model;
 
+import ModeloTerminal.CoordenadaGlobal;
 import java.text.ParseException;
 import java.util.Date;
 
 public class MensajeRaise extends MensajeNetworkController implements MensajeGeneral {
     
-    protected long latitud;
-    protected long longitud;
+    protected CoordenadaGlobal latitud;
+    protected CoordenadaGlobal longitud;
 
-    public MensajeRaise(int idTR, long latitud, long longitud) {
+    public MensajeRaise(int idTR, CoordenadaGlobal latitud, CoordenadaGlobal longitud) {
         this.fecha = new Date();
         this.idTR = idTR;
         this.latitud = latitud;
@@ -30,8 +31,8 @@ public class MensajeRaise extends MensajeNetworkController implements MensajeGen
        String respuesta = "Raise";
        respuesta += "|" + idTR;
        respuesta += "|" + fecha.getTime();
-       respuesta += "|" + latitud;
-       respuesta += "|" + longitud;
+       respuesta += "|" + latitud.toString();
+       respuesta += "|" + longitud.toString();
        
        return respuesta;
    }
@@ -44,8 +45,8 @@ public class MensajeRaise extends MensajeNetworkController implements MensajeGen
         }
         int id = Integer.valueOf(campos[1]);
         Date fecha = new Date(Long.valueOf(campos[2]));
-        int lat = Integer.valueOf(campos[3]);
-        int lon = Integer.valueOf(campos[4]);
+        CoordenadaGlobal lat = CoordenadaGlobal.parse(campos[3]);
+        CoordenadaGlobal lon = CoordenadaGlobal.parse(campos[4]);
         MensajeRaise res = new MensajeRaise(id, lat, lon);
         res.setFecha(fecha);
         return res;
