@@ -1,17 +1,18 @@
 package networkController;
 
+import Comunication.MessageReciever;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.HeartbeatMessege;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.MensajeNetworkController;
 import model.MensajeRaise;
 import red_gsm.MensajeGSM;
 
-public class NetworkController extends Thread {
+public class NetworkController extends MessageReciever<MensajeRaise> implements Runnable {
 
     private static final long delay = 120000; // el tiempo esperado para decidir que una TR se cae, 2'
     
@@ -22,6 +23,11 @@ public class NetworkController extends Thread {
 
     private BlockingQueue<HeartbeatMessege> entrada;
     private BlockingQueue<MensajeGSM> entradaRaise;
+    private BlockingQueue<MensajeGSM> modemSalida;
+
+    public void setModemSalida(BlockingQueue<MensajeGSM> modemSalida) {
+        this.modemSalida = modemSalida;
+    }
 
     public void setEntrada(BlockingQueue<HeartbeatMessege> entrada) {
         this.entrada = entrada;
@@ -41,17 +47,17 @@ public class NetworkController extends Thread {
     private boolean recibirMensaje() {
 
         if (entradaRaise.size() > 0) {
-            try {
-                MensajeGSM levanto = entradaRaise.poll();
-                String contenido = levanto.getMensaje().split("#")[2];
-                MensajeRaise mensajeRaise = MensajeRaise.parse(contenido);
-                System.out.println("NC Recibio mensaje RAISE de la TR " + mensajeRaise.getIdTR());
-                procesarMensajeNC(mensajeRaise);
-            } catch (ParseException ex) {
-                Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            MensajeGSM levanto = entradaRaise.poll();
+            receive(levanto);
+            /*
+            String contenido = levanto.getMensaje().split("#")[2];
+            MensajeRaise mensajeRaise = MensajeRaise.parse(contenido);
+            System.out.println("NC Recibio mensaje RAISE de la TR " + mensajeRaise.getIdTR());
+            procesarMensajeNC(mensajeRaise);
+             */
             return true;
         } else if(entrada.size() > 0) {
+            
             HeartbeatMessege mensajeHeartbeat = entrada.poll();
             System.out.println("NC Recibio mensaje HEART de la TR " + mensajeHeartbeat.getIdTR());
             procesarMensajeNC(mensajeHeartbeat);
@@ -112,6 +118,25 @@ public class NetworkController extends Thread {
 
     private void actualizarEstadoRedTelemetrica(HeartbeatMessege mensajeHeartbeat) {
         // TODO: Ralizar en iteraciones siguientes ;)
+    }
+
+    @Override
+    protected MensajeRaise parseMensaje(String str) throws ParseException {
+        return MensajeRaise.parse(str);
+    }
+
+    @Override
+    protected void phisicalReply(MensajeGSM msj) {
+        try {
+            modemSalida.put(msj);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    protected void procesarMensaje(MensajeRaise msj) {
+        procesarMensajeNC(msj);
     }
 
     

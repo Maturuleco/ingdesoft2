@@ -1,4 +1,6 @@
 idTR:03
 numeroModem:003
-NumeroEstacionCentral:999
+NumeroEstacionAsignada:999
+latitud:74_E
+longitud:3_S
 Sensor1:default|sensor8|01|4000
