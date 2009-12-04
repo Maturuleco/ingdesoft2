@@ -11,4 +11,5 @@ package model;
  */
 public interface MensajeGeneral {
     public abstract long getTimeStamp();
+    public abstract Integer getIdTR();
 }
