@@ -8,6 +8,7 @@ package terminalremotafinal;
 import Adapters.Adapter;
 import DataManager.DataManager;
 import DataSender.DataSender;
+import ModeloTerminal.CoordenadaGlobal;
 import StartUpManager.StartUpManager;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,14 +20,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+//import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.DatoSensado;
 import model.Mensaje;
 import red_gsm.ModemGSM;
 import red_gsm.MensajeGSM;
-import red_gsm.ComparadorMsjGSM;
+//import red_gsm.ComparadorMsjGSM;
 
 /**
  *
@@ -36,9 +37,8 @@ public class Main {
 
     public static int estacionCentral;
     public static int idTR;
-    // TODO Poner estos campos en el arch de config
-    public static int latitud = 14;
-    public static int longitud = 15;
+    public static CoordenadaGlobal latitud;
+    public static CoordenadaGlobal longitud;
     private static int numeroModem;
     private static List<Adapter> adapters = new LinkedList<Adapter>();
     private static DataSender dataSender;
@@ -94,14 +94,28 @@ public class Main {
             String dato = getDatoFromLine(linea);
             idTR = Integer.valueOf(dato);
             System.out.println("IdTR cargado\n");
+            
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             numeroModem = Integer.valueOf(dato);
             System.out.println("Numero de Modem " + numeroModem + "\n");
+            
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             estacionCentral = Integer.valueOf(dato);
             System.out.println("Numero Estacion Central " + estacionCentral + "\n");
+            
+            
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            latitud = CoordenadaGlobal.parse(dato);
+            System.out.println("Latitud " + latitud + "\n");
+            
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            longitud = CoordenadaGlobal.parse(dato);
+            System.out.println("Longitud " + longitud + "\n");
+            
             Adapter adapter;
             linea = br.readLine();
             System.out.println("Comienzo Carga de adapters");
@@ -113,8 +127,8 @@ public class Main {
                 linea = br.readLine();
             }
             System.out.println("Fin Carga Adapters");
-       //     configFile.delete();
-            linea = br.readLine();
+//            configFile.delete();
+//            linea = br.readLine();
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -205,6 +219,7 @@ public class Main {
                     configurar(configFile);
                 } catch (ParseException ex) {
                     System.out.println("Archivo de configuracion invalido\n");
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (FileNotFoundException ex) {
                     System.out.println("Path invalido\n");
                 }
