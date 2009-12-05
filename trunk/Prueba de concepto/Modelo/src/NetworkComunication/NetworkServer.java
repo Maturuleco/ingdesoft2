@@ -16,8 +16,8 @@ import model.MensajeGeneral;
  * @author Ce y Mat
  */
 
-//public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral, TipoMensajeSalida extends MensajeGeneral> {
-public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
+public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral, TipoMensajeSalida extends MensajeGeneral> {
+//public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
 
     private ServerSocket socket;
     private Socket socketCliente;
@@ -25,7 +25,7 @@ public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
     protected abstract void procesarMensaje(TipoMensajeEntrada mensaje);
     
     //Si no se desea enviar una respuesta, devolver null
-    //protected abstract TipoMensajeSalida generarRespuesta(TipoMensajeEntrada mensaje);
+    protected abstract TipoMensajeSalida generarRespuesta(TipoMensajeEntrada mensaje);
 
     public NetworkServer(int port) {
         try {
@@ -37,7 +37,7 @@ public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
 
 
 
-    public void atenderCliente(){
+    public void esperarYAtenderCliente(){
         try {
             socketCliente = socket.accept();
 
@@ -47,12 +47,12 @@ public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
             Object obj = entradaObjetos.readObject();
             TipoMensajeEntrada mensajeRecibido = (TipoMensajeEntrada) obj;
             procesarMensaje(mensajeRecibido);
-/*
+
             TipoMensajeSalida respuesta = generarRespuesta(mensajeRecibido);
 
             if (respuesta != null)
                 enviarRespuesta(respuesta);
-*/
+
         } catch (ClassCastException ex) {
                 Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -62,7 +62,7 @@ public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
         }
 
     }
-/*
+
     protected void enviarRespuesta(TipoMensajeSalida respuesta){
         OutputStream salida = null;
         try {
@@ -81,5 +81,5 @@ public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
             }
         }
     }
-*/
+
 }
