@@ -12,12 +12,19 @@ import java.util.List;
  *
  * @author mar
  */
-public class TRsSubscriberMessage {
+public class TRsSubscriberMessage extends SubscriberMessage{
     private Integer idEC;
     private Date timeStamp;
 
     private List<Integer> TRs;
     private List<FactorClimatico> factoresClimaticos;
+
+    public TRsSubscriberMessage(Integer idEC, Date timeStamp, List<Integer> TRs, List<FactorClimatico> factoresClimaticos) {
+        this.idEC = idEC;
+        this.timeStamp = timeStamp;
+        this.TRs = TRs;
+        this.factoresClimaticos = factoresClimaticos;
+    }
 
     public List<Integer> getTRs() {
         return TRs;

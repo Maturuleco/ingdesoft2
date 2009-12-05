@@ -10,9 +10,9 @@ package model;
  * @author mar
  */
 public class SubscriptionAcceptedMessage {
-    private TRsSubscriberMessage mensajeAceptado;
+    private SubscriberMessage mensajeAceptado;
 
-    public SubscriptionAcceptedMessage(TRsSubscriberMessage mensajeAceptado) {
+    public SubscriptionAcceptedMessage(SubscriberMessage mensajeAceptado) {
         this.mensajeAceptado = mensajeAceptado;
     }
 
