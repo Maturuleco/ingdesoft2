@@ -28,7 +28,7 @@ public class ClassTestServer extends NetworkServer<MensajeSerializable,MensajeSe
 
     @Override
     protected MensajeSerializable generarRespuesta(MensajeSerializable mensaje) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return mensaje;
     }
 
 

@@ -15,7 +15,7 @@ public class ClassTestClient extends NetworkClient<MensajeSerializable, MensajeS
 
     @Override
     protected void procesarMensajeDeRespuesta(MensajeSerializable mensaje) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.println("procesando mensajes de respuesta: " + mensaje.toString());
     }
 
 
