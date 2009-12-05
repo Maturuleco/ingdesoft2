@@ -1,6 +1,8 @@
 package NetworkComunication;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ConnectException;
@@ -14,11 +16,13 @@ import model.MensajeGeneral;
  *
  * @author Ce y Mat
  */
-public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral> {
+public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral, TipoMensajeDeRespuesta extends MensajeGeneral> {
 
     private String host;
     private Socket socket = null;
     private int port;
+
+    protected abstract void procesarMensajeDeRespuesta(TipoMensajeDeRespuesta mensaje);
 
     public NetworkClient(int port) {
         this("localhost", port);
@@ -47,7 +51,7 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral> {
     }
 
 
-    protected boolean enviarMensaje(TipoMensajeDeEnvio mensajeDeEnvio) {
+    protected boolean enviarMensaje(TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
         Boolean mensajeEnviado = false;
         if (conectar()) {
             OutputStream salida = null;
@@ -56,6 +60,9 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral> {
                 ObjectOutputStream salidaObjetos = new ObjectOutputStream(salida);
 
                 salidaObjetos.writeObject(mensajeDeEnvio);
+
+                if (conRespuesta)
+                    esperarRespuesta();
 
                 mensajeEnviado = true;
             } catch (IOException ex) {
@@ -69,6 +76,29 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral> {
             }
         }
         return mensajeEnviado;
+    }
+
+    private void esperarRespuesta() {
+        InputStream entrada = null;
+        try {
+            entrada = socket.getInputStream();
+            ObjectInputStream entradaObjetos = new ObjectInputStream(entrada);
+            // Validar que el readObj espera hasta que le envian la respuesta
+            Object obj = entradaObjetos.readObject();
+            TipoMensajeDeRespuesta mensajeRecibido = (TipoMensajeDeRespuesta) obj;
+            procesarMensajeDeRespuesta(mensajeRecibido);
+            
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                entrada.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }

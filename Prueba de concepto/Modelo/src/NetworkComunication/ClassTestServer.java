@@ -1,12 +1,12 @@
 package NetworkComunication;
 
-import model.Mensaje;
+
 
 /**
  *
  * @author Ce y Mat
  */
-public class ClassTestServer extends NetworkServer<MensajeSerializable> implements Runnable {
+public class ClassTestServer extends NetworkServer<MensajeSerializable,MensajeSerializable> implements Runnable {
 
     public MensajeSerializable m =null;
 
@@ -23,7 +23,12 @@ public class ClassTestServer extends NetworkServer<MensajeSerializable> implemen
 
     public void run() {
         while (true)
-            atenderCliente();
+            esperarYAtenderCliente();
+    }
+
+    @Override
+    protected MensajeSerializable generarRespuesta(MensajeSerializable mensaje) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

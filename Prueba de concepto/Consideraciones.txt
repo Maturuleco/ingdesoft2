@@ -1,3 +1,14 @@
 Ver qué se necesita mandar en el mensaje de Raise a la EC, por más que ahora no lo usemos?
-Ver qué se "presisa" guardar en la base de datos...
+Ver qué se "precisa" guardar en la base de datos...
 Ver, en caso de q se necesite la latitud y longitud de una TR de dónde saca esa info el que recive los datos... ¿Necesita comunicarse con el NetworkManager? O se tiene una lista con las TR activas y su ubicación en una especie de Singleton threadSafe?
+
+
+
+
+
+
+
+
+
+
+NOTA: 5/12: 4:30 hrs (Ce y Mat) con el Tema de la Iternts (Clases abastractas para mandar objetos por sockets)
