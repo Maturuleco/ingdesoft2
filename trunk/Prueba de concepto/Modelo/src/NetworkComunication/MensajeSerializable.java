@@ -17,6 +17,7 @@ import java.util.List;
  *
  * @author Ce y Mat
  */
+
 public class MensajeSerializable implements MensajeGeneral, Serializable{
     private int priority = 0;
     long timeStamp;
