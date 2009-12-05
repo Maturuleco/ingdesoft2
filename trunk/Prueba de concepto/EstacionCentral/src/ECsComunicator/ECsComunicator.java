@@ -11,14 +11,19 @@ package ECsComunicator;
  */
 public class ECsComunicator extends Thread{
 
-    private PublishSubscribe publishSubscribe;
+    private ECsPublishSubscriber publishSubscribe;
+    private ECsSubscriptor subscriptor;
+    private Integer idEC;
 
-    ECsComunicator(){
-        this.publishSubscribe = new PublishSubscribe();
+    ECsComunicator(Integer idEC){
+        this.publishSubscribe = new ECsPublishSubscriber();
+        this.idEC = idEC;
+        this.subscriptor = new ECsSubscriptor(this.idEC);
     }
 
     @Override
     public void run() {
         publishSubscribe.run();
+        subscriptor.run();
     }
 }
