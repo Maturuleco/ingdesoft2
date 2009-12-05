@@ -1,0 +1,25 @@
+Subscribirte a datos			[Ec1:Cliente  Ec2:Servidor]
+Ec1 se conecta a Ec2
+Ec1 envia subscripcion a Ec2
+Ec2 recibe y subscribe a Ec1
+Ec2 envia su respuestaa Ec1 ? Si
+Ec1 se desconecta de Ec2
+
+Enviar Datos				[Ec2:Cliente  Ec1:Servidor]
+Ec2 recibe un dato nuevo interno
+Ec2 se fija a quienes se lo manda (Ec1, ponele)
+Ec2 se conecta a Ec1
+Ec2 le manda el dato a Ec1
+Ec2 se desconecta de Ec1
+
+
+Recibir datos externos			[Ec2:Cliente  Ec1:Servidor]
+Ec1 boludea... liro, liro...
+Ec1 recibe una conexión de Ec2 (ponele) 				[hace un acept]
+Escucha a Ec2 y recibe el dato.
+
+
+Avisar TRs propias
+Ec2 quiere avisar que sus Trs 				[ponele que porque se levanta la Ec]
+Itera todas las EC's y les va avisando... 		[suerte]
+

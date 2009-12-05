@@ -1,0 +1,12 @@
+Tareas
+
+1_ Guardar en la BBDD las subscripciones
+2_ Que se envie / guarde la info recibida
+3_ Data Sender (todo)
+4_ Modificar el Validador para que le envie info al Data Sender
+5_ Cuando se cargan los modelos que se le envie la info de Subscripciones al EC Comunicator
+6_ Que el Predictor Viewr envie la info de las predicciones al EC Comunicator
+7_ Mandarle las TRs al EC Comunicator cuando se lo crea
+8_ Agregar el archivo de configuracion de los modelos
+
+
