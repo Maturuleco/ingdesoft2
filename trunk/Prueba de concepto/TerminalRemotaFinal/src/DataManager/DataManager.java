@@ -17,7 +17,7 @@ import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
-import model.DatoSensado;
+import Datos.DatoSensado;
 import model.Mensaje;
 import terminalremotafinal.Main;
 

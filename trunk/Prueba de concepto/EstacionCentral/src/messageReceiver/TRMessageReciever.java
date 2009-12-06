@@ -16,7 +16,7 @@ import red_gsm.MensajeGSM;
  *
  * @author matiaz
  */
-public class TRMessageReciever extends Comunication.MessageReciever<Mensaje> implements Runnable {
+public class TRMessageReciever extends ComunicacionSobreGSM.MessageReciever<Mensaje> implements Runnable {
     
     private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;

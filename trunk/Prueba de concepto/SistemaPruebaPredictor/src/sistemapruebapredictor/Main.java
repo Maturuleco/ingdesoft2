@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 import predictor.PredictorManager;
 
 /**

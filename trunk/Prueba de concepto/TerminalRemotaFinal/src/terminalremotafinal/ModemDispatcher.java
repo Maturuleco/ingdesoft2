@@ -5,8 +5,8 @@
 package terminalremotafinal;
 
 import java.util.concurrent.BlockingQueue;
-import model.DataSource;
-import model.ValidatingTools;
+import Datos.DataSource;
+import Herramientas.ValidatingTools;
 import red_gsm.MensajeGSM;
 
 /**

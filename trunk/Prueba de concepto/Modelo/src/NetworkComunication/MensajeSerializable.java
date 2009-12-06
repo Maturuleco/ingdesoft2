@@ -5,6 +5,8 @@
 
 package NetworkComunication;
 
+import Datos.DataSource;
+import Datos.DatoSensado;
 import model.*;
 import java.io.Serializable;
 import java.text.ParseException;

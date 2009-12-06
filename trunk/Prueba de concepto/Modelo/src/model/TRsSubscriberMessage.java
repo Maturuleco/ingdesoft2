@@ -5,6 +5,7 @@
 
 package model;
 
+import Datos.FactorClimatico;
 import java.util.Date;
 import java.util.List;
 

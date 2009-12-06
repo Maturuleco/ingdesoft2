@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.Map;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 
 /**
  *

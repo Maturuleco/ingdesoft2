@@ -9,7 +9,7 @@ import com.db4o.ObjectServer;
 import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

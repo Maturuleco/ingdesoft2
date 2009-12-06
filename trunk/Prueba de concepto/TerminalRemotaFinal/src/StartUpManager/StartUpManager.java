@@ -5,12 +5,12 @@
 
 package StartUpManager;
 
-import Comunication.MessajeSender;
+import ComunicacionSobreGSM.MessajeSender;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.MensajeGeneral;
-import model.MensajeRaise;
+import EstadoDeRed.MensajeRaise;
 import red_gsm.MensajeGSM;
 import terminalremotafinal.Main;
 
@@ -23,6 +23,12 @@ public class StartUpManager extends MessajeSender implements Runnable {
     private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;
 
+    public StartUpManager() {
+        destino = terminalremotafinal.Main.estacionCentral;
+    }
+
+    
+    
     public void setSalida(BlockingQueue<MensajeGSM> salida) {
         this.modemSalida = salida;
     }

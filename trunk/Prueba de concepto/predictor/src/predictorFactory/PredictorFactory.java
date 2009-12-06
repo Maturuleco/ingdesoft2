@@ -7,7 +7,7 @@ package predictorFactory;
 
 import java.util.Collection;
 import java.util.List;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 import modelo.Modelo;
 import predictor.Predictor;
 

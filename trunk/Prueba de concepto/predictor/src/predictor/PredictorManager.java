@@ -16,7 +16,7 @@ import java.awt.geom.Area;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 import modelo.Modelo;
 import selectorDatos.SelectorDatos;
 

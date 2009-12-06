@@ -6,7 +6,10 @@
 package ECsComunicator;
 
 import model.*;
-import publishsubscriber.*;
+import publishsubscriber.PublishSubscriber;
+import publishsubscriber.Suscripcion;
+import publishsubscriber.TRsFactoresSuscripcion;
+
 
 /**
  *

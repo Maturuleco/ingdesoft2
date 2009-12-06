@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.BlockingQueue;
-import model.DatoSensado;
-import model.FactorClimatico;
+import Datos.DatoSensado;
+import Datos.FactorClimatico;
 
 public class Adapter implements Runnable {
     

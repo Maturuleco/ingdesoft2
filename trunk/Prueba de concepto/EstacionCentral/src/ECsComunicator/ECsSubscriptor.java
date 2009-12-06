@@ -8,7 +8,7 @@ package ECsComunicator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 import model.SubscriptionAcceptedMessage;
 import model.TRsSubscriberMessage;
 

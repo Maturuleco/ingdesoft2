@@ -7,9 +7,9 @@ package sistemapruebapredictor;
 
 import java.util.Calendar;
 import java.util.Date;
-import model.DataSource;
-import model.DatoAlmacenado;
-import model.FactorClimatico;
+import Datos.DataSource;
+import Datos.DatoAlmacenado;
+import Datos.FactorClimatico;
 
 /**
  *

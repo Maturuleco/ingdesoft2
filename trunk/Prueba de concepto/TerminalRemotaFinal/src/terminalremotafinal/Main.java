@@ -23,7 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 //import java.util.concurrent.PriorityBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DatoSensado;
+import Datos.DatoSensado;
 import model.Mensaje;
 import red_gsm.ModemGSM;
 import red_gsm.MensajeGSM;

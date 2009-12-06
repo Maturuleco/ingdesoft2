@@ -7,7 +7,7 @@ package validator;
 
 import com.db4o.ObjectServer;
 import java.util.concurrent.BlockingQueue;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

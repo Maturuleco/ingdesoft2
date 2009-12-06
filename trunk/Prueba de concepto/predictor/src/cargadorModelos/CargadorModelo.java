@@ -9,7 +9,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.LinkedList;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Modelo;

@@ -9,7 +9,7 @@ import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import java.util.TimerTask;
 import java.util.concurrent.BlockingQueue;
-import model.DatoSensado;
+import Datos.DatoSensado;
 import model.Mensaje;
 import terminalremotafinal.Main;
 
@@ -49,7 +49,7 @@ public final class TareaEnvioDatosSensados extends TimerTask {
 
     private void send(ObjectSet<DatoSensado> datos) {
         Integer id = Main.idTR;
-        Mensaje m = new Mensaje(id, model.DataSource.terminal_remota);
+        Mensaje m = new Mensaje(id, Datos.DataSource.terminal_remota);
         m.setDatos(datos);
         salida.add(m);
     }

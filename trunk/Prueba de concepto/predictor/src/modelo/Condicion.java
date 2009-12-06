@@ -14,8 +14,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DatoSensado;
-import model.FactorClimatico;
+import Datos.DatoSensado;
+import Datos.FactorClimatico;
 
 /**
  *

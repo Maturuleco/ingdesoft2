@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 import modelo.Modelo;
 import predictor.Predictor;
 import predictor.ResultadoRegla;

@@ -6,7 +6,7 @@
 package ModeloTerminal;
 
 import java.util.Set;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 
 /**
  *

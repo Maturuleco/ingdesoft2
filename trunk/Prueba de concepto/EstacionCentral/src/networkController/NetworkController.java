@@ -1,15 +1,15 @@
 package networkController;
 
-import Comunication.MessageReciever;
+import ComunicacionSobreGSM.MessageReciever;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.HeartbeatMessege;
+import EstadoDeRed.HeartbeatMessege;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
-import model.MensajeNetworkController;
-import model.MensajeRaise;
+import EstadoDeRed.MensajeNetworkController;
+import EstadoDeRed.MensajeRaise;
 import red_gsm.MensajeGSM;
 
 public class NetworkController extends MessageReciever<MensajeRaise> implements Runnable {
