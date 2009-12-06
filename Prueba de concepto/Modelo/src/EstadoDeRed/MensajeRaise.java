@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package model;
+package EstadoDeRed;
 
+import model.*;
 import ModeloTerminal.CoordenadaGlobal;
 import java.text.ParseException;
 import java.util.Date;

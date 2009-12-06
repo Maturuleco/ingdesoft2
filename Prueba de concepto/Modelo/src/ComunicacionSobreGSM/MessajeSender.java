@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package Comunication;
+package ComunicacionSobreGSM;
 
 import java.util.Date;
 import java.util.Timer;
 import model.MensajeGeneral;
-import model.ValidatingTools;
+import Herramientas.ValidatingTools;
 import red_gsm.MensajeGSM;
 
 /**
@@ -23,10 +23,16 @@ public abstract class MessajeSender {
     protected long timeStampMsjActual;
     protected SenderTask[] enviando;
     protected Timer timer = new Timer();
+    
+    protected int destino;
 
     protected abstract Boolean checkMsj(String[] cuerpo);
     protected abstract Boolean phisicalSend(MensajeGSM msj);
     protected abstract void transmitionFinished(MensajeGeneral msj);
+
+    public int getDestino() {
+        return destino;
+    }
     
     protected void formatPartes(String[] partes) {
         for (int i = 0; i < partes.length - 1; i++) {

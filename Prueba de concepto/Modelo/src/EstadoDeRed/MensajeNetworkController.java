@@ -1,5 +1,5 @@
 
-package model;
+package EstadoDeRed;
 
 import java.util.Date;
 
