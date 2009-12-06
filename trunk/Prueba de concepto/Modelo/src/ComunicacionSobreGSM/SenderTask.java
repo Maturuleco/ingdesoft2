@@ -3,10 +3,9 @@
  * and open the template in the editor.
  */
 
-package Comunication;
+package ComunicacionSobreGSM;
 
 import red_gsm.MensajeGSM;
-import terminalremotafinal.Main;
 
 import java.util.TimerTask;
 
@@ -20,7 +19,7 @@ public class SenderTask extends TimerTask {
     private MessajeSender handler = null;
 
     public SenderTask(String msj, MessajeSender handler) {
-        mensaje = new MensajeGSM(0, Main.estacionCentral, msj);
+        mensaje = new MensajeGSM(0, handler.getDestino(), msj);
         this.handler = handler;
     }
     

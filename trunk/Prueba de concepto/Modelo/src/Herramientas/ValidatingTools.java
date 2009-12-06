@@ -3,8 +3,10 @@
  * and open the template in the editor.
  */
 
-package model;
+package Herramientas;
 
+import Datos.DataSource;
+import model.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 

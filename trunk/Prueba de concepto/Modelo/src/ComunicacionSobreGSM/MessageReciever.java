@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Comunication;
+package ComunicacionSobreGSM;
 
 import java.text.ParseException;
 import java.util.Dictionary;
@@ -11,7 +11,7 @@ import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.MensajeGeneral;
-import model.ValidatingTools;
+import Herramientas.ValidatingTools;
 import red_gsm.MensajeGSM;
 
 /**
