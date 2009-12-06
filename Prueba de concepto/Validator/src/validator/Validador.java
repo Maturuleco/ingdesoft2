@@ -5,7 +5,7 @@
 
 package validator;
 
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

@@ -6,7 +6,7 @@
 package publishsubscriber;
 
 import java.util.List;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 
 /**
  *

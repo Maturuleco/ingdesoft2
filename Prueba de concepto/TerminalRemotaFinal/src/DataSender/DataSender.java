@@ -20,7 +20,7 @@ import red_gsm.MensajeGSM;
  * @author Tas
  * 
  */
-public class DataSender extends Comunication.MessajeSender implements Runnable {
+public class DataSender extends ComunicacionSobreGSM.MessajeSender implements Runnable {
 
     private BlockingQueue<MensajeGSM> modemSalida;
     private BlockingQueue<MensajeGSM> modemEntrada;
@@ -42,6 +42,10 @@ public class DataSender extends Comunication.MessajeSender implements Runnable {
 
     public void setSalida(BlockingQueue<? super Mensaje> salida) {
         this.salida = salida;
+    }
+
+    public DataSender() {
+        destino = terminalremotafinal.Main.estacionCentral;
     }
 
     

@@ -12,9 +12,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DataSource;
-import model.DatoSensado;
-import model.FactorClimatico;
+import Datos.DataSource;
+import Datos.DatoSensado;
+import Datos.FactorClimatico;
 import model.Mensaje;
 import red_gsm.MensajeGSM;
 

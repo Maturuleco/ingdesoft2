@@ -1,6 +1,6 @@
 package NetworkComunication;
 
-import model.DataSource;
+import Datos.DataSource;
 
 /**
  *

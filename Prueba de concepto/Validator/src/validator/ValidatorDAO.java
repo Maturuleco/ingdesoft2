@@ -12,7 +12,7 @@ import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
 import java.util.Collection;
 import java.util.List;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

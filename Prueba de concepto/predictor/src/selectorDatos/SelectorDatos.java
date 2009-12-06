@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.DatoAlmacenado;
-import model.FactorClimatico;
+import Datos.DatoAlmacenado;
+import Datos.FactorClimatico;
 
 /**
  *

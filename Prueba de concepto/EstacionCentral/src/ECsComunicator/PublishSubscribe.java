@@ -10,7 +10,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import model.FactorClimatico;
+import Datos.FactorClimatico;
 import model.SubscriptionAcceptedMessage;
 import model.TRsSubscriberMessage;
 

@@ -5,7 +5,7 @@
 
 package sistemapruebapredictor;
 
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

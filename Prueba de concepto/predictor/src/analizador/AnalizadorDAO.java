@@ -14,7 +14,7 @@ import com.db4o.ext.Db4oIOException;
 import evaluador.ResultadoEvaluacion;
 import java.util.Collection;
 import java.util.List;
-import model.DatoAlmacenado;
+import Datos.DatoAlmacenado;
 
 /**
  *

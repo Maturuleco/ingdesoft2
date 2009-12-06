@@ -6,8 +6,8 @@ package predictor;
 
 import java.util.Collection;
 import java.util.Map;
-import model.DatoAlmacenado;
-import model.FactorClimatico;
+import Datos.DatoAlmacenado;
+import Datos.FactorClimatico;
 import modelo.Condicion;
 import modelo.Regla;
 

@@ -6,10 +6,10 @@
 package dataReceiver;
 
 import java.util.concurrent.BlockingQueue;
-import model.DatoAlmacenado;
-import model.DatoSensado;
+import Datos.DatoAlmacenado;
+import Datos.DatoSensado;
 import model.Mensaje;
-import model.HeartbeatMessege;
+import EstadoDeRed.HeartbeatMessege;
 
 /**
  *
