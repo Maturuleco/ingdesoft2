@@ -5,6 +5,8 @@
 
 package publishsubscriber;
 
+import model.SuscriptorMessage;
+
 /**
  *
  * @author mar
@@ -19,5 +21,7 @@ public abstract class Suscripcion {
     public void setIdSuscriptor(Integer idSuscriptor) {
         this.idSuscriptor = idSuscriptor;
     }
+
+    public abstract Boolean seCorresponde(SuscriptorMessage mensaje);
 
 }

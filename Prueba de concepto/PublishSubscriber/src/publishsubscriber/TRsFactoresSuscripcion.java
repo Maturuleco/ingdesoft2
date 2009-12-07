@@ -7,6 +7,7 @@ package publishsubscriber;
 
 import java.util.List;
 import Datos.FactorClimatico;
+import model.SuscriptorMessage;
 
 /**
  *
@@ -22,14 +23,6 @@ public class TRsFactoresSuscripcion extends Suscripcion{
         this.factores = factores;
     }
 
-    public Integer getIdEC() {
-        return idEC;
-    }
-
-    public void setIdEC(Integer idEC) {
-        this.idEC = idEC;
-    }
-
     public List<Integer> getIdsTR() {
         return idsTR;
     }
@@ -38,7 +31,11 @@ public class TRsFactoresSuscripcion extends Suscripcion{
         this.idsTR = idsTR;
     }
 
-    Integer idEC;
     List<Integer> idsTR;
     List<FactorClimatico> factores;
+
+    @Override
+    public Boolean seCorresponde(SuscriptorMessage mensaje) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
