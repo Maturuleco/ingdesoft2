@@ -4,12 +4,18 @@
  */
 package cargadorModelos;
 
-import java.awt.Rectangle;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.LinkedList;
 import Datos.FactorClimatico;
+import java.awt.Rectangle;
+import java.awt.geom.Area;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.text.ParseException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Modelo;
@@ -21,6 +27,90 @@ import modelo.Regla;
  */
 public class CargadorModelo {
 
+    private String path = "MODELOS/";
+    private List<Modelo> modelos = new LinkedList<Modelo>();
+
+    public CargadorModelo(){
+        File folder = new File (path);
+        File[] files = folder.listFiles();
+
+        if (files != null) {
+            for (int j = 0; j < files.length; j++) {
+                File file = files[j];
+                cargarModelo(file);
+            }
+        }
+    }
+
+    public Collection<Modelo> getModelosCargados() {
+        return modelos;
+    }
+
+    private void cargarModelo(File file) {
+        int numRegla = 0;
+        FileReader fr = null;
+        String nombreModelo = null;
+        Collection<Regla> reglas = new LinkedList<Regla>();
+
+        try {
+            fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            
+            //Ej. Nombre Modelo: FRIO
+            String linea = br.readLine();
+            nombreModelo = getNombreModelo(linea);
+            
+            // Condiciones del modelo
+            linea = br.readLine();
+            if( linea == null)
+                throw new ParseException("ERROR. El modelo no contiene condiciones.", 0);
+
+            while (linea != null) {
+                Collection<Condicion> condiciones = new LinkedList<Condicion>();
+                condiciones.add(getCondicion(linea));
+                reglas.add(new Regla("Regla " + numRegla, condiciones));
+
+                linea = br.readLine();
+            }
+            fr.close();
+            Modelo modelo = new Modelo(nombreModelo, reglas, null);
+            modelos.add(modelo);
+
+        } catch (Exception ex) {
+            Logger.getLogger(CargadorModelo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String getNombreModelo(String linea) throws ParseException {
+        if (linea == null) {
+            throw new ParseException("ERROR. El archivo de modelos esta vacio", 0);
+        }
+        String[] partes = linea.split(":");
+        if (partes.length != 2) {
+            throw new ParseException("ERROR. El archivo de modelos no esta bien formado." + linea, 0);
+        }
+        return partes[1];
+    }
+
+    private Condicion getCondicion(String linea) throws ParseException {
+        if (linea == null) {
+            throw new ParseException("ERROR. El archivo de modelos esta vacio", 0);
+        }
+        String[] partes = linea.split(";");
+        if (partes.length != 3) {
+            throw new ParseException("ERROR. El archivo de modelos no esta bien formado." + linea, 0);
+        }
+        
+        FactorClimatico factorClimatico = FactorClimatico.parse(partes[0]);
+        Comparador comparador = Comparador.parse(partes[1]);
+        String valor = partes[2];
+
+        Condicion condicion = new Condicion(factorClimatico, comparador, valor);
+
+        return condicion;
+    }
+
+    // --- SACAR DESPUES DE PROBAR LO DE ARRIBA
     public Collection<Modelo> getModelos() {
         Collection<Modelo> modelos = new LinkedList<Modelo>();
         Area area1 = new Area(new Rectangle(0, 0, 10, 10));
@@ -71,4 +161,5 @@ public class CargadorModelo {
 
         return reglas;
     }
+ // --- END SACAR
 }
