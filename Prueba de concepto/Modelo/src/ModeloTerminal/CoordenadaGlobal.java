@@ -43,4 +43,32 @@ public class CoordenadaGlobal {
     @Override public String toString(){
         return grado.toString() + '_' + puntoCardinal.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CoordenadaGlobal other = (CoordenadaGlobal) obj;
+        if (this.puntoCardinal != other.puntoCardinal) {
+            return false;
+        }
+        if (this.grado != other.grado && (this.grado == null || !this.grado.equals(other.grado))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + (this.puntoCardinal != null ? this.puntoCardinal.hashCode() : 0);
+        hash = 59 * hash + (this.grado != null ? this.grado.hashCode() : 0);
+        return hash;
+    }
+    
+    
 }
