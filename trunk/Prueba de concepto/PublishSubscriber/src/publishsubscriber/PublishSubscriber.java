@@ -16,8 +16,9 @@ import model.*;
 public abstract class PublishSubscriber extends Thread{
 
     private static final long sleepTime = 100;
-    private BlockingQueue<SubscriberMessage> entrada;
-    private BlockingQueue<SubscriptionAcceptedMessage> salida;
+    private BlockingQueue<SubscriberMessage> entradaSuscripciones;
+    private BlockingQueue<SuscriptorMessage> salida;
+    private BlockingQueue<InformationMessage> entradaInfo;
     private List<Suscripcion> suscripciones;
 
     public PublishSubscriber() {    
@@ -28,6 +29,7 @@ public abstract class PublishSubscriber extends Thread{
         while (true) {
             if (! sensarEntradaDatos() ) {
                 try {
+                    enviarInfo();
                     // Duermo un segundo
                     sleep(sleepTime);
                 } catch (InterruptedException ex) {}
@@ -36,15 +38,19 @@ public abstract class PublishSubscriber extends Thread{
     }
 
     public void setEntrada(BlockingQueue<SubscriberMessage> entrada) {
-        this.entrada = entrada;
+        this.entradaSuscripciones = entrada;
     }
 
-    public void setSalida (BlockingQueue<SubscriptionAcceptedMessage> salida) {
+    public void setSalida (BlockingQueue<SuscriptorMessage> salida) {
         this.salida = salida;
     }
 
+    public void setEntradaInfo (BlockingQueue<InformationMessage> entradaInfo) {
+        this.entradaInfo = entradaInfo;
+    }
+
     private boolean sensarEntradaDatos() {
-        SubscriberMessage mensaje = entrada.poll();
+        SubscriberMessage mensaje = entradaSuscripciones.poll();
         if (mensaje != null) {
             System.out.println("El Publish Subscriber recibe una suscripcion");
             Suscripcion suscripcion = crearSuscripcion(mensaje);
@@ -58,9 +64,23 @@ public abstract class PublishSubscriber extends Thread{
 
     protected abstract Suscripcion crearSuscripcion(SubscriberMessage mensaje);
     
-    private void enviarRespuesta(SubscriptionAcceptedMessage respuesta){
+    private void enviarRespuesta(SuscriptorMessage respuesta){
         salida.add(respuesta);
         System.out.println("El Publish Subscriber acepta una suscripcion");
+    }
+
+    private void enviarInfo() {
+        InformationMessage mensaje = entradaInfo.poll();
+        if (mensaje != null) {
+            System.out.println("El Publish Subscriber recibe informacion para enviar");
+            for (Suscripcion s : suscripciones){
+                if (s.seCorresponde(mensaje)){
+                    Integer receptor = s.getIdSuscriptor();
+                    InformationMessage respuesta = new InformationMessage(receptor,mensaje);
+                    enviarRespuesta(respuesta);
+                }
+            }
+        }
     }
 
 
