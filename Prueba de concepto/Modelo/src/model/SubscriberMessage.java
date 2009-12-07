@@ -11,4 +11,14 @@ package model;
  */
 public abstract class SubscriberMessage {
 
+    Integer idSuscriptor;
+
+    public Integer getIdSuscriptor() {
+        return idSuscriptor;
+    }
+
+    public void setIdSuscriptor(Integer idSuscriptor) {
+        this.idSuscriptor = idSuscriptor;
+    }
+    
 }

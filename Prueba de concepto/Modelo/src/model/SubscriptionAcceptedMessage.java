@@ -9,7 +9,7 @@ package model;
  *
  * @author mar
  */
-public class SubscriptionAcceptedMessage {
+public class SubscriptionAcceptedMessage extends SuscriptorMessage{
     private SubscriberMessage mensajeAceptado;
 
     public SubscriptionAcceptedMessage(SubscriberMessage mensajeAceptado) {

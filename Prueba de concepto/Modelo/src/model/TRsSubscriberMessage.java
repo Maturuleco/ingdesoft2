@@ -14,14 +14,14 @@ import java.util.List;
  * @author mar
  */
 public class TRsSubscriberMessage extends SubscriberMessage{
-    private Integer idEC;
+
     private Date timeStamp;
 
     private List<Integer> TRs;
     private List<FactorClimatico> factoresClimaticos;
 
-    public TRsSubscriberMessage(Integer idEC, Date timeStamp, List<Integer> TRs, List<FactorClimatico> factoresClimaticos) {
-        this.idEC = idEC;
+    public TRsSubscriberMessage(Integer idSuscriptor, Date timeStamp, List<Integer> TRs, List<FactorClimatico> factoresClimaticos) {
+        this.idSuscriptor = idSuscriptor;
         this.timeStamp = timeStamp;
         this.TRs = TRs;
         this.factoresClimaticos = factoresClimaticos;
@@ -41,14 +41,6 @@ public class TRsSubscriberMessage extends SubscriberMessage{
 
     public void setFactoresClimaticos(List<FactorClimatico> factoresClimaticos) {
         this.factoresClimaticos = factoresClimaticos;
-    }
-
-    public Integer getIdEC() {
-        return idEC;
-    }
-
-    public void setIdEC(Integer idEC) {
-        this.idEC = idEC;
     }
 
     public Date getTimeStamp() {
