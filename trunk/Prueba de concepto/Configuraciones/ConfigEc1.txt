@@ -1,0 +1,3 @@
+idEc:01
+numeroModem:999
+trID:1#pos:Lat·54_E|Long·32_S#tipoSensores:H|P
