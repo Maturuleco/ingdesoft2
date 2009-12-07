@@ -10,6 +10,8 @@ import com.db4o.ObjectServer;
 import dataReceiver.DataReceiver;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import messageReceiver.TRMessageReciever;
 import networkController.NetworkController;
 import predictor.PredictorManager;
@@ -20,6 +22,13 @@ import java.util.concurrent.PriorityBlockingQueue;
 import Datos.DatoAlmacenado;
 import model.Mensaje;
 import EstadoDeRed.HeartbeatMessege;
+import ModeloTerminal.ModeloTerminalRemota;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.text.ParseException;
+import java.util.Collection;
+import java.util.LinkedList;
 import red_gsm.ComparadorMsjGSM;
 import red_gsm.MensajeGSM;
 import red_gsm.ModemGSM;
@@ -29,8 +38,10 @@ import red_gsm.ModemGSM;
  * @author Santiago Avendaño
  */
 public class Main {
-
-    public static int numeroModem = 999;
+    public static int idEc;
+    public static int numeroModem;
+    
+    private static Collection<ModeloTerminalRemota> terminales = new LinkedList<ModeloTerminalRemota>();
 
     private static PredictorManager predictor;
     private static ValidatorManager validator;
@@ -63,9 +74,82 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        inicializarComponentes();
-        conectarComponentes();
-        prenderComponentes();
+        if (args.length < 1) {
+            System.out.println("Es necesario el archivo de configuracion\n");
+        } else {
+          //  System.out.println(args[0]);
+            String configPath = args[0];
+            File configFile = new File(configPath);
+            if (!configFile.isFile()) {
+                System.out.println("Es necesario el archivo de configuracion\n");
+            } else {
+                try {
+
+                    configurar(configFile);
+                    inicializarComponentes();
+                    conectarComponentes();
+                    prenderComponentes();
+                
+                } catch (ParseException ex) {
+                    System.out.println("Archivo de configuracion invalido\n");
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (FileNotFoundException ex) {
+                    System.out.println("Path invalido\n");
+                }
+            }
+        }
+    }
+    
+    private static String getDatoFromLine(String linea) throws ParseException {
+        if (linea == null) {
+            throw new ParseException("Configuration file", 0);
+        }
+        String[] partes = linea.split(":");
+        if (partes.length != 2) {
+            throw new ParseException("En archivo de configuracion " + linea, 0);
+        }
+        return partes[1];
+    }
+    
+    private static void configurar(File configFile) throws ParseException, FileNotFoundException {
+        
+        if (!configFile.canRead()) {
+            throw new FileNotFoundException();
+        }
+        
+        FileReader fr = null;
+        fr = new FileReader(configFile);
+        BufferedReader br = new BufferedReader(fr);
+        
+        try {
+            String linea;
+            String dato;
+            
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            idEc = Integer.valueOf(dato);
+            System.out.println("IdEc cargado\n");
+            
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            numeroModem = Integer.valueOf(dato);
+            System.out.println("IdEc cargado\n");
+            
+            ModeloTerminalRemota tr;
+            linea = br.readLine();
+            System.out.println("Comienzo Carga de terminales");
+            while (linea != null) {
+                tr = ModeloTerminalRemota.parse(linea);
+                System.out.println("Terminal " + tr.toString() + " cargada\n");
+                terminales.add(tr);
+                linea = br.readLine();
+            }
+            System.out.println("Fin Carga Terminales");
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     private static void conectarComponentes() {

@@ -14,6 +14,10 @@ import java.util.logging.Logger;
 import Datos.DataSource;
 import Datos.DatoSensado;
 import Datos.FactorClimatico;
+import ModeloTerminal.CoordenadaGlobal;
+import ModeloTerminal.ModeloTerminalRemota;
+import ModeloTerminal.PuntoCardinal;
+import ModeloTerminal.UbicacionGeografica;
 import model.Mensaje;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -115,6 +119,46 @@ public class TestParseo {
             Logger.getLogger(TestParseo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    @Test
+    public void testParseUbicacionGeográfica() {
+        try {
+            CoordenadaGlobal latitud = new CoordenadaGlobal(PuntoCardinal.Este, 54);
+            CoordenadaGlobal longitud = new CoordenadaGlobal(PuntoCardinal.Sur, 32);
+            UbicacionGeografica t1 = new UbicacionGeografica(latitud, longitud);
+            String str = t1.toString();
+            System.out.println("A String: " + str + "\n");
+            UbicacionGeografica t2 = UbicacionGeografica.parse(str);
+            System.out.println("Luego del Parseo: "+t2.toString()+"\n");
+            
+            assertEquals(t1, t2);
+        } catch (ParseException ex) {
+            Logger.getLogger(TestParseo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @Test
+    public void testParseModeloTerminal() {
+        CoordenadaGlobal latitud = new CoordenadaGlobal(PuntoCardinal.Este, 54);
+        CoordenadaGlobal longitud = new CoordenadaGlobal(PuntoCardinal.Sur, 32);
+        UbicacionGeografica u1 = new UbicacionGeografica(latitud, longitud);
+        ModeloTerminalRemota mt1 = new ModeloTerminalRemota(01, u1);
+        mt1.addTipoSensor(FactorClimatico.humedad);
+        mt1.addTipoSensor(FactorClimatico.humedad);
+        mt1.addTipoSensor(FactorClimatico.presion);
+        ModeloTerminalRemota mt2 = null;
+
+        try {
+            String str = mt1.toString();
+            System.out.println("Terminal a String:\n" + str);
+            mt2 = ModeloTerminalRemota.parse(str);
+            System.out.println("Terminal parseada:\n"+mt2.toString());
+        } catch (ParseException ex) {
+            Logger.getLogger(TestParseo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        assertEquals(mt1, mt2);
     }
 
 
