@@ -5,7 +5,7 @@
 package predictor;
 
 import analizador.Analizador;
-import areaController.AreaController;
+import areaController.ControladorDeRequerimientos;
 import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
 import evaluador.Evaluador;
@@ -22,7 +22,7 @@ public class PredictorManager implements Runnable {
 
     private static final long tiempoEspera = 5000;
     private volatile boolean keepTrying = true;
-    private AreaController controladorAreas = new AreaController();
+    private ControladorDeRequerimientos controladorAreas = new ControladorDeRequerimientos();
     private SelectorDatos selectorDatos;
     private Evaluador evaluador;
     private Analizador analizador = new Analizador();

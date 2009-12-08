@@ -4,8 +4,7 @@
  */
 package evaluador;
 
-import areaController.AreaController;
-import java.awt.geom.Area;
+import areaController.ControladorDeRequerimientos;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,13 +26,13 @@ import selectorDatos.SelectorDatos;
 public class Evaluador {
 
     private SelectorDatos selectorDatos;
-    private AreaController controladorAreas;
+    private ControladorDeRequerimientos controladorRequerimientos;
     private PredictorFactory predictorFactory = new PredictorAgruparPorFactorFactory();
     private Particionador particionador = new Particionador(3);
 
-    public Evaluador(SelectorDatos selectorDatos, AreaController controladorAreas) {
+    public Evaluador(SelectorDatos selectorDatos, ControladorDeRequerimientos controladorAreas) {
         this.selectorDatos = selectorDatos;
-        this.controladorAreas = controladorAreas;
+        this.controladorRequerimientos = controladorAreas;
     }
 
     public Collection<ResultadoEvaluacion> evaluar(Modelo modelo) {
@@ -41,11 +40,10 @@ public class Evaluador {
         List<DatoAlmacenado> datosTotales;
         Map<Integer, List<DatoAlmacenado>> datosTotalesAgrupadosPorTR;
         List<Predictor> predictores;
-        Area areaInfluenciaModelo;
         Set<Integer> trsSeleccionadas;
 
-        areaInfluenciaModelo = modelo.getArea();
-        trsSeleccionadas = controladorAreas.buscarTerminalesRemotas(areaInfluenciaModelo);
+        
+        trsSeleccionadas = controladorRequerimientos.buscarTerminalesRemotas(modelo.getRequerimientosDatos());
         datosTotales = selectorDatos.seleccionar(trsSeleccionadas, null, 10);
         datosTotalesAgrupadosPorTR = selectorDatos.agruparDatosPorTR(datosTotales);
         for (Integer idTR : datosTotalesAgrupadosPorTR.keySet()) {
@@ -55,7 +53,7 @@ public class Evaluador {
         return resultados;
     }
 
-    private ResultadoEvaluacion empaquetarResultado(String nombreModelo, Integer idTR,ConcurrentLinkedQueue<ResultadoRegla> resultados ){
+    private ResultadoEvaluacion empaquetarResultado(Integer nombreModelo, Integer idTR,ConcurrentLinkedQueue<ResultadoRegla> resultados ){
         Integer reglasVerificadas = 0;
         for (ResultadoRegla resultadoRegla : resultados) {
             if (resultadoRegla.verifiqueTodasLasCondiciones()) reglasVerificadas++;

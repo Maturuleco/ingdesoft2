@@ -13,7 +13,7 @@ import java.util.Date;
  * @author Santiago Avendaño
  */
 public class ResultadoEvaluacion {
-    private String nombreModelo;
+    private Integer nombreModelo;
     private Integer idTR;
     private Integer reglasEvaluadas;
     private Integer reglasVerificadas;
@@ -23,7 +23,7 @@ public class ResultadoEvaluacion {
         timeStamp = new Date();
     }
 
-    public ResultadoEvaluacion(String nombreModelo, Integer idTR, Integer reglasEvaluadas, Integer reglasVerificadas) {
+    public ResultadoEvaluacion(Integer nombreModelo, Integer idTR, Integer reglasEvaluadas, Integer reglasVerificadas) {
         this.nombreModelo = nombreModelo;
         this.idTR = idTR;
         this.reglasEvaluadas = reglasEvaluadas;
@@ -39,11 +39,11 @@ public class ResultadoEvaluacion {
         this.idTR = idTR;
     }
 
-    public String getNombreModelo() {
+    public Integer getNombreModelo() {
         return nombreModelo;
     }
 
-    public void setNombreModelo(String nombreModelo) {
+    public void setNombreModelo(Integer nombreModelo) {
         this.nombreModelo = nombreModelo;
     }
 
