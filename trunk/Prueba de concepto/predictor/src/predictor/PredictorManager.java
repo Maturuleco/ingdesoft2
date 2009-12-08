@@ -8,15 +8,9 @@ import analizador.Analizador;
 import areaController.AreaController;
 import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
-import predictorFactory.PredictorFactory;
-import predictorFactory.PredictorAgruparPorFactorFactory;
 import evaluador.Evaluador;
 import evaluador.ResultadoEvaluacion;
-import java.awt.geom.Area;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import Datos.DatoAlmacenado;
 import modelo.Modelo;
 import selectorDatos.SelectorDatos;
 
@@ -32,9 +26,10 @@ public class PredictorManager implements Runnable {
     private SelectorDatos selectorDatos;
     private Evaluador evaluador;
     private Analizador analizador = new Analizador();
-    private CargadorModelo cargadorModelos = new CargadorModelo();
+    private CargadorModelo cargadorModelos;
 
-    public PredictorManager(ObjectServer server, ObjectServer serverResultados) {
+    public PredictorManager(ObjectServer server, ObjectServer serverResultados, String path) {
+        cargadorModelos = new CargadorModelo(path);
         selectorDatos = new SelectorDatos(server);
         evaluador = new Evaluador(selectorDatos, controladorAreas);
         analizador.getAnalizadorDAO().setServerResultados(serverResultados);

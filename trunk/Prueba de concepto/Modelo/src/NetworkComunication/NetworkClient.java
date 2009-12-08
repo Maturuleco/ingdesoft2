@@ -5,18 +5,18 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.MensajeGeneral;
 
 /**
  *
  * @author Ce y Mat
  */
-public abstract class NetworkClient<TipoMensajeDeEnvio extends MensajeGeneral, TipoMensajeDeRespuesta extends MensajeGeneral> {
+public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, TipoMensajeDeRespuesta extends Serializable> {
 
     private String host;
     private Socket socket = null;

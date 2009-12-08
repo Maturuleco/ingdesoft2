@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package publishsubscriber;
 
@@ -14,6 +10,9 @@ import model.SuscriptorMessage;
  * @author mar
  */
 public class TRsFactoresSuscripcion extends Suscripcion{
+
+    private List<Integer> idsTR;
+    private List<FactorClimatico> factores;
 
     public List<FactorClimatico> getFactores() {
         return factores;
@@ -30,9 +29,6 @@ public class TRsFactoresSuscripcion extends Suscripcion{
     public void setIdsTR(List<Integer> idsTR) {
         this.idsTR = idsTR;
     }
-
-    List<Integer> idsTR;
-    List<FactorClimatico> factores;
 
     @Override
     public Boolean seCorresponde(SuscriptorMessage mensaje) {

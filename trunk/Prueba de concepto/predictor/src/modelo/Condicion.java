@@ -130,4 +130,35 @@ public class Condicion {
         }
         return res;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Condicion other = (Condicion) obj;
+        if (this.comparador != other.comparador) {
+            return false;
+        }
+        if (this.constante != other.constante && (this.constante == null || !this.constante.equals(other.constante))) {
+            return false;
+        }
+        if (this.factor != other.factor) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + (this.comparador != null ? this.comparador.hashCode() : 0);
+        hash = 47 * hash + (this.constante != null ? this.constante.hashCode() : 0);
+        hash = 47 * hash + (this.factor != null ? this.factor.hashCode() : 0);
+        return hash;
+    }
+    
 }

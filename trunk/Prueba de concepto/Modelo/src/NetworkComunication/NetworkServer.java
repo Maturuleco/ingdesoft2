@@ -5,18 +5,18 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.MensajeGeneral;
 
 /**
  *
  * @author Ce y Mat
  */
 
-public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral, TipoMensajeSalida extends MensajeGeneral> {
+public abstract class NetworkServer<TipoMensajeEntrada extends Serializable, TipoMensajeSalida extends Serializable> {
 //public abstract class NetworkServer<TipoMensajeEntrada extends MensajeGeneral> {
 
     private ServerSocket socket;
