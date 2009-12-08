@@ -5,25 +5,20 @@
 
 package ECsComunicator;
 
+import DataSender.DatosPublishSubscriber;
+import ModelSubscriptor.ECsDatosSubscriptor;
+
 /**
  *
  * @author mar
  */
 public class ECsComunicator extends Thread{
 
-    private ECsPublishSubscriber publishSubscribe;
-    private ECsDatosSubscriptor subscriptor;
-    private Integer idEC;
-
-    ECsComunicator(Integer idEC){
-        this.publishSubscribe = new ECsPublishSubscriber();
-        this.idEC = idEC;
-        this.subscriptor = new ECsDatosSubscriptor(this.idEC);
+    ECsComunicator(){
     }
 
     @Override
     public void run() {
-        publishSubscribe.run();
-        subscriptor.run();
+       
     }
 }
