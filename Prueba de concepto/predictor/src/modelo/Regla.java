@@ -74,4 +74,36 @@ public class Regla {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Regla other = (Regla) obj;
+        if (this.nombre != other.nombre && (this.nombre == null || !this.nombre.equals(other.nombre))) {
+            return false;
+        }
+        if (this.condiciones != other.condiciones && (this.condiciones == null || !this.condiciones.equals(other.condiciones))) {
+            return false;
+        }
+        if (this.condicionesPorFactor != other.condicionesPorFactor && (this.condicionesPorFactor == null || !this.condicionesPorFactor.equals(other.condicionesPorFactor))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.nombre != null ? this.nombre.hashCode() : 0);
+        hash = 97 * hash + (this.condiciones != null ? this.condiciones.hashCode() : 0);
+        hash = 97 * hash + (this.condicionesPorFactor != null ? this.condicionesPorFactor.hashCode() : 0);
+        return hash;
+    }
+    
+    
 }

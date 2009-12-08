@@ -1,42 +1,68 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package modelo;
 
-import java.awt.geom.Area;
 import java.util.Collection;
 
 /**
  *
- * @author Santiago Avendaño <santiavenda2@gmail.com>
+ * @author Santiago Avendaño, Ce y Mat
  */
 public class Modelo {
 
-    private String nombreModelo;
+    private Integer nombreModelo;
     private Collection<Regla> reglas;
-    private Area area;
+    private Requerimiento requerimientos;
 
-    public Modelo(String nombreModelo, Collection<Regla> reglas, Area area) {
+    public Modelo(Integer nombreModelo, Collection<Regla> reglas, Requerimiento requerimientos) {
         this.nombreModelo = nombreModelo;
         this.reglas = reglas;
-        this.area = area;
+        this.requerimientos = requerimientos;
     }
 
+    public Requerimiento getRequerimientos() {
+        return requerimientos;
+    }
+
+    public void setRequerimientos(Requerimiento requerimientos) {
+        this.requerimientos = requerimientos;
+    }
+  
     public Collection<Regla> getReglas() {
         return reglas;
     }
 
-    public String getNombreModelo() {
+    public Integer getNombreModelo() {
         return nombreModelo;
     }
 
-    public void setNombreModelo(String nombreModelo) {
+    public void setNombreModelo(Integer nombreModelo) {
         this.nombreModelo = nombreModelo;
     }
 
-    public Area getArea() {
-        return area;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Modelo other = (Modelo) obj;
+        if (this.nombreModelo.equals(other.nombreModelo) && (this.nombreModelo == null || !this.nombreModelo.equals(other.nombreModelo))) {
+            return false;
+        }
+        if (this.reglas != other.reglas && (this.reglas == null || !this.reglas.equals(other.reglas))) {
+            return false;
+        }
+        return true;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + (this.nombreModelo != null ? this.nombreModelo.hashCode() : 0);
+        hash = 13 * hash + (this.reglas != null ? this.reglas.hashCode() : 0);
+        return hash;
+    }
+    
 }

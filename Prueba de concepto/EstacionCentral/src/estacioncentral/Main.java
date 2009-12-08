@@ -40,6 +40,7 @@ import red_gsm.ModemGSM;
 public class Main {
     public static int idEc;
     public static int numeroModem;
+    public static String carpetaParaModelos;
     
     private static Collection<ModeloTerminalRemota> terminales = new LinkedList<ModeloTerminalRemota>();
 
@@ -135,6 +136,11 @@ public class Main {
             numeroModem = Integer.valueOf(dato);
             System.out.println("IdEc cargado\n");
             
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            carpetaParaModelos = dato;
+            System.out.println("Carpeta de modelos cargada:"+carpetaParaModelos+"\n");
+            
             ModeloTerminalRemota tr;
             linea = br.readLine();
             System.out.println("Comienzo Carga de terminales");
@@ -191,7 +197,7 @@ public class Main {
         System.out.println("Se creo la base Valid Data en la ruta:" + serverValidDataPath.getAbsolutePath());
         resultadosServer = Db4o.openServer(serverResultadosPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Resultados en la ruta:" + serverResultadosPath.getAbsolutePath());
-        predictor = new PredictorManager(validDataServer, resultadosServer);
+        predictor = new PredictorManager(validDataServer, resultadosServer, carpetaParaModelos);
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
         validator = new ValidatorManager(validDataServer);
         System.out.println("Se creo el Validator y se le le asigno el server de ValidData");

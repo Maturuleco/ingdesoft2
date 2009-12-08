@@ -47,4 +47,5 @@ public enum Comparador {
                 throw new UnsupportedOperationException("No hay entrada para" + this.name());
         }
     }
+    
 }
