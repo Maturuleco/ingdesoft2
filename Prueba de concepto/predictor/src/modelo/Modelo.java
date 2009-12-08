@@ -2,6 +2,8 @@
 package modelo;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -11,22 +13,16 @@ public class Modelo {
 
     private Integer nombreModelo;
     private Collection<Regla> reglas;
-    private Requerimiento requerimientos;
+    private Set<RequerimientoDato> requerimientosDatos;
+    private Set<RequerimientoResultado> requerimientosResultados;
 
-    public Modelo(Integer nombreModelo, Collection<Regla> reglas, Requerimiento requerimientos) {
+    public Modelo(Integer nombreModelo, Collection<Regla> reglas) {
         this.nombreModelo = nombreModelo;
         this.reglas = reglas;
-        this.requerimientos = requerimientos;
+        this.requerimientosDatos = new HashSet<RequerimientoDato>();
+        this.requerimientosResultados = new HashSet<RequerimientoResultado>();
     }
 
-    public Requerimiento getRequerimientos() {
-        return requerimientos;
-    }
-
-    public void setRequerimientos(Requerimiento requerimientos) {
-        this.requerimientos = requerimientos;
-    }
-  
     public Collection<Regla> getReglas() {
         return reglas;
     }
@@ -35,34 +31,20 @@ public class Modelo {
         return nombreModelo;
     }
 
-    public void setNombreModelo(Integer nombreModelo) {
-        this.nombreModelo = nombreModelo;
+    public Set<RequerimientoDato> getRequerimientosDatos() {
+        return requerimientosDatos;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Modelo other = (Modelo) obj;
-        if (this.nombreModelo.equals(other.nombreModelo) && (this.nombreModelo == null || !this.nombreModelo.equals(other.nombreModelo))) {
-            return false;
-        }
-        if (this.reglas != other.reglas && (this.reglas == null || !this.reglas.equals(other.reglas))) {
-            return false;
-        }
-        return true;
+    public Set<RequerimientoResultado> getRequerimientosResultados() {
+        return requerimientosResultados;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 13 * hash + (this.nombreModelo != null ? this.nombreModelo.hashCode() : 0);
-        hash = 13 * hash + (this.reglas != null ? this.reglas.hashCode() : 0);
-        return hash;
+    public void setRequerimientosDatos(Set<RequerimientoDato> requerimientosDatos) {
+        this.requerimientosDatos = requerimientosDatos;
+    }
+
+    public void setRequerimientosResultados(Set<RequerimientoResultado> requerimientosResultados) {
+        this.requerimientosResultados = requerimientosResultados;
     }
     
 }
