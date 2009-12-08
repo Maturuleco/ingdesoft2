@@ -5,26 +5,28 @@
 
 package publishsubscriber;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.*;
 
 /**
  *
  * @author mar
  */
-public abstract class Subscriptor extends Thread{
+public abstract class Subscriptor {//extends Thread{
     private BlockingQueue<SubscriberMessage> salida;
     private BlockingQueue<SubscriptionAcceptedMessage> entrada;
 
     public Subscriptor() {
     }
-
+/*
     @Override
     public void run(){
         while(true){
             subscribe();
         }
     }
-
+*/
     public void setEntrada(BlockingQueue<SubscriberMessage> salida) {
         this.salida = salida;
     }
@@ -36,7 +38,12 @@ public abstract class Subscriptor extends Thread{
     public void subscribe () {
         SubscriberMessage mensaje = crearMensajeSuscripcion();
         while (!LlegueRespuesta(mensaje)){
-            salida.add(mensaje);
+            try {
+                Thread.sleep(1000);
+                salida.add(mensaje);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Subscriptor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
     }
