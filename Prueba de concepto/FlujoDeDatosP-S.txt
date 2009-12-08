@@ -1,0 +1,41 @@
+Subscripciones DATO/RESULTADO:
+
+PASOS:
+1_ Subscriptor: Por cada requerimiento de datos/resultados de los modelos internos se genera una SubscripcionDATO (SD) o SubscripcionRESULTADO (SR) respectivamente. Se envia la subscripcion al EC-Comunicator.
+
+2_ EC-Comunicator: Por cada subscripcion recibida se envia el mensaje por un puerto de salidaSubscripcionDATO para SD o por un puerto salidaSubscripcionRESULTADO para SR.
+   La EC receptora de SD o SR recibe el mensaje por un puerto entradaSubscripcionDATO o entradaSubscripcionRESULTADO y dependiendo de esto deriva la solicitud al componente responsable, es decir, el Data Sender o Predictor Viewer quien se encarga de dar de alta la subscripcion (persistirla) y envia luego un mensaje de OK.
+
+3_ La EC locutor recibe el mensaje de OK enviado y lo comunica al Subscriptor.
+
+
+Envio DATOS:
+
+1_ El Data Sender recibe un DATO del Validador y por cada subscripcion que aplica al DATO recibido arma un mensajeDATO y se lo envia al EC-comunicator que manda el mensaje al receptor correspondiente.
+
+2_ La EC receptora del DATO recibe el mensajeDATO y como sabe que se trata de un dato lo deriva al Validador para que lo almacene.
+
+
+Envio RESULTADOS:
+
+1_ El Predictor Viewer recibe un RESULTADO del Predictor Manager y por cada subscripcion que aplica al RESULTADO recibido arma un mensajeRESULTADO y se lo envia al EC-comunicator que manda el mensaje al receptor correspondiente.
+
+2_ La EC receptora del RESULTADO recibe el mensajeRESULTADO y como sabe que se trata de un resultado de modelo lo deriva al Predictor Viewer para que lo almacene.
+
+
+Jerarquía de Clases:
+
+Esto se utiliza cuando se quiere subscribir la EC a datos/resultados de otras ECs externas:
+Subscriptor Ec1-> EC-Comunicator Ec1-> .... -> EC-Comunicator Ec2 -> Data Sender Ec2 o Predictor Viewer Ec2 (segun corresponda)
+Subscripcion
+	|_ SubscripcionDATO
+	|_ SubscripcionRESULTADO
+
+Esto se utiliza cuando se quiere publicar info interna:
+Data Sender Ec1 o Predictor Viewer Ec1 -> EC-Comunicator Ec1-> .... -> EC-Comunicator Ec2 -> Validator Ec2 o Predictor Viewer Ec2 (segun corresponda)
+MensajeConInformacionYDestinatario
+	|_ mensajeDATO
+	|_ mensajeRESULTADO
+
+
+
