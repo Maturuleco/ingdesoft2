@@ -33,8 +33,16 @@ public abstract class Subscriptor extends Thread{
 
     public void subscribe () {
         SubscriberMessage mensaje = crearMensajeSuscripcion();
-        salida.add(mensaje);
+        while (!LlegueRespuesta(mensaje)){
+            salida.add(mensaje);
+        }
+        
     }
 
     protected abstract SubscriberMessage crearMensajeSuscripcion();
+
+    private boolean LlegueRespuesta(SubscriberMessage mensaje) {
+        SubscriptionAcceptedMessage respuesta = entrada.poll();
+        return mensaje.equals(respuesta.getMensajeAceptado());
+    }
 }
