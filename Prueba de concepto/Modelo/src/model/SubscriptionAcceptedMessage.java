@@ -16,5 +16,8 @@ public class SubscriptionAcceptedMessage extends SuscriptorMessage{
         this.mensajeAceptado = mensajeAceptado;
     }
 
-    
+    public SubscriberMessage getMensajeAceptado() {
+        return mensajeAceptado;
+    }
+
 }
