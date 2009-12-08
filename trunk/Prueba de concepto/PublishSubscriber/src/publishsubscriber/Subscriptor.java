@@ -20,7 +20,9 @@ public abstract class Subscriptor extends Thread{
 
     @Override
     public void run(){
-        subscribe();
+        while(true){
+            subscribe();
+        }
     }
 
     public void setEntrada(BlockingQueue<SubscriberMessage> salida) {
