@@ -23,7 +23,7 @@ public class ECsPublishSubscriber extends PublishSubscriber{
 
     @Override
     protected Suscripcion crearSuscripcion(SubscriberMessage mensaje) {
-        TRsSubscriberMessage mensajeParticular = (TRsSubscriberMessage)mensaje;
+        MensajePedidoSubscripcionDatos mensajeParticular = (MensajePedidoSubscripcionDatos)mensaje;
         TRsFactoresSuscripcion suscripcion = new TRsFactoresSuscripcion();
         suscripcion.setIdSuscriptor(mensajeParticular.getIdSuscriptor());
         suscripcion.setFactores(mensajeParticular.getFactoresClimaticos());

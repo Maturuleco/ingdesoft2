@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import Datos.FactorClimatico;
 import model.SubscriptionAcceptedMessage;
-import model.TRsSubscriberMessage;
+import model.MensajePedidoSubscripcionDatos;
 
 /**
  *
@@ -21,7 +21,7 @@ import model.TRsSubscriberMessage;
 public class PublishSubscribe extends Thread{
 
     private static final long sleepTime = 100;
-    private BlockingQueue<TRsSubscriberMessage> entrada;
+    private BlockingQueue<MensajePedidoSubscripcionDatos> entrada;
     private BlockingQueue<SubscriptionAcceptedMessage> salida;
     // Por TR, por factor climatico, la lista de ECs suscriptas
     private Dictionary<Integer, Dictionary<FactorClimatico, List<Integer>>> suscripciones;
@@ -43,7 +43,7 @@ public class PublishSubscribe extends Thread{
         }
     }
 
-    public void setEntrada(BlockingQueue<TRsSubscriberMessage> entrada) {
+    public void setEntrada(BlockingQueue<MensajePedidoSubscripcionDatos> entrada) {
         this.entrada = entrada;
     }
 
@@ -52,7 +52,7 @@ public class PublishSubscribe extends Thread{
     }
 
     private boolean sensarEntradaDatos() {
-        TRsSubscriberMessage mensaje = entrada.poll();
+        MensajePedidoSubscripcionDatos mensaje = entrada.poll();
         if (mensaje != null) {
             System.out.println("El Publish Subscriber recibe una suscripcion");
             for (Integer TR : mensaje.getTRs()){
