@@ -5,11 +5,13 @@
 
 package model;
 
+import SubscripcionesEc.SubscriberMessage;
+
 /**
  *
  * @author mar
  */
-public class InformationMessage extends SuscriptorMessage{
+public class InformationMessage implements SuscriptorMessage{
     Integer receptor;
     InformationMessage mensaje;
 
@@ -32,6 +34,14 @@ public class InformationMessage extends SuscriptorMessage{
     public InformationMessage(Integer receptor, InformationMessage mensaje) {
         this.receptor = receptor;
         this.mensaje = mensaje;
+    }
+
+    public boolean subscripcionAceptada() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public SubscriberMessage getMessage() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

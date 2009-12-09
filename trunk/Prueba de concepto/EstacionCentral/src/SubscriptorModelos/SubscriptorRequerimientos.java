@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import model.MensajePedidoSubscripcionDatos;
 import model.MensajePedidoSubscripcionResultados;
-import model.SubscriberMessage;
+import SubscripcionesEc.SubscriberMessage;
 import model.SuscriptorMessage;
 import modelo.Modelo;
 import modelo.Requerimiento;

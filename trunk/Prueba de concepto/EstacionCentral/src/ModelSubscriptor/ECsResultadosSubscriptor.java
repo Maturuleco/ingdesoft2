@@ -5,7 +5,7 @@
 
 package ModelSubscriptor;
 
-import model.SubscriberMessage;
+import SubscripcionesEc.SubscriberMessage;
 import publishsubscriber.Subscriptor;
 
 /**

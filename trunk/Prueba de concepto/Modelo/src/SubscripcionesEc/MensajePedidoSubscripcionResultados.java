@@ -1,5 +1,6 @@
-package model;
+package SubscripcionesEc;
 
+import model.*;
 import java.util.Date;
 
 /**

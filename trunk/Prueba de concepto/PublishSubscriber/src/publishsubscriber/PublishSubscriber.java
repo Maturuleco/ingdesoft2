@@ -5,9 +5,13 @@
 
 package publishsubscriber;
 
+import SubscripcionesEc.SubscriberMessage;
+import SubscripcionesEc.SubscriptionAcceptedMessage;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
-import model.*;
+import model.InformationMessage;
+import model.SuscriptorMessage;
+
 
 /**
  *

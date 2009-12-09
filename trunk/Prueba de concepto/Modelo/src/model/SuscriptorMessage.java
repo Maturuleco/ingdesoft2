@@ -5,6 +5,8 @@
 
 package model;
 
+import SubscripcionesEc.SubscriberMessage;
+
 /**
  *
  * @author mar

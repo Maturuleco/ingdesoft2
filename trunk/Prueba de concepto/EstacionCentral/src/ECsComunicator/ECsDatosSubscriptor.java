@@ -5,7 +5,7 @@
 
 package ECsComunicator;
 
-import model.SubscriberMessage;
+import SubscripcionesEc.SubscriberMessage;
 import publishsubscriber.Subscriptor;
 
 /**
