@@ -22,12 +22,4 @@ public class SubscriptionAcceptedMessage implements SuscriptorMessage{
         return mensajeAceptado;
     }
 
-    public boolean subscripcionAceptada() {
-        return true;
-    }
-
-    public SubscriberMessage getMessage() {
-        return mensajeAceptado;
-    }
-
 }
