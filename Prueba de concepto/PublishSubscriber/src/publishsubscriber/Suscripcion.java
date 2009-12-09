@@ -14,6 +14,11 @@ import model.SuscriptorMessage;
 public abstract class Suscripcion {
     Integer idSuscriptor;
 
+    public Suscripcion(Integer idSuscriptor) {
+        this.idSuscriptor = idSuscriptor;
+    }
+
+    
     public Integer getIdSuscriptor() {
         return idSuscriptor;
     }
