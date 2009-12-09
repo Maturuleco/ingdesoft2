@@ -9,6 +9,8 @@ package model;
  *
  * @author mar
  */
-public class SuscriptorMessage {
+public interface SuscriptorMessage {
+    public boolean subscripcionAceptada();
+    public SubscriberMessage getMessage();
 
 }
