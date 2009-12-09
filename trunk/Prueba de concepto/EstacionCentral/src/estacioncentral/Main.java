@@ -235,6 +235,9 @@ public class Main {
         new Thread(validator).start();
         System.out.println("Se prendio el validador");
 
+        new Thread(validDataManager).start();
+        System.out.println("Se prendio el validDataManager");
+
         new Thread(predictor).start();
         System.out.println("Se prendio el predictor");
 
