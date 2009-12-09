@@ -46,5 +46,41 @@ public class Modelo {
     public void setRequerimientosResultados(Set<RequerimientoResultado> requerimientosResultados) {
         this.requerimientosResultados = requerimientosResultados;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Modelo other = (Modelo) obj;
+        if (this.nombreModelo != other.nombreModelo && (this.nombreModelo == null || !this.nombreModelo.equals(other.nombreModelo))) {
+            return false;
+        }
+        if (this.reglas != other.reglas && (this.reglas == null || !this.reglas.equals(other.reglas))) {
+            return false;
+        }
+        if (this.requerimientosDatos != other.requerimientosDatos && (this.requerimientosDatos == null || !this.requerimientosDatos.equals(other.requerimientosDatos))) {
+            return false;
+        }
+        if (this.requerimientosResultados != other.requerimientosResultados && (this.requerimientosResultados == null || !this.requerimientosResultados.equals(other.requerimientosResultados))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + (this.nombreModelo != null ? this.nombreModelo.hashCode() : 0);
+        hash = 29 * hash + (this.reglas != null ? this.reglas.hashCode() : 0);
+        hash = 29 * hash + (this.requerimientosDatos != null ? this.requerimientosDatos.hashCode() : 0);
+        hash = 29 * hash + (this.requerimientosResultados != null ? this.requerimientosResultados.hashCode() : 0);
+        return hash;
+    }
+    
+    
     
 }
