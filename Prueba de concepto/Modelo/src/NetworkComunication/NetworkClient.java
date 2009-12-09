@@ -25,12 +25,12 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
     protected abstract void procesarMensajeDeRespuesta(TipoMensajeDeRespuesta mensaje);
 
     public NetworkClient(int port) {
-        this("localhost", port);
+        this(new NetworkDestination("localhost", port));
     }
 
-    public NetworkClient(String host, int port) {
-        this.host = host;
-        this.port = port;
+    public NetworkClient(NetworkDestination nd) {
+        this.host = nd.getHost();
+        this.port = nd.getPort();
     }
 
     private boolean conectar() {

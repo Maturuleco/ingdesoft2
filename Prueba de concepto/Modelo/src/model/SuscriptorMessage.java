@@ -5,10 +5,12 @@
 
 package model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mar
  */
-public interface SuscriptorMessage {
+public interface SuscriptorMessage extends Serializable {
 
 }
