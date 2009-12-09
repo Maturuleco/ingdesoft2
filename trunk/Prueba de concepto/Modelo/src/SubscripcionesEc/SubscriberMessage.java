@@ -5,11 +5,13 @@
 
 package SubscripcionesEc;
 
+import java.io.Serializable;
+
 /**
  *
  * @author mar
  */
-public abstract class SubscriberMessage {
+public abstract class SubscriberMessage implements Serializable {
 
     Integer idSuscriptor;
     Integer ecProovedora;
