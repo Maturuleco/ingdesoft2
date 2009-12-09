@@ -1,7 +1,6 @@
 
 package publishsubscriber;
 
-import java.util.List;
 import Datos.FactorClimatico;
 import model.SuscriptorMessage;
 
@@ -11,23 +10,21 @@ import model.SuscriptorMessage;
  */
 public class TRsFactoresSuscripcion extends Suscripcion{
 
-    private List<Integer> idsTR;
-    private List<FactorClimatico> factores;
+    private Integer idTR;
+    private FactorClimatico factor;
 
-    public List<FactorClimatico> getFactores() {
-        return factores;
+    public TRsFactoresSuscripcion(Integer idSuscriptor, Integer idTR, FactorClimatico factor) {
+        super(idSuscriptor);
+        this.idTR = idTR;
+        this.factor = factor;
     }
 
-    public void setFactores(List<FactorClimatico> factores) {
-        this.factores = factores;
+    public FactorClimatico getFactor() {
+        return factor;
     }
 
-    public List<Integer> getIdsTR() {
-        return idsTR;
-    }
-
-    public void setIdsTR(List<Integer> idsTR) {
-        this.idsTR = idsTR;
+    public Integer getIdTR() {
+        return idTR;
     }
 
     @Override

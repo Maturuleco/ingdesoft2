@@ -7,7 +7,9 @@ package publishsubscriber;
 
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import model.InformationMessage;
 import model.SuscriptorMessage;
@@ -17,13 +19,13 @@ import model.SuscriptorMessage;
  *
  * @author mar
  */
-public abstract class PublishSubscriber extends Thread{
+public abstract class PublishSubscriber implements Runnable {
 
     private static final long sleepTime = 100;
     private BlockingQueue<SubscriberMessage> entradaSuscripciones;
     private BlockingQueue<SuscriptorMessage> salida;
     private BlockingQueue<InformationMessage> entradaInfo;
-    private List<Suscripcion> suscripciones;
+    private Set<Suscripcion> suscripciones = new HashSet<Suscripcion>();
 
     public PublishSubscriber() {    
     }
@@ -35,7 +37,7 @@ public abstract class PublishSubscriber extends Thread{
                 try {
                     enviarInfo();
                     // Duermo un segundo
-                    sleep(sleepTime);
+                    Thread.sleep(sleepTime);
                 } catch (InterruptedException ex) {}
             }
         }

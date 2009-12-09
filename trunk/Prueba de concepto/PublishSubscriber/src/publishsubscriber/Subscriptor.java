@@ -46,7 +46,7 @@ public abstract class Subscriptor {
 
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
-        return mensaje.equals(respuesta.getMessage());
+        return mensaje.equals(respuesta.getMensajeAceptado());
         
     }
 }

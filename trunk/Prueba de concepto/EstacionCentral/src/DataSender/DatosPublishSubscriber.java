@@ -5,6 +5,7 @@
 
 package DataSender;
 
+import Datos.FactorClimatico;
 import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import SubscripcionesEc.SubscriberMessage;
 import publishsubscriber.PublishSubscriber;
@@ -25,10 +26,10 @@ public class DatosPublishSubscriber extends PublishSubscriber{
     @Override
     protected Suscripcion crearSuscripcion(SubscriberMessage mensaje) {
         MensajePedidoSubscripcionDatos mensajeParticular = (MensajePedidoSubscripcionDatos)mensaje;
-        TRsFactoresSuscripcion suscripcion = new TRsFactoresSuscripcion();
-        suscripcion.setIdSuscriptor(mensajeParticular.getIdSuscriptor());
-        suscripcion.setFactores(mensajeParticular.getFactoresClimaticos());
-        suscripcion.setIdsTR(mensajeParticular.getTRs());
+        Integer idSubscriptor = mensajeParticular.getIdSuscriptor();
+        FactorClimatico factorClimatico =mensajeParticular.getFactorClimatico();
+        Integer idTR = mensajeParticular.getTR();
+        TRsFactoresSuscripcion suscripcion = new TRsFactoresSuscripcion(idSubscriptor, idTR, factorClimatico);
         return suscripcion;
     }
     
