@@ -22,14 +22,22 @@ public class SubscriptorModelos implements Runnable{
     private final long sleepTime = 1000;
     private BlockingQueue<Modelo> entradaModelos;
     
-    private SubscriptorRequerimiento<RequerimientoDato> subscriptorDatos;
-    private SubscriptorRequerimiento<RequerimientoResultado> subscriptorResultados;
+//    private SubscriptorRequerimiento<RequerimientoDato> subscriptorDatos;
+//    private SubscriptorRequerimiento<RequerimientoResultado> subscriptorResultados;
+//    
+//    public SubscriptorModelos() {
+//        this.subscriptorDatos = new SubscriptorRequerimiento<RequerimientoDato>();
+//        this.subscriptorResultados = new SubscriptorRequerimiento<RequerimientoResultado>();
+//    }
+    private SubscriptorRequerimiento subscriptorDatos;
+    private SubscriptorRequerimiento subscriptorResultados;
     
     public SubscriptorModelos() {
-        this.subscriptorDatos = new SubscriptorRequerimiento<RequerimientoDato>();
-        this.subscriptorResultados = new SubscriptorRequerimiento<RequerimientoResultado>();
+        this.subscriptorDatos = new SubscriptorRequerimiento();
+        this.subscriptorResultados = new SubscriptorRequerimiento();
     }
 
+    
     public void setEntradaModelos(BlockingQueue<Modelo> entradaModelos) {
         this.entradaModelos = entradaModelos;
     }

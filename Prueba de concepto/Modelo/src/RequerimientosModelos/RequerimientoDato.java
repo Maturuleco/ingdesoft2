@@ -2,6 +2,8 @@
 package RequerimientosModelos;
 
 import Datos.FactorClimatico;
+import SubscripcionesEc.CreadorPedidosSubscripciones;
+import SubscripcionesEc.SubscriberMessage;
 
 /**
  *
@@ -24,6 +26,11 @@ public class RequerimientoDato extends Requerimiento {
 
     public Integer getTrID() {
         return trID;
+    }
+
+    @Override
+    public SubscriberMessage crearSubscripcion(Integer idSubscriptor, CreadorPedidosSubscripciones creador) {
+        return creador.crearPedidoDatos(idSubscriptor, this);
     }
 
 }

@@ -1,11 +1,14 @@
 
 package RequerimientosModelos;
 
+import SubscripcionesEc.CreadorPedidosSubscripciones;
+import SubscripcionesEc.SubscriberMessage;
+
 /**
  *
  * @author Ce y Mat
  */
-public class Requerimiento {
+public abstract class Requerimiento {
     private Integer EcProveedora;
 
     public Requerimiento(Integer EcProveedora) {
@@ -15,5 +18,7 @@ public class Requerimiento {
     public Integer getProveedor() {
         return EcProveedora;
     }
+    
+    public abstract SubscriberMessage crearSubscripcion(Integer idSubscriptor, CreadorPedidosSubscripciones creador);
 
 }

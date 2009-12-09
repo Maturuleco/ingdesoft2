@@ -1,5 +1,8 @@
 package RequerimientosModelos;
 
+import SubscripcionesEc.CreadorPedidosSubscripciones;
+import SubscripcionesEc.SubscriberMessage;
+
 /**
  *
  * @author Ce y Mat
@@ -20,6 +23,11 @@ public class RequerimientoResultado extends Requerimiento {
 
     public Integer getTrID() {
         return trID;
+    }
+
+    @Override
+    public SubscriberMessage crearSubscripcion(Integer idSubscriptor, CreadorPedidosSubscripciones creador) {
+        return creador.crearPedidoResultados(idSubscriptor, this);
     }
     
 }
