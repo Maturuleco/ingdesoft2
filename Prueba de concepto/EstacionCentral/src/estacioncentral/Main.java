@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package estacioncentral;
 
 import com.db4o.Db4o;
@@ -23,6 +18,7 @@ import Datos.DatoAlmacenado;
 import model.Mensaje;
 import EstadoDeRed.HeartbeatMessege;
 import ModeloTerminal.ModeloTerminalRemota;
+import ValidDataManager.ValidDataManager;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -46,29 +42,25 @@ public class Main {
 
     private static PredictorManager predictor;
     private static ValidatorManager validator;
+    private static ValidDataManager validDataManager;
     private static DataReceiver dataReceiver;
     private static TRMessageReciever messageReceiver;
     private static NetworkController networkController;
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
     
-    private static BlockingQueue<Mensaje> trReceiverToData =
-            new LinkedBlockingQueue<Mensaje>();
-    private static BlockingQueue<DatoAlmacenado> dataToValidator =
-            new LinkedBlockingQueue<DatoAlmacenado>();
-    private static BlockingQueue<HeartbeatMessege> dataToNetwork =
-            new LinkedBlockingQueue<HeartbeatMessege>();
-    private static BlockingQueue<MensajeGSM> salidaModem =
-            new LinkedBlockingQueue<MensajeGSM>();
-    private static BlockingQueue<MensajeGSM> entradaModem =
-            new PriorityBlockingQueue<MensajeGSM>(3, new ComparadorMsjGSM());
-    private static BlockingQueue<MensajeGSM> dispatcherReceiver =
-            new LinkedBlockingQueue<MensajeGSM>();
-    private static BlockingQueue<MensajeGSM> dispatcherNetwork =
-            new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<Mensaje> trReceiverToData = new LinkedBlockingQueue<Mensaje>();
+    private static BlockingQueue<DatoAlmacenado> dataToValidator = new LinkedBlockingQueue<DatoAlmacenado>();
+    private static BlockingQueue<DatoAlmacenado> validatorToValidDataManager = new LinkedBlockingQueue<DatoAlmacenado>();
+    private static BlockingQueue<HeartbeatMessege> dataToNetwork = new LinkedBlockingQueue<HeartbeatMessege>();
+    private static BlockingQueue<MensajeGSM> salidaModem = new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> entradaModem = new PriorityBlockingQueue<MensajeGSM>(3, new ComparadorMsjGSM());
+    private static BlockingQueue<MensajeGSM> dispatcherReceiver = new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> dispatcherNetwork = new LinkedBlockingQueue<MensajeGSM>();
 
 
     private static ObjectServer validDataServer;
+    private static ObjectServer outlierDataServer;
     private static ObjectServer resultadosServer;
 
     /**
@@ -178,6 +170,10 @@ public class Main {
         networkController.setEntradaRaise(dispatcherNetwork);
 
         validator.setEntradaDatos(dataToValidator);
+        validator.setSalidaDatos(validatorToValidDataManager);
+        validDataManager.setEntradaDatosInternos(validatorToValidDataManager);
+
+        // OJO! FALTA la cola del EC-COMUNICATOR AL VALIDDATAMANAGER (externos)
 
     }
 
@@ -185,21 +181,36 @@ public class Main {
         new File("resources").mkdir();
         File serverValidDataPath = new File("resources/ValidData.yap");
         serverValidDataPath.delete();
+
         File serverResultadosPath = new File("resources/Resultados.yap");
         serverResultadosPath.delete();
+
+        File serverOutliersPath = new File("resources/Outliers.yap");
+        serverOutliersPath.delete();
+
         try {
             serverValidDataPath.createNewFile();
+            serverOutliersPath.createNewFile();
             serverResultadosPath.createNewFile();
         } catch (IOException ex) {
             System.out.println("No se pudo crear el archivo");
         }
         validDataServer = Db4o.openServer(serverValidDataPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Valid Data en la ruta:" + serverValidDataPath.getAbsolutePath());
+        
+        outlierDataServer = Db4o.openServer(serverOutliersPath.getAbsolutePath(), 0);
+        System.out.println("Se creo la base Outliers Data en la ruta:" + serverOutliersPath.getAbsolutePath());
+
         resultadosServer = Db4o.openServer(serverResultadosPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Resultados en la ruta:" + serverResultadosPath.getAbsolutePath());
+
         predictor = new PredictorManager(validDataServer, resultadosServer, carpetaParaModelos);
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
-        validator = new ValidatorManager(validDataServer);
+        
+        validator = new ValidatorManager(outlierDataServer);
+        System.out.println("Se creo el Validator y se le le asigno el server de ValidData");
+
+        validDataManager = new ValidDataManager(validDataServer);
         System.out.println("Se creo el Validator y se le le asigno el server de ValidData");
 
         messageReceiver = new TRMessageReciever();
