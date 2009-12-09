@@ -29,4 +29,7 @@ public abstract class Suscripcion {
 
     public abstract Boolean seCorresponde(SuscriptorMessage mensaje);
 
+    @Override
+    public abstract boolean equals(Object obj); 
+    
 }
