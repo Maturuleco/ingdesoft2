@@ -15,26 +15,18 @@ import model.*;
  *
  * @author mar
  */
-public abstract class Subscriptor {//extends Thread{
+public abstract class Subscriptor {
     private BlockingQueue<SubscriberMessage> salida;
-    private BlockingQueue<SuscriptorMessage> entrada;
+    private BlockingQueue<SubscriptionAcceptedMessage> entrada;
 
     public Subscriptor() {
     }
 
-/*
-    @Override
-    public void run(){
-        while(true){
-            subscribe();
-        }
-    }
-*/
-    public void setEntrada(BlockingQueue<SuscriptorMessage> entrada) {
+    public void setEntradaRespuestas(BlockingQueue<SubscriptionAcceptedMessage> entrada) {
         this.entrada = entrada;
     }
 
-    public void setSalida(BlockingQueue<SubscriberMessage> salida) {
+    public void setSalidaSubscripciones(BlockingQueue<SubscriberMessage> salida) {
         this.salida = salida;
     }
 
@@ -54,6 +46,7 @@ public abstract class Subscriptor {//extends Thread{
 
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
-        return mensaje.equals(respuesta.getMensajeAceptado());
+        return mensaje.equals(respuesta.getMessage());
+        
     }
 }

@@ -12,7 +12,5 @@ import SubscripcionesEc.SubscriberMessage;
  * @author mar
  */
 public interface SuscriptorMessage {
-    public boolean subscripcionAceptada();
-    public SubscriberMessage getMessage();
 
 }

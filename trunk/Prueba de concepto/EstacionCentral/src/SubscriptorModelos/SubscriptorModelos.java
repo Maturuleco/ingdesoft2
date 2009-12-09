@@ -9,7 +9,7 @@ import RequerimientosModelos.RequerimientoDato;
 import RequerimientosModelos.RequerimientoResultado;
 import java.util.concurrent.BlockingQueue;
 import SubscripcionesEc.SubscriberMessage;
-import model.SuscriptorMessage;
+import SubscripcionesEc.SubscriptionAcceptedMessage;
 import modelo.Modelo;
 
 /**
@@ -34,17 +34,17 @@ public class SubscriptorModelos implements Runnable{
         this.entradaModelos = entradaModelos;
     }
 
-    public void setEntradaRespuestaSubscriptor(BlockingQueue<SuscriptorMessage> entrada) {
-        subscriptorDatos.setEntrada(entrada);
-        subscriptorResultados.setEntrada(entrada);
+    public void setEntradaRespuestaSubscriptor(BlockingQueue<SubscriptionAcceptedMessage> entrada) {
+        subscriptorDatos.setEntradaRespuestas(entrada);
+        subscriptorResultados.setEntradaRespuestas(entrada);
     }
 
     public void setSalidaSubscripcionesDatos(BlockingQueue<SubscriberMessage> salidaSubscripcionesDatos) {
-        subscriptorDatos.setSalida(salidaSubscripcionesDatos);
+        subscriptorDatos.setSalidaSubscripciones(salidaSubscripcionesDatos);
     }
 
     public void setSalidaSubscripcionesResultados(BlockingQueue<SubscriberMessage> salidaSubscripcionesResultados) {
-        subscriptorResultados.setSalida(salidaSubscripcionesResultados);
+        subscriptorResultados.setSalidaSubscripciones(salidaSubscripcionesResultados);
     }
 
     public void run() {
