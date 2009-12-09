@@ -5,7 +5,9 @@
 
 package ECsComunicator;
 
+import SubscripcionesEc.SubscriberMessage;
 import model.*;
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import publishsubscriber.PublishSubscriber;
 import publishsubscriber.Suscripcion;
 import publishsubscriber.TRsFactoresSuscripcion;

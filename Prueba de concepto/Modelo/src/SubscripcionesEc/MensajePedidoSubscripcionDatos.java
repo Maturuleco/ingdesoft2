@@ -1,5 +1,6 @@
-package model;
+package SubscripcionesEc;
 
+import model.*;
 import Datos.FactorClimatico;
 import java.util.Date;
 

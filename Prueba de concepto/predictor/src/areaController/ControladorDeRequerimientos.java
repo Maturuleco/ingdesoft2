@@ -7,7 +7,7 @@ package areaController;
 
 import java.util.HashSet;
 import java.util.Set;
-import modelo.RequerimientoDato;
+import RequerimientosModelos.RequerimientoDato;
 
 /**
  *

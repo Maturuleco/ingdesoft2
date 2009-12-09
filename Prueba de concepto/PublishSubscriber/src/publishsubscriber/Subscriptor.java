@@ -4,6 +4,8 @@
  */
 
 package publishsubscriber;
+import SubscripcionesEc.SubscriberMessage;
+import SubscripcionesEc.SubscriptionAcceptedMessage;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;

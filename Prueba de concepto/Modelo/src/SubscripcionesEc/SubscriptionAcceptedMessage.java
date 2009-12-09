@@ -3,13 +3,15 @@
  * and open the template in the editor.
  */
 
-package model;
+package SubscripcionesEc;
+
+import model.*;
 
 /**
  *
  * @author mar
  */
-public class SubscriptionAcceptedMessage extends SuscriptorMessage{
+public class SubscriptionAcceptedMessage implements SuscriptorMessage{
     private SubscriberMessage mensajeAceptado;
 
     public SubscriptionAcceptedMessage(SubscriberMessage mensajeAceptado) {
@@ -17,6 +19,14 @@ public class SubscriptionAcceptedMessage extends SuscriptorMessage{
     }
 
     public SubscriberMessage getMensajeAceptado() {
+        return mensajeAceptado;
+    }
+
+    public boolean subscripcionAceptada() {
+        return true;
+    }
+
+    public SubscriberMessage getMessage() {
         return mensajeAceptado;
     }
 
