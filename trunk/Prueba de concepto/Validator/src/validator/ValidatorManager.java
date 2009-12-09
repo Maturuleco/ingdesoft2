@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package validator;
 
@@ -18,28 +14,33 @@ public class ValidatorManager implements Runnable{
     private static final long tiempoEspera = 100;
     private volatile boolean keepTrying = true;
 
-    private ValidatorDAO validadorDAO = null;
+    private ValidatorDAO outlierDAO = null;
     private Validador validador = new Validador();
-    private BlockingQueue<DatoAlmacenado> entradaDatos;
+    private BlockingQueue<DatoAlmacenado> entradaDatosAValidar;
+    private BlockingQueue<DatoAlmacenado> salidaDatosAAlmacenar;
 
     public ValidatorManager(ObjectServer server) {
-        validadorDAO = new ValidatorDAO(server);
+        outlierDAO = new ValidatorDAO(server);
     }
 
     public void setEntradaDatos(BlockingQueue<DatoAlmacenado> entradaDatos) {
-        this.entradaDatos = entradaDatos;
+        this.entradaDatosAValidar = entradaDatos;
     }
     
+    public void setSalidaDatos(BlockingQueue<DatoAlmacenado> salidaDatos) {
+        this.salidaDatosAAlmacenar = salidaDatos;
+    }
+
     @Override
     public void run() {
         while (keepTrying) {
             try {
-                DatoAlmacenado dato = entradaDatos.poll();
+                DatoAlmacenado dato = entradaDatosAValidar.poll();
                 if (dato != null) {
                     if (validador.validar(dato)){
-                        validadorDAO.escribirDatosValidos(dato);
+                        salidaDatosAAlmacenar.put(dato);
                     } else {
-                        validadorDAO.escribirDatosOutlier(dato);
+                        outlierDAO.escribirDatosOutlier(dato);
                     }
                     Thread.sleep(tiempoEspera);
                 }
