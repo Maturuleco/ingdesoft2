@@ -17,14 +17,17 @@ import publishsubscriber.Subscriptor;
  */
 
 public class SubscriptorRequerimiento<T extends Requerimiento> extends Subscriptor {
+//public class SubscriptorRequerimiento extends Subscriptor {
     
-    // private Set<RequerimientoResultado> requerimientosResultadosSubscriptos = new HashSet<RequerimientoResultado>();
-    private Set<T> requerimientosSubscriptos = new HashSet<T>();
+     private Set<T> requerimientosSubscriptos = new HashSet<T>();
+  //  private Set<Requerimiento> requerimientosSubscriptos = new HashSet<Requerimiento>();
     
-    public void procesarRequerimientos(Set<T> requerimientos) {
+    //public void procesarRequerimientos(Set<? extends Requerimiento> requerimientos) {
+     public void procesarRequerimientos(Set<T> requerimientos) {
         for (T req : requerimientos) {
             if (! requerimientosSubscriptos.contains(req)) {
-                subscribe(CreadorPedidosSubscripciones.crearPedido(estacioncentral.Main.idEc , req));
+                CreadorPedidosSubscripciones cp = new CreadorPedidosSubscripciones();
+                subscribe(req.crearSubscripcion(estacioncentral.Main.idEc , cp));
             }
         }
         
