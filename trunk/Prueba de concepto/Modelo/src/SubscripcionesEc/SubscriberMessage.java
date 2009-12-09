@@ -12,13 +12,19 @@ package SubscripcionesEc;
 public abstract class SubscriberMessage {
 
     Integer idSuscriptor;
+    Integer ecProovedora;
+
+    public SubscriberMessage(Integer idSuscriptor, Integer ecProovedora) {
+        this.idSuscriptor = idSuscriptor;
+        this.ecProovedora = ecProovedora;
+    }
+
+    public Integer getEcProovedora() {
+        return ecProovedora;
+    }
 
     public Integer getIdSuscriptor() {
         return idSuscriptor;
-    }
-
-    public void setIdSuscriptor(Integer idSuscriptor) {
-        this.idSuscriptor = idSuscriptor;
     }
     
 }

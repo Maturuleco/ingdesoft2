@@ -15,8 +15,8 @@ public class MensajePedidoSubscripcionDatos extends SubscriberMessage{
     private Integer tr;
     private FactorClimatico factorClimatico;
 
-    public MensajePedidoSubscripcionDatos(Integer idSuscriptor, Integer tr, FactorClimatico factorClimatico) {
-        this.idSuscriptor = idSuscriptor;
+    public MensajePedidoSubscripcionDatos(Integer idSuscriptor, Integer ecProovedora, Integer tr, FactorClimatico factorClimatico) {
+        super(idSuscriptor, ecProovedora);
         this.timeStamp = new Date();
         this.tr = tr;
         this.factorClimatico = factorClimatico;

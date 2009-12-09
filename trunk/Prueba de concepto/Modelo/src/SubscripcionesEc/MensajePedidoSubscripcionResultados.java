@@ -14,7 +14,8 @@ public class MensajePedidoSubscripcionResultados extends SubscriberMessage{
     private Integer modelo;
     private Integer trID;
 
-    public MensajePedidoSubscripcionResultados(Integer modelo, Integer trID) {
+    public MensajePedidoSubscripcionResultados(Integer idSuscriptor, Integer ecProovedora, Integer modelo, Integer trID) {
+        super(idSuscriptor, ecProovedora);
         this.timeStamp = new Date();
         this.modelo = modelo;
         this.trID = trID;
