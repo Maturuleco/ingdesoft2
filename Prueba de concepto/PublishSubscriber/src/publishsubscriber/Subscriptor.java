@@ -17,10 +17,11 @@ import model.*;
  */
 public abstract class Subscriptor {//extends Thread{
     private BlockingQueue<SubscriberMessage> salida;
-    private BlockingQueue<SubscriptionAcceptedMessage> entrada;
+    private BlockingQueue<SuscriptorMessage> entrada;
 
     public Subscriptor() {
     }
+
 /*
     @Override
     public void run(){
@@ -29,16 +30,15 @@ public abstract class Subscriptor {//extends Thread{
         }
     }
 */
-    public void setEntrada(BlockingQueue<SubscriberMessage> salida) {
-        this.salida = salida;
-    }
-
-    public void setSalida (BlockingQueue<SubscriptionAcceptedMessage> entrada) {
+    public void setEntrada(BlockingQueue<SuscriptorMessage> entrada) {
         this.entrada = entrada;
     }
 
-    public void subscribe () {
-        SubscriberMessage mensaje = crearMensajeSuscripcion();
+    public void setSalida(BlockingQueue<SubscriberMessage> salida) {
+        this.salida = salida;
+    }
+
+    public void subscribe (SubscriberMessage mensaje) {
         while (!LlegueRespuesta(mensaje)){
             try {
                 Thread.sleep(1000);
@@ -50,7 +50,7 @@ public abstract class Subscriptor {//extends Thread{
         
     }
 
-    protected abstract SubscriberMessage crearMensajeSuscripcion();
+    //protected abstract SubscriberMessage crearMensajeSuscripcion();
 
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();

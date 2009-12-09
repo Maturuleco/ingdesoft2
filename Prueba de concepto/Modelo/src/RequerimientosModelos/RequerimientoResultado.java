@@ -13,5 +13,13 @@ public class RequerimientoResultado extends Requerimiento {
         this.modelo = modelo;
         this.trID = trID;
     }
+
+    public Integer getModelo() {
+        return modelo;
+    }
+
+    public Integer getTrID() {
+        return trID;
+    }
     
 }
