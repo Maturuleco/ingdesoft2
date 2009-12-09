@@ -2,6 +2,7 @@
 package publishsubscriber;
 
 import Datos.FactorClimatico;
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import model.SuscriptorMessage;
 
 /**
@@ -29,7 +30,15 @@ public class TRsFactoresSuscripcion extends Suscripcion{
 
     @Override
     public Boolean seCorresponde(SuscriptorMessage mensaje) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (mensaje instanceof MensajePedidoSubscripcionDatos) {
+            MensajePedidoSubscripcionDatos pedido = (MensajePedidoSubscripcionDatos) mensaje;
+            Boolean res = pedido.getIdSuscriptor().equals(getIdSuscriptor());
+            res = res && pedido.getFactorClimatico().equals(getFactor());
+            res = res && pedido.getTR().equals(getIdTR());
+            return res;
+        }
+        else
+            return false;
     }
 
     @Override
