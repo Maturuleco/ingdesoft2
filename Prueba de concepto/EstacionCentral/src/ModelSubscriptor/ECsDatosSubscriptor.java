@@ -5,7 +5,6 @@
 
 package ModelSubscriptor;
 
-import SubscripcionesEc.SubscriberMessage;
 import publishsubscriber.Subscriptor;
 
 /**
@@ -21,10 +20,8 @@ public class ECsDatosSubscriptor extends Subscriptor{
     }
 
     @Override
-    protected SubscriberMessage crearMensajeSuscripcion() {
-        //se fija en que necesitan los modelos en ese momento
-        //y crea un TRsSubscriberMessage para los datos de tr
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void run(){
+        
     }
     
 }
