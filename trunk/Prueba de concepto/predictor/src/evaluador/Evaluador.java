@@ -59,7 +59,7 @@ public class Evaluador {
             if (resultadoRegla.verifiqueTodasLasCondiciones()) reglasVerificadas++;
         }
         ResultadoEvaluacion resultado =new ResultadoEvaluacion();
-        resultado.setNombreModelo(nombreModelo);
+        resultado.setIdModelo(nombreModelo);
         resultado.setIdTR(idTR);
         resultado.setReglasEvaluadas(resultados.size());
         resultado.setReglasVerificadas(reglasVerificadas);

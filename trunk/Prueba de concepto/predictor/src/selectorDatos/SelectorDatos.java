@@ -77,7 +77,7 @@ public class SelectorDatos {
             predicado = predicadoDatosDeTR(idTRs);
         }
         if (factores != null) {
-            predicado = conjuncion(predicado, predicadorDatosFactor(factores));
+            predicado = conjuncion(predicado, predicadoDatosFactor(factores));
         }
         if (segundos != null) {
             Date hasta = Calendar.getInstance().getTime();
@@ -101,7 +101,7 @@ public class SelectorDatos {
             predicado = conjuncion(predicado, predicadoDatosHasta(hasta));
         }
         if (factores != null) {
-            predicado = conjuncion(predicado, predicadorDatosFactor(factores));
+            predicado = conjuncion(predicado, predicadoDatosFactor(factores));
         }
         return select(predicado);
     }
@@ -166,7 +166,7 @@ public class SelectorDatos {
         };
     }
 
-    private Predicate<DatoAlmacenado> predicadorDatosFactor(final Collection<FactorClimatico> factores) {
+    private Predicate<DatoAlmacenado> predicadoDatosFactor(final Collection<FactorClimatico> factores) {
         return new Predicate<DatoAlmacenado>() {
 
             @Override
