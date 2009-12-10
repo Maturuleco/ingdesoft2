@@ -15,12 +15,8 @@ import model.InformationMessage;
  */
 public class ClienteInformacion extends NetworkClient<InformationMessage, InformationMessage> {
 
-    public ClienteInformacion(NetworkDestination nd) {
-        super(nd);
-    }
-
-    public void sendData(InformationMessage dato){
-        super.enviarMensaje(dato, false);
+    public void send(InformationMessage dato, NetworkDestination destino){
+        super.enviarMensaje(destino, dato, false);
     }
     
     @Override

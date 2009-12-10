@@ -19,16 +19,15 @@ import java.util.logging.Logger;
  */
 public class ClienteSubscripciones extends NetworkClient<SubscriberMessage, SubscriptionAcceptedMessage> {
     
-    private static BlockingQueue<SubscriptionAcceptedMessage> salida;
+    private BlockingQueue<SubscriptionAcceptedMessage> salida;
             
-    public ClienteSubscripciones(NetworkDestination nd) {
-        super(nd);
+    public void setSalida(BlockingQueue<SubscriptionAcceptedMessage> salida) {
+        this.salida = salida;
     }
 
-    public static void setSalida(BlockingQueue<SubscriptionAcceptedMessage> salida) {
-        ClienteSubscripciones.salida = salida;
+    public void send(SubscriberMessage msj, NetworkDestination destino){
+        super.enviarMensaje(destino, msj, true);
     }
-
     
     @Override
     protected void procesarMensajeDeRespuesta(SubscriptionAcceptedMessage mensaje) {
