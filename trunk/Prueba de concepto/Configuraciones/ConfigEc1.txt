@@ -1,4 +1,5 @@
 idEc:01
 numeroModem:999
 pathRelativoModelo:../Configuraciones/ModelosEc1
+archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos.xml
 trID:1#pos:Lat·54_E|Long·32_S#tipoSensores:H|P
