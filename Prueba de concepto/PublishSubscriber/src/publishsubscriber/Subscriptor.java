@@ -9,13 +9,12 @@ import SubscripcionesEc.SubscriptionAcceptedMessage;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.*;
 
 /**
  *
  * @author mar
  */
-public abstract class Subscriptor {
+public abstract class Subscriptor extends Thread{
     private BlockingQueue<SubscriberMessage> salida;
     private BlockingQueue<SubscriptionAcceptedMessage> entrada;
 
@@ -41,8 +40,6 @@ public abstract class Subscriptor {
         }
         
     }
-
-    //protected abstract SubscriberMessage crearMensajeSuscripcion();
 
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
