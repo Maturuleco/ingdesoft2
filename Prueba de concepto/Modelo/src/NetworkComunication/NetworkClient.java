@@ -18,21 +18,18 @@ import java.util.logging.Logger;
  */
 public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, TipoMensajeDeRespuesta extends Serializable> {
 
-    private String host;
     private Socket socket = null;
+    
+    private String host;
     private int port;
-
+    
     protected abstract void procesarMensajeDeRespuesta(TipoMensajeDeRespuesta mensaje);
 
-    public NetworkClient(int port) {
-        this(new NetworkDestination("localhost", port));
-    }
-
-    public NetworkClient(NetworkDestination nd) {
+    protected void setDestino(NetworkDestination nd){
         this.host = nd.getHost();
         this.port = nd.getPort();
     }
-
+    
     private boolean conectar() {
         try {
             this.socket = new Socket(host, port);
@@ -50,8 +47,13 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
 
     }
 
-
-    protected boolean enviarMensaje(TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
+    protected boolean enviarMensaje(NetworkDestination nd, TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
+        setDestino(nd);
+        return enviarMensaje(mensajeDeEnvio,conRespuesta);
+    }
+    
+    
+    protected boolean enviarMensaje( TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
         Boolean mensajeEnviado = false;
         if (conectar()) {
             OutputStream salida = null;

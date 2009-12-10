@@ -10,7 +10,7 @@ package NetworkComunication;
 public class ClassTestClient extends NetworkClient<MensajeSerializable, MensajeSerializable> {
 
     public ClassTestClient(int port) {
-        super(port);
+        super.setDestino(new NetworkDestination("localhost", port));
     }
 
     @Override
