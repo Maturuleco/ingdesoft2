@@ -28,26 +28,32 @@ public class EcComunicator implements Runnable {
     private static final long sleeptime = 1000;
     private ControladorPuertos puertosEcs;
     private Boolean serversReady = false;
-//    private Boolean ecComunicReady = false;
+
     private ClienteInformacion clienteEnvioDatos;
     private ClienteInformacion clienteEnvioResult;
     private ClienteSubscripciones clienteSubsDatos;
     private ClienteSubscripciones clienteSubsResult;
+
     private ServerInformacion<InformationMessage> serverDatos;
     private ServerInformacion<InformationMessage> serverResultados;
     private ServerSubscripcones<MensajePedidoSubscripcionDatos> serverSubsDatos;
     private ServerSubscripcones<MensajePedidoSubscripcionResultados> serverSubsResult;
+
     private BlockingQueue<SubscriberMessage> entradaEnvioSubscripcionesDatos;
 //    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesDatos;
+
     private BlockingQueue<SubscriberMessage> entradaEnvioSubscripcionesResult;
 //    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesResult;
+
     private BlockingQueue<InformationMessage> entradaDatos;
     private BlockingQueue<InformationMessage> entradaResult;
 
 //    private BlockingQueue<InformationMessage> salidaDatosExternos;
 //    private BlockingQueue<InformationMessage> salidaResultExternos;
+
 //    private BlockingQueue<SubscriberMessage> salidaSubscripExternasDatos;
 //    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasDatos;
+
 //    private BlockingQueue<SubscriberMessage> salidaSubscripExternasResult;
 //    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasResult;
 
@@ -57,22 +63,22 @@ public class EcComunicator implements Runnable {
      * EcComunicator va a crear un thread por cada Servidor (porque no hay otra) y va a 
      * manejar los clientes en su propio hilo de ejecución. Hay 4 clases creadas ya para los
      * servers y los clientes, sólo habría que hacer news para crea las 8 instancias.
-     * A los servers se le asignan colas para mandar lo que reciban, y en el caso de que 
+     * 
+     * A los servers se le asigna un cola para mandar lo que reciban, y en el caso de que 
      * reciban informacion una cola para esperar la respuesta a mandar.
-     * Los clientes sólo tienen cola los de información para mandar las respuesatas de los
-     * mensajes. Todas las colas las tendría que setear el EcComunicator después de crearlos.
+     * 
+     * En cuanto a los clientes, sólo tienen cola los de subscripciones, la usan para mandar las
+     * respuesatas de los mensajes.
+     * Todas las colas las tendría que setear el EcComunicator después de crearlos.
      * Además el EcComunicator tiene un controlador de puertos que debe configurra al inicio
      * con toda la info de los puertos (tanto propios como ajenos, está hecho con xStream)
-     * Va a necesitar esta info para crear los clientes y servers.
+     * Va a necesitar esta info para mandar los mensajes y crear los servers.
+     * 
      * Luego, el run de EcComunicator, lo que tiene que hacer es crear un thread por server
      * y quedarse polleando las colas esperando ante el pedido de alguna subscripción para pasarsela al
      * cliente que corresponda.
-     * 
-     * Ahora que me doy cuenta, esto es para conectar sólo dos Ecs, habría que tener un juego
-     * de clientes por Ec ajena...
-     * 
-     * Ok, a esto le falta... :P
      */
+    
     public EcComunicator(String pathArchivoPuertosEcs) {
         this.clienteEnvioDatos = new ClienteInformacion();
         this.clienteEnvioResult = new ClienteInformacion();
@@ -171,6 +177,11 @@ public class EcComunicator implements Runnable {
     }
 
     public void run() {
+        new Thread(serverDatos).start();
+        new Thread(serverResultados).start();
+        new Thread(serverSubsDatos).start();
+        new Thread(serverSubsResult).start();
+        System.out.println("EcCONTROLLER\tSe Inician los Servers para recibie informacion y subscripciones externas");
         while (true) {
             if (entradaDatos.size() > 0) {
                 InformationMessage dato = entradaDatos.poll();
