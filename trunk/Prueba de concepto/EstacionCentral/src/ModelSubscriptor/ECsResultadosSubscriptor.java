@@ -5,7 +5,6 @@
 
 package ModelSubscriptor;
 
-import SubscripcionesEc.SubscriberMessage;
 import publishsubscriber.Subscriptor;
 
 /**
@@ -21,10 +20,7 @@ public class ECsResultadosSubscriptor extends Subscriptor{
     }
 
     @Override
-    protected SubscriberMessage crearMensajeSuscripcion() {
-        //se fija en que necesitan los modelos en ese momento
-        //y crea un ResultadosSubscriberMessage para pedir los
-        //resultados parciales de los otros modelos
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void run(){
+
     }
 }
