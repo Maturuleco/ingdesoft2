@@ -37,6 +37,7 @@ public class Main {
     public static int idEc;
     public static int numeroModem;
     public static String carpetaParaModelos;
+    private static String archivoDePuertosDeLaRed;
     
     private static Collection<ModeloTerminalRemota> terminales = new LinkedList<ModeloTerminalRemota>();
 
@@ -132,6 +133,11 @@ public class Main {
             dato = getDatoFromLine(linea);
             carpetaParaModelos = dato;
             System.out.println("Carpeta de modelos cargada:"+carpetaParaModelos+"\n");
+            
+            linea = br.readLine();
+            dato = getDatoFromLine(linea);
+            archivoDePuertosDeLaRed = dato;
+            System.out.println("Archivo de Puertos de la red cargado:"+archivoDePuertosDeLaRed+"\n");
             
             ModeloTerminalRemota tr;
             linea = br.readLine();
