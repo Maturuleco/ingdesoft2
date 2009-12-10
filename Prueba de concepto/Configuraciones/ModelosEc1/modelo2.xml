@@ -1,0 +1,242 @@
+<modelo.Modelo>
+  <nombreModelo>FRIO</nombreModelo>
+  <reglas class="linked-list">
+    <modelo.Regla>
+      <nombre>Regla 1</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">0.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>mayor</comparador>
+          <constante class="float">1020.0</constante>
+          <factor>presion</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">-10.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[3]"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[2]"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+    <modelo.Regla>
+      <nombre>Regla 2</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">-10.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+    <modelo.Regla>
+      <nombre>Regla 3</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">50.0</constante>
+          <factor>humedad</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+    <modelo.Regla>
+      <nombre>Regla 4</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>mayor</comparador>
+          <constante class="float">40.0</constante>
+          <factor>velocidad_viento</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>igual</comparador>
+          <constante class="float">0.0</constante>
+          <factor>direccion_viento</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[2]"/>
+          </linked-list>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+    <modelo.Regla>
+      <nombre>Regla 5</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>mayor</comparador>
+          <constante class="float">30.0</constante>
+          <factor>lluvias</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+  </reglas>
+  <area>
+    <curves>
+      <sun.awt.geom.Order0>
+        <direction>1</direction>
+        <x>0.0</x>
+        <y>0.0</y>
+      </sun.awt.geom.Order0>
+      <sun.awt.geom.Order1>
+        <direction>1</direction>
+        <x0>0.0</x0>
+        <y0>0.0</y0>
+        <x1>0.0</x1>
+        <y1>10.0</y1>
+        <xmin>0.0</xmin>
+        <xmax>0.0</xmax>
+      </sun.awt.geom.Order1>
+      <sun.awt.geom.Order1>
+        <direction>-1</direction>
+        <x0>10.0</x0>
+        <y0>0.0</y0>
+        <x1>10.0</x1>
+        <y1>10.0</y1>
+        <xmin>10.0</xmin>
+        <xmax>10.0</xmax>
+      </sun.awt.geom.Order1>
+    </curves>
+  </area>
+</modelo.Modelo>
