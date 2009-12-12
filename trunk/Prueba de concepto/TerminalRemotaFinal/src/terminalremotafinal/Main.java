@@ -190,6 +190,10 @@ public class Main {
         System.out.println("Comenzando ejecucion de Modem\n");
         modemDispatcher.start();
         System.out.println("Comenzando ejecucion de Dispatcher\n");
+
+        startUpManager.run();
+        System.out.println("Comenzando el envio de Raise (StartUpManager)");
+
         dataManager.start();
         System.out.println("Comenzando ejecucion de Data Manager\n");
         new Thread(dataSender).start();
@@ -198,8 +202,6 @@ public class Main {
             System.out.println("Comenzando ejecucion de Adapter "+adapter.getName().toString()+"\n");
             adapter.start();
         }
-        System.out.println("Comenzando la ejecución del StartUpManager");
-        new Thread(startUpManager).start();
     }
 
     /**
