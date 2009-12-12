@@ -13,10 +13,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,8 +43,8 @@ public class CargadorModelo {
     public Collection<Modelo> getModelos() {
         Collection<Modelo> modelos = new LinkedList<Modelo>();
 
-        Modelo modelo1 = new Modelo(1, getReglas1());
-        Modelo modelo2 = new Modelo(2, getReglas2());
+        Modelo modelo1 = new Modelo(1, "se detectaron vientos fuertes", getReglas1());
+        Modelo modelo2 = new Modelo(2,  "se detectó frio polar", getReglas2());
 
         modelo1.setRequerimientosDatos(getReqDato1());
         modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());
@@ -124,9 +122,9 @@ public class CargadorModelo {
 
     private static Set<RequerimientoResultado> getReqResult2() {
         Set<RequerimientoResultado> reqs = new HashSet<RequerimientoResultado>();
-        reqs.add(new RequerimientoResultado(02, 69, 01));
-        reqs.add(new RequerimientoResultado(02, 69, 02));
-        reqs.add(new RequerimientoResultado(02, 7070, 04));
+        reqs.add(new RequerimientoResultado(01, 1, 01));
+        reqs.add(new RequerimientoResultado(01, 1, 02));
+        reqs.add(new RequerimientoResultado(01, 2, 04));
         return reqs;
     }
 
