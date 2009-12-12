@@ -124,21 +124,5 @@
       <factor>lluvias</factor>
     </RequerimientosModelos.RequerimientoDato>
   </requerimientosDatos>
-  <requerimientosResultados>
-    <RequerimientosModelos.RequerimientoResultado>
-      <EcProveedora>2</EcProveedora>
-      <modelo>69</modelo>
-      <trID>2</trID>
-    </RequerimientosModelos.RequerimientoResultado>
-    <RequerimientosModelos.RequerimientoResultado>
-      <EcProveedora>2</EcProveedora>
-      <modelo>7070</modelo>
-      <trID>4</trID>
-    </RequerimientosModelos.RequerimientoResultado>
-    <RequerimientosModelos.RequerimientoResultado>
-      <EcProveedora>2</EcProveedora>
-      <modelo>69</modelo>
-      <trID>1</trID>
-    </RequerimientosModelos.RequerimientoResultado>
-  </requerimientosResultados>
+  <requerimientosResultados/>
 </modelo.Modelo>
