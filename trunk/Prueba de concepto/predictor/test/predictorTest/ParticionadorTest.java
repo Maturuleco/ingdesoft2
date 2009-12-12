@@ -14,6 +14,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import particionador.ParticionadorPorCantidad;
 import predictor.Predictor;
 import predictor.PredictorTodosConTodos;
 import predictor.ResultadoRegla;
@@ -35,7 +36,7 @@ public class ParticionadorTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        particionador = new Particionador(tamanioParticion);
+        particionador = new ParticionadorPorCantidad(tamanioParticion);
         predictores = new LinkedList<Predictor>();
     }
 

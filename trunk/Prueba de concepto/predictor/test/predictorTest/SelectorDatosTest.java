@@ -7,7 +7,6 @@ package predictorTest;
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
-import com.db4o.query.Query;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -22,6 +21,9 @@ import java.util.logging.Logger;
 import Datos.DataSource;
 import Datos.DatoAlmacenado;
 import Datos.FactorClimatico;
+import RequerimientosModelos.RequerimientoDato;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -181,6 +183,16 @@ public class SelectorDatosTest {
     }
 
     @Test
+    public void seleccionarDatosPorRequerimientos(){
+        Set<RequerimientoDato> requerimientos = new HashSet<RequerimientoDato>();
+        requerimientos.add(new RequerimientoDato(null, 1, FactorClimatico.presion));
+        List<DatoAlmacenado> datos = selector.seleccionar(requerimientos);
+        assertTrue(datos.size() == 10);
+
+    }
+
+    @Test
+    @Ignore
     public void seleccionarDatosPorTR() {
         Map<Integer, List<DatoAlmacenado>> datosPorTR = selector.agruparDatosPorTR(null);
         List<DatoAlmacenado> datosDeTR;
