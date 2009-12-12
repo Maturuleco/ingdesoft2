@@ -4,6 +4,7 @@
  */
 package EcComunicator;
 
+import Datos.DatoAlmacenado;
 import NetworkComunication.NetworkDestination;
 import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import SubscripcionesEc.MensajePedidoSubscripcionResultados;
@@ -34,7 +35,9 @@ public class EcComunicator implements Runnable {
     private ClienteSubscripciones clienteSubsDatos;
     private ClienteSubscripciones clienteSubsResult;
 
-    private ServerInformacion<InformationMessage> serverDatos;
+    private ServerInformacion<DatoAlmacenado> serverDatos;
+    // TODO: El information message de abajo debe ser resultadoModelo o
+    // la clase que se use...
     private ServerInformacion<InformationMessage> serverResultados;
     private ServerSubscripcones<MensajePedidoSubscripcionDatos> serverSubsDatos;
     private ServerSubscripcones<MensajePedidoSubscripcionResultados> serverSubsResult;
@@ -45,7 +48,7 @@ public class EcComunicator implements Runnable {
     private BlockingQueue<SubscriberMessage> entradaEnvioSubscripcionesResult;
 //    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesResult;
 
-    private BlockingQueue<InformationMessage> entradaDatos;
+    private BlockingQueue<InformationMessage<DatoAlmacenado>> entradaDatos;
     private BlockingQueue<InformationMessage> entradaResult;
 
 //    private BlockingQueue<InformationMessage> salidaDatosExternos;
@@ -88,7 +91,7 @@ public class EcComunicator implements Runnable {
     }
 
     //Datos Internos :
-    public void setEntradaDatos(BlockingQueue<InformationMessage> entradaInformacion) {
+    public void setEntradaDatos(BlockingQueue<InformationMessage<DatoAlmacenado>> entradaInformacion) {
         this.entradaDatos = entradaInformacion;
     }
 
@@ -112,7 +115,7 @@ public class EcComunicator implements Runnable {
         clienteSubsResult.setSalida(salidaRespSubsResult);
     }
     // Datos Externos :
-    public void setSalidaDatosExternos(BlockingQueue<InformationMessage> salidaDatos) {
+    public void setSalidaDatosExternos(BlockingQueue<DatoAlmacenado> salidaDatos) {
         serverDatos.setSalidaDeInformacion(salidaDatos);
     }
 
@@ -139,7 +142,7 @@ public class EcComunicator implements Runnable {
     public void initialize(String pathPortsEcs) {
         if (configurar(pathPortsEcs)) {
             Integer idEc = estacioncentral.Main.idEc;
-            this.serverDatos = new ServerInformacion<InformationMessage>(puertosEcs.getPort(idEc, TypeServerDestinyPort.envio_datos));
+            this.serverDatos = new ServerInformacion<DatoAlmacenado>(puertosEcs.getPort(idEc, TypeServerDestinyPort.envio_datos));
             this.serverResultados = new ServerInformacion<InformationMessage>(puertosEcs.getPort(idEc, TypeServerDestinyPort.envio_resultado));
             this.serverSubsDatos = new ServerSubscripcones<MensajePedidoSubscripcionDatos>(puertosEcs.getPort(idEc, TypeServerDestinyPort.envio_subscripcion_datos));
             this.serverSubsResult = new ServerSubscripcones<MensajePedidoSubscripcionResultados>(puertosEcs.getPort(idEc, TypeServerDestinyPort.envio_subscripcion_resultados));
