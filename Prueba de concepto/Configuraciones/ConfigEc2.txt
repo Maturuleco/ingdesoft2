@@ -1,0 +1,5 @@
+﻿idEc:02
+numeroModem:998
+pathRelativoModelo:../Configuraciones/ModelosEc2
+archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos.xml
+trID:2#pos:Lat·54_E|Long·32_S#tipoSensores:H|P

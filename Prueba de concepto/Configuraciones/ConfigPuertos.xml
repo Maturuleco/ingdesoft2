@@ -4,36 +4,36 @@
       <int>4</int>
       <hashtable>
         <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1064</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
-          <int>1061</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
-          <int>1060</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
-          <int>1065</int>
-        </entry>
-        <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_resultados</EcComunicator.TypeServerDestinyPort>
-          <int>1067</int>
+          <int>4067</int>
         </entry>
         <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
-          <int>1062</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
-          <int>1063</int>
+          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
+          <int>4064</int>
         </entry>
         <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1066</int>
+          <int>4066</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
+          <int>4062</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
+          <int>4063</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
+          <int>4061</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
+          <int>4060</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
+          <int>4065</int>
         </entry>
       </hashtable>
     </entry>
@@ -41,36 +41,36 @@
       <int>3</int>
       <hashtable>
         <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1054</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
-          <int>1051</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
-          <int>1050</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
-          <int>1055</int>
-        </entry>
-        <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_resultados</EcComunicator.TypeServerDestinyPort>
-          <int>1057</int>
+          <int>4057</int>
         </entry>
         <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
-          <int>1052</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
-          <int>1053</int>
+          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
+          <int>4054</int>
         </entry>
         <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1056</int>
+          <int>4056</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
+          <int>4052</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
+          <int>4053</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
+          <int>4051</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
+          <int>4050</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
+          <int>4055</int>
         </entry>
       </hashtable>
     </entry>
@@ -78,36 +78,36 @@
       <int>2</int>
       <hashtable>
         <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1044</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
-          <int>1041</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
-          <int>1040</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
-          <int>1045</int>
-        </entry>
-        <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_resultados</EcComunicator.TypeServerDestinyPort>
-          <int>1047</int>
+          <int>4047</int>
         </entry>
         <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
-          <int>1042</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
-          <int>1043</int>
+          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
+          <int>4044</int>
         </entry>
         <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1046</int>
+          <int>4046</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
+          <int>4042</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
+          <int>4043</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
+          <int>4041</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
+          <int>4040</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
+          <int>4045</int>
         </entry>
       </hashtable>
     </entry>
@@ -115,36 +115,36 @@
       <int>1</int>
       <hashtable>
         <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1034</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
-          <int>1031</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
-          <int>1030</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
-          <int>1035</int>
-        </entry>
-        <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_resultados</EcComunicator.TypeServerDestinyPort>
-          <int>1037</int>
+          <int>4037</int>
         </entry>
         <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
-          <int>1032</int>
-        </entry>
-        <entry>
-          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
-          <int>1033</int>
+          <EcComunicator.TypeServerDestinyPort>envio_datos</EcComunicator.TypeServerDestinyPort>
+          <int>4034</int>
         </entry>
         <entry>
           <EcComunicator.TypeServerDestinyPort>envio_subscripcion_datos</EcComunicator.TypeServerDestinyPort>
-          <int>1036</int>
+          <int>4036</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_datos</EcComunicator.TypeClientPort>
+          <int>4032</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_subscripcion_resultados</EcComunicator.TypeClientPort>
+          <int>4033</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_resultados</EcComunicator.TypeClientPort>
+          <int>4031</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeClientPort>recepcion_datos</EcComunicator.TypeClientPort>
+          <int>4030</int>
+        </entry>
+        <entry>
+          <EcComunicator.TypeServerDestinyPort>envio_resultado</EcComunicator.TypeServerDestinyPort>
+          <int>4035</int>
         </entry>
       </hashtable>
     </entry>
@@ -167,3 +167,4 @@
       <string>localhost</string>
     </entry>
   </hosts>
+</EcComunicator.ControladorPuertos>
