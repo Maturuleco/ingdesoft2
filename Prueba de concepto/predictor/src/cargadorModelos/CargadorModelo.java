@@ -115,18 +115,18 @@ public class CargadorModelo {
 
     private static Set<RequerimientoDato> getReqDato1() {
         Set<RequerimientoDato> reqs = new HashSet<RequerimientoDato>();
-        reqs.add(new RequerimientoDato(01, 01, FactorClimatico.lluvias));
-        reqs.add(new RequerimientoDato(01, 02, FactorClimatico.lluvias));
+        reqs.add(new RequerimientoDato(02, 01, FactorClimatico.lluvias));
+        reqs.add(new RequerimientoDato(02, 02, FactorClimatico.lluvias));
         reqs.add(new RequerimientoDato(02, 03, FactorClimatico.temperatura));
-        reqs.add(new RequerimientoDato(03, 04, FactorClimatico.humedad));
+        reqs.add(new RequerimientoDato(02, 04, FactorClimatico.humedad));
         return reqs;
     }
 
     private static Set<RequerimientoResultado> getReqResult2() {
         Set<RequerimientoResultado> reqs = new HashSet<RequerimientoResultado>();
-        reqs.add(new RequerimientoResultado(01, 69, 01));
-        reqs.add(new RequerimientoResultado(01, 69, 02));
-        reqs.add(new RequerimientoResultado(01, 7070, 04));
+        reqs.add(new RequerimientoResultado(02, 69, 01));
+        reqs.add(new RequerimientoResultado(02, 69, 02));
+        reqs.add(new RequerimientoResultado(02, 7070, 04));
         return reqs;
     }
 

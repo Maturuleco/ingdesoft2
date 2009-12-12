@@ -25,9 +25,9 @@ public class SubscriptorRequerimiento<T extends Requerimiento> extends Subscript
     //public void procesarRequerimientos(Set<? extends Requerimiento> requerimientos) {
      public void procesarRequerimientos(Set<T> requerimientos) {
         for (T req : requerimientos) {
-            if (! requerimientosSubscriptos.contains(req)) {
+            if (! requerimientosSubscriptos.contains(req) && req.getProveedor()!= estacioncentral.Main.idEc) {
                 CreadorPedidosSubscripciones cp = new CreadorPedidosSubscripciones();
-                System.out.println("[SR]Me suscribo");
+                System.out.println("[SR]Me suscribo a req de Ec: "+req.getProveedor());
                 subscribe(req.crearSubscripcion(estacioncentral.Main.idEc , cp));
             }
         }

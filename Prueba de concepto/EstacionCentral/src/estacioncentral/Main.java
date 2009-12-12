@@ -89,8 +89,8 @@ public class Main {
 
     private static BlockingQueue<SubscriberMessage> pedidosDeSubsADatos =
             new LinkedBlockingQueue<SubscriberMessage>();
-    private static BlockingQueue<SuscriptorMessage> aceptacionSubsDatos =
-            new LinkedBlockingQueue<SuscriptorMessage>();
+    private static BlockingQueue<SubscriptionAcceptedMessage> aceptacionSubsExternasDatos =
+            new LinkedBlockingQueue<SubscriptionAcceptedMessage>();
     private static BlockingQueue<InformationMessage<DatoAlmacenado>> datosSalientes =
             new LinkedBlockingQueue<InformationMessage<DatoAlmacenado>>();
     private static BlockingQueue<InformationMessage<ResultadoEvaluacion>> resultadosSalientes =
@@ -99,9 +99,10 @@ public class Main {
             new LinkedBlockingQueue<Modelo>();
     private static BlockingQueue<Collection<ResultadoEvaluacion>> salidasResultados =
             new LinkedBlockingQueue<Collection<ResultadoEvaluacion>>();
-    private static BlockingQueue<SubscriberMessage> salidaSubscripExternasDatos =
+    private static BlockingQueue<SubscriberMessage> subscripExternasDatos =
             new LinkedBlockingQueue<SubscriberMessage>();
-
+    private static BlockingQueue<DatoAlmacenado> validatorToDataSender =
+            new LinkedBlockingQueue<DatoAlmacenado>();
     private static ObjectServer validDataServer;
     private static ObjectServer outlierDataServer;
     private static ObjectServer resultadosServer;
@@ -220,13 +221,15 @@ public class Main {
 
         validator.setEntradaDatos(dataToValidator);
         validator.setSalidaDatos(validatorToValidDataManager);
+        validator.setSalidaDatosAPublicar(validatorToDataSender);
 
         validDataManager.setEntradaDatosInternos(validatorToValidDataManager);
 
         dataSender.setEntrada(pedidosDeSubsADatos);
-        // TODO: falta la cola desde el validador
-        dataSender.setSalidaAceptacionSubs(aceptacionSubsDatos);
+        dataSender.setEntradaInfo(validatorToDataSender);
+        dataSender.setSalidaAceptacionSubs(aceptacionSubsExternasDatos);
         dataSender.setSalidaInfo(datosSalientes);
+        dataSender.setEntrada(subscripExternasDatos);
 
         subscriptorModelos.setEntradaRespuestaSubscriptor(respuestaSubs);
         subscriptorModelos.setSalidaSubscripcionesDatos(colaSubsDatos);
@@ -235,13 +238,15 @@ public class Main {
 
         ecComunicator.setEntradaDatos(datosSalientes);
         ecComunicator.setEntradaResult(resultadosSalientes);
-        ecComunicator.setSalidaSubscripExternasDatos(salidaSubscripExternasDatos);
+        ecComunicator.setSalidaSubscripExternasDatos(subscripExternasDatos);
         //ecComunicator.setEntradaRespSubscripExternasDatos();
 
         ecComunicator.setEntradaEnvioSubscripcionesDatos(colaSubsDatos);
         ecComunicator.setEntradaEnvioSubscripcionesResult(colaSubsResul);
         ecComunicator.setSalidaRespSubscripcionesResult(respuestaSubs);
         ecComunicator.setSalidaRespSubscripcionesDatos(respuestaSubs);
+
+        ecComunicator.setEntradaRespSubscripExternasDatos(aceptacionSubsExternasDatos);
 
         ecComunicator.setSalidaDatosExternos(validatorToValidDataManager);
         //TODO: setear colas de informacion
@@ -255,13 +260,13 @@ public class Main {
 
     private static void inicializarComponentes(){
         new File("resources").mkdir();
-        File serverValidDataPath = new File("resources/ValidData.yap");
+        File serverValidDataPath = new File("resources/ValidData"+idEc+".yap");
         serverValidDataPath.delete();
 
-        File serverResultadosPath = new File("resources/Resultados.yap");
+        File serverResultadosPath = new File("resources/Resultados"+idEc+".yap");
         serverResultadosPath.delete();
 
-        File serverOutliersPath = new File("resources/Outliers.yap");
+        File serverOutliersPath = new File("resources/Outliers"+idEc+".yap");
         serverOutliersPath.delete();
 
         try {
@@ -346,8 +351,8 @@ public class Main {
         new Thread(ecComunicator).start();
         System.out.println("Se prendio el subscriptor de modelos");
 
-        //new Thread(dataSender).start();
-        //System.out.println("Se prendio el Data Sender");
+        new Thread(dataSender).start();
+        System.out.println("Se prendio el Data Sender");
 
         System.out.println("Se prendieron todos los componentes");
     }

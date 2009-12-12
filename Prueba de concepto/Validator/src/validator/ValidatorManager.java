@@ -18,6 +18,7 @@ public class ValidatorManager implements Runnable{
     private Validador validador = new Validador();
     private BlockingQueue<DatoAlmacenado> entradaDatosAValidar;
     private BlockingQueue<DatoAlmacenado> salidaDatosAAlmacenar;
+    private BlockingQueue<DatoAlmacenado> salidaDatosAPublicar;
 
     public ValidatorManager(ObjectServer server) {
         outlierDAO = new ValidatorDAO(server);
@@ -31,6 +32,10 @@ public class ValidatorManager implements Runnable{
         this.salidaDatosAAlmacenar = salidaDatos;
     }
 
+    public void setSalidaDatosAPublicar(BlockingQueue<DatoAlmacenado> salidaDatosAPublicar) {
+        this.salidaDatosAPublicar = salidaDatosAPublicar;
+    }
+
     @Override
     public void run() {
         while (keepTrying) {
@@ -39,6 +44,7 @@ public class ValidatorManager implements Runnable{
                 if (dato != null) {
                     if (validador.validar(dato)){
                         salidaDatosAAlmacenar.put(dato);
+                        salidaDatosAPublicar.put(dato);
                     } else {
                         outlierDAO.escribirDatosOutlier(dato);
                     }

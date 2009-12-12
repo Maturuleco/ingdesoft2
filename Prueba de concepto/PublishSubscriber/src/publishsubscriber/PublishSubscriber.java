@@ -22,7 +22,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
 
     private static final long sleepTime = 100;
     private BlockingQueue<SubscriberMessage> entradaSuscripciones;
-    private BlockingQueue<SuscriptorMessage> salidaAceptacionSubs;
+    private BlockingQueue<SubscriptionAcceptedMessage> salidaAceptacionSubs;
     private BlockingQueue<T> entradaInfo;
     private BlockingQueue<InformationMessage<T>> salidaInfo;
     private Set<Suscripcion> suscripciones = new HashSet<Suscripcion>();
@@ -32,6 +32,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("PS prendido----------");
         while (true) {
             if (! sensarEntradaSubscripciones() ) {
                 try {
@@ -47,7 +48,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
         this.entradaSuscripciones = entrada;
     }
 
-    public void setSalidaAceptacionSubs(BlockingQueue<SuscriptorMessage> salidaAceptacionSubs) {
+    public void setSalidaAceptacionSubs(BlockingQueue<SubscriptionAcceptedMessage> salidaAceptacionSubs) {
         this.salidaAceptacionSubs = salidaAceptacionSubs;
     }
 
@@ -67,6 +68,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
             suscripciones.add(suscripcion);
             SubscriptionAcceptedMessage respuesta = new SubscriptionAcceptedMessage(mensaje);
             enviarRespuesta(respuesta);
+            System.out.println("El Publish Subscriber acepta una suscripcion");
             return true;
         }
         return false;
@@ -74,7 +76,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
 
     protected abstract Suscripcion crearSuscripcion(SubscriberMessage mensaje);
     
-    private void enviarRespuesta(SuscriptorMessage respuesta){
+    private void enviarRespuesta(SubscriptionAcceptedMessage respuesta){
         salidaAceptacionSubs.add(respuesta);
         System.out.println("El Publish Subscriber acepta una suscripcion");
     }
