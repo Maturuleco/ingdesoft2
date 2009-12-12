@@ -33,9 +33,9 @@ public class MainTest {
         
 //        Collection<Modelo> modelos = new LinkedList<Modelo>();
 
-        Modelo modelo1 = new Modelo(69, getReglas1());
+        Modelo modelo1 = new Modelo(69, "se detectaron vientos fuertes", getReglas1());
         //modelos.add(modelo1);
-        Modelo modelo2 = new Modelo(7070, getReglas2());
+        Modelo modelo2 = new Modelo(7070, "se detectó frio polar", getReglas2());
         
         modelo1.setRequerimientosDatos(getReqDato1());
         modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());

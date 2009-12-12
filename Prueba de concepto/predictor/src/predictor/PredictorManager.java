@@ -5,6 +5,7 @@
 package predictor;
 
 import analizador.Analizador;
+import analizador.Prediccion;
 import areaController.ControladorDeRequerimientos;
 import cargadorModelos.CargadorModelo;
 import com.db4o.ObjectServer;
@@ -53,6 +54,8 @@ public class PredictorManager implements Runnable {
     public void run() {
         Collection<Modelo> modelos;
         Collection<ResultadoEvaluacion> resultados;
+        Collection<ResultadoEvaluacion> resultadosExternos;
+        Prediccion prediccion;
         while (keepTrying) {
             try {
                 modelos = cargadorModelos.getModelos();
@@ -61,8 +64,13 @@ public class PredictorManager implements Runnable {
                     salidaSubscriptor.put(modelo);
                     System.out.println("[PM] ENVIE MODELO" + modelo.getNombreModelo());
                     resultados = evaluador.evaluar(modelo);
-                    analizador.analizar(modelo, resultados);
+                    resultadosExternos = resultadosDAO.seleccionar(modelo.getRequerimientosResultados());
+                    resultados.addAll(resultadosExternos);
+                    prediccion = analizador.analizar(modelo, resultados);
                     salidaResultManager.put(resultados);
+                    if (!prediccion.equals(Prediccion.PREDICCION_NULA)){
+                        System.out.println(prediccion.toString());
+                    }
                 }
 
                 Thread.sleep(tiempoEspera);

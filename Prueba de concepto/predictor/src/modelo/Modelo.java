@@ -14,17 +14,23 @@ import java.util.Set;
 public class Modelo {
 
     private Integer nombreModelo;
+    private String descripcion;
     private Collection<Regla> reglas;
     private Set<RequerimientoDato> requerimientosDatos;
     private Set<RequerimientoResultado> requerimientosResultados;
 
-    public Modelo(Integer nombreModelo, Collection<Regla> reglas) {
+    public Modelo(Integer nombreModelo, String descripcion, Collection<Regla> reglas) {
         this.nombreModelo = nombreModelo;
+        this.descripcion = descripcion;
         this.reglas = reglas;
         this.requerimientosDatos = new HashSet<RequerimientoDato>();
         this.requerimientosResultados = new HashSet<RequerimientoResultado>();
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
     public Collection<Regla> getReglas() {
         return reglas;
     }

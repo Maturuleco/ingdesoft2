@@ -4,11 +4,11 @@
  */
 package selectorResultados;
 
+import RequerimientosModelos.RequerimientoResultado;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.ext.DatabaseClosedException;
-import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
 import com.db4o.query.Predicate;
 import evaluador.ResultadoEvaluacion;
@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -45,23 +46,10 @@ public class ResultadosDAO {
         this.server = serverResultados;
     }
 
-//    public void escribirResultados(Collection<ResultadoEvaluacion> resultados) {
-//        abrirCliente();
-//        try {
-//            for (ResultadoEvaluacion resultado : resultados) {
-//                cliente.store(resultado);
-//            }
-//            cliente.commit();
-//        } catch (DatabaseClosedException e) {
-//            System.out.println("la base que intenta ingresar se encuentra cerrada");
-//            System.out.println(e.getMessage());
-//        } catch (DatabaseReadOnlyException e) {
-//            System.out.println("la base que intenta ingresar esta en estado read-only");
-//            System.out.println(e.getMessage());
-//        } finally {
-//            cerrarCliente();
-//        }
-//    }
+    public List<ResultadoEvaluacion> seleccionar(Set<RequerimientoResultado> requerimientos){
+        Predicate<ResultadoEvaluacion> predicado = predicadoDatosRequerimientos(requerimientos);
+        return select(predicado);
+    }
 
     public List<ResultadoEvaluacion> seleccionar(Collection<Integer> idTRs, Collection<Integer> idModelos, Integer segundos) {
         Predicate<ResultadoEvaluacion> predicado = predicadoDatosTodos();
@@ -96,6 +84,15 @@ public class ResultadosDAO {
             cerrarCliente();
         }
         return resultado;
+    }
+
+    private Predicate<ResultadoEvaluacion> predicadoDatosRequerimientos(final Set<RequerimientoResultado> requerimientos){
+        return new Predicate<ResultadoEvaluacion>(){
+            @Override
+            public boolean match(ResultadoEvaluacion resultado){
+                return requerimientos.contains(resultado.obtenerRequerimiento());
+            }
+        };
     }
 
     private Predicate<ResultadoEvaluacion> predicadoDatosTodos() {
