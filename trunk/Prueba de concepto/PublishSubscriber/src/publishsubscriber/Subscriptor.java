@@ -35,7 +35,7 @@ public abstract class Subscriptor {
             try {
                 Thread.sleep(1000);
                 salida.put(mensaje);
-                System.out.println("[S]ENVIE PEDIDO SUSCRIPCION");
+//                System.out.println("[S]ENVIE PEDIDO SUSCRIPCION");
             } catch (InterruptedException ex) {
                 Logger.getLogger(Subscriptor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -46,6 +46,7 @@ public abstract class Subscriptor {
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
         if (respuesta != null) {
+            System.out.println("[S] Llega respuesta de subscripcion al subscriptor");
             return mensaje.equals(respuesta.getMensajeAceptado());
         } else{
             return false;

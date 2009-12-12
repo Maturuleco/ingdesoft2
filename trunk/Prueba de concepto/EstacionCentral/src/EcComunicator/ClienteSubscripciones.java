@@ -26,6 +26,7 @@ public class ClienteSubscripciones extends NetworkClient<SubscriberMessage, Subs
     }
 
     public void send(SubscriberMessage msj, NetworkDestination destino){
+        System.out.println("[EcCom]Se manda pedido de subscripcion");
         super.enviarMensaje(destino, msj, true);
     }
     
@@ -33,6 +34,7 @@ public class ClienteSubscripciones extends NetworkClient<SubscriberMessage, Subs
     protected void procesarMensajeDeRespuesta(SubscriptionAcceptedMessage mensaje) {
         try {
             salida.put(mensaje);
+            System.out.println("[EcCom] Se recibe respuesta a pedido de subscripcion (y se lo manda al Subscriptor)");
         } catch (InterruptedException ex) {
             Logger.getLogger(ClienteSubscripciones.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -39,8 +39,10 @@ public class ServerSubscripcones<T extends SubscriberMessage> extends NetworkSer
     }
     @Override
     protected void procesarMensaje(T mensaje) {
+        System.out.println("[EcCom] Se recibe pedido de subscripcion");
         try {
             salidaDeSubscripciones.put(mensaje);
+            System.out.println("[EcCom] Se manda pedido de subscripcions al DataSender");
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerSubscripcones.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,6 +53,7 @@ public class ServerSubscripcones<T extends SubscriberMessage> extends NetworkSer
         SubscriptionAcceptedMessage respuesta = null;
         try {
             respuesta = entradaDeRespuestasDeSubscripciones.take();
+            System.out.println("[EcCom] Se recibe la respuesta desde el DataSender");
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerSubscripcones.class.getName()).log(Level.SEVERE, null, ex);
         }
