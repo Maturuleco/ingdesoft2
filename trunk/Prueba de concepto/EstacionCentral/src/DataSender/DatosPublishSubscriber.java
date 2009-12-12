@@ -5,6 +5,7 @@
 
 package DataSender;
 
+import Datos.DatoAlmacenado;
 import Datos.FactorClimatico;
 import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import SubscripcionesEc.SubscriberMessage;
@@ -17,7 +18,7 @@ import publishsubscriber.TRsFactoresSuscripcion;
  *
  * @author mar
  */
-public class DatosPublishSubscriber extends PublishSubscriber{
+public class DatosPublishSubscriber extends PublishSubscriber<DatoAlmacenado> {
 
     public DatosPublishSubscriber() {
 
