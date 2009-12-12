@@ -15,15 +15,15 @@ import model.InformationMessage;
  *
  * @author tas
  */
-public class ServerInformacion<T extends InformationMessage> extends NetworkServer<T, InformationMessage> implements Runnable {
+public class ServerInformacion<T> extends NetworkServer<InformationMessage<T>, InformationMessage<T>> implements Runnable {
 
-    private BlockingQueue<InformationMessage> salidaDeInformacion;
+    private BlockingQueue<T> salidaDeInformacion;
     
     public ServerInformacion(int port) {
         super(port);
     }
 
-    public void setSalidaDeInformacion(BlockingQueue<InformationMessage> salidaDeInformacion) {
+    public void setSalidaDeInformacion(BlockingQueue<T> salidaDeInformacion) {
         this.salidaDeInformacion = salidaDeInformacion;
     }
 
@@ -33,16 +33,16 @@ public class ServerInformacion<T extends InformationMessage> extends NetworkServ
     }
     
     @Override
-    protected void procesarMensaje(T mensaje) {
+    protected void procesarMensaje(InformationMessage<T> mensaje) {
         try {
-            salidaDeInformacion.put(mensaje);
+            salidaDeInformacion.put(mensaje.getMensaje());
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerInformacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    protected InformationMessage generarRespuesta(T mensaje) {
+    protected InformationMessage<T> generarRespuesta(InformationMessage<T> mensaje) {
         return null;
     }
 
