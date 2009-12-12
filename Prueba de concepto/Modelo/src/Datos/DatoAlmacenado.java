@@ -51,4 +51,8 @@ public class DatoAlmacenado extends DatoSensado {
         return datoMostrado;
     }
 
+    public RequerimientoDato obtenerRequerimiento(){
+        return new Requerimiento(null, idTR,)
+    }
+
 }

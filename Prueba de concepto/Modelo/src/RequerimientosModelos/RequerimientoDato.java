@@ -1,4 +1,4 @@
-
+!
 package RequerimientosModelos;
 
 import Datos.FactorClimatico;
@@ -37,5 +37,33 @@ public class RequerimientoDato extends Requerimiento {
     public String toString() {
         return "Requeriemiento: TR = " + trID + " Factor = " + factor.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RequerimientoDato other = (RequerimientoDato) obj;
+        if (this.trID != other.trID && (this.trID == null || !this.trID.equals(other.trID))) {
+            return false;
+        }
+        if (this.factor != other.factor) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + (this.trID != null ? this.trID.hashCode() : 0);
+        hash = 71 * hash + this.factor.hashCode();
+        return hash;
+    }
+
+    
 
 }

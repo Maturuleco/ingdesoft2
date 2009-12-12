@@ -124,11 +124,19 @@ public class SelectorDatos {
         return resultado;
     }
 
-    private Predicate<DatoAlmacenado> predicadoDatosTodos() {
+    private Predicate<DatoAlmacenado> predicadoDatosRequerimientos(){
+        return new Predicate<DatoAlmacenado>(){
+            @Override
+            public boolean match(DatoAlmacenado dato)
+        }
+    }
+
+    private Predicate<DatoAlmacenado> predicadoDatosTodos(final Set<RequerimientoDato> requerimientos) {
         return new Predicate<DatoAlmacenado>() {
 
             @Override
             public boolean match(DatoAlmacenado dato) {
+
                 return true;
             }
         };
