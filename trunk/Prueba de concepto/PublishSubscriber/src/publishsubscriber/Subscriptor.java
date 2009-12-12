@@ -14,18 +14,18 @@ import java.util.logging.Logger;
  *
  * @author mar
  */
-public abstract class Subscriptor extends Thread{
-    private BlockingQueue<SubscriberMessage> salida;
-    private BlockingQueue<SubscriptionAcceptedMessage> entrada;
+public abstract class Subscriptor{
+    private BlockingQueue<? super SubscriberMessage> salida;
+    private BlockingQueue<? extends SubscriptionAcceptedMessage> entrada;
 
     public Subscriptor() {
     }
 
-    public void setEntradaRespuestas(BlockingQueue<SubscriptionAcceptedMessage> entrada) {
+    public void setEntradaRespuestas(BlockingQueue<? extends SubscriptionAcceptedMessage> entrada) {
         this.entrada = entrada;
     }
 
-    public void setSalidaSubscripciones(BlockingQueue<SubscriberMessage> salida) {
+    public void setSalidaSubscripciones(BlockingQueue<? super SubscriberMessage> salida) {
         this.salida = salida;
     }
 

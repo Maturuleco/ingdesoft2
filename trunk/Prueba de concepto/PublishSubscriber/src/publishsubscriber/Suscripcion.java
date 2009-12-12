@@ -11,7 +11,7 @@ import model.SuscriptorMessage;
  *
  * @author mar
  */
-public abstract class Suscripcion {
+public abstract class Suscripcion<T> {
     Integer idSuscriptor;
 
     public Suscripcion(Integer idSuscriptor) {
@@ -27,9 +27,9 @@ public abstract class Suscripcion {
         this.idSuscriptor = idSuscriptor;
     }
 
-    public abstract Boolean seCorresponde(SuscriptorMessage mensaje);
+    public abstract Boolean seCorresponde(T mensaje);
 
     @Override
-    public abstract boolean equals(Object obj); 
-    
+    public abstract boolean equals(Object obj);
+
 }

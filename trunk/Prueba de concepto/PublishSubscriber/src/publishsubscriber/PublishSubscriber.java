@@ -18,12 +18,13 @@ import model.SuscriptorMessage;
  *
  * @author mar
  */
-public abstract class PublishSubscriber implements Runnable {
+public abstract class PublishSubscriber<T> implements Runnable {
 
     private static final long sleepTime = 100;
     private BlockingQueue<SubscriberMessage> entradaSuscripciones;
-    private BlockingQueue<SuscriptorMessage> salida;
-    private BlockingQueue<InformationMessage> entradaInfo;
+    private BlockingQueue<SuscriptorMessage> salidaAceptacionSubs;
+    private BlockingQueue<T> entradaInfo;
+    private BlockingQueue<InformationMessage<T>> salidaInfo;
     private Set<Suscripcion> suscripciones = new HashSet<Suscripcion>();
 
     public PublishSubscriber() {    
@@ -32,7 +33,7 @@ public abstract class PublishSubscriber implements Runnable {
     @Override
     public void run(){
         while (true) {
-            if (! sensarEntradaDatos() ) {
+            if (! sensarEntradaSubscripciones() ) {
                 try {
                     enviarInfo();
                     // Duermo un segundo
@@ -46,15 +47,19 @@ public abstract class PublishSubscriber implements Runnable {
         this.entradaSuscripciones = entrada;
     }
 
-    public void setSalida (BlockingQueue<SuscriptorMessage> salida) {
-        this.salida = salida;
+    public void setSalidaAceptacionSubs(BlockingQueue<SuscriptorMessage> salidaAceptacionSubs) {
+        this.salidaAceptacionSubs = salidaAceptacionSubs;
     }
 
-    public void setEntradaInfo (BlockingQueue<InformationMessage> entradaInfo) {
+    public void setSalidaInfo(BlockingQueue<InformationMessage<T>> salidaInfo) {
+        this.salidaInfo = salidaInfo;
+    }
+
+    public void setEntradaInfo (BlockingQueue<T> entradaInfo) {
         this.entradaInfo = entradaInfo;
     }
 
-    private boolean sensarEntradaDatos() {
+    private boolean sensarEntradaSubscripciones() {
         SubscriberMessage mensaje = entradaSuscripciones.poll();
         if (mensaje != null) {
             System.out.println("El Publish Subscriber recibe una suscripcion");
@@ -70,18 +75,23 @@ public abstract class PublishSubscriber implements Runnable {
     protected abstract Suscripcion crearSuscripcion(SubscriberMessage mensaje);
     
     private void enviarRespuesta(SuscriptorMessage respuesta){
-        salida.add(respuesta);
+        salidaAceptacionSubs.add(respuesta);
         System.out.println("El Publish Subscriber acepta una suscripcion");
     }
 
+    private void enviarRespuesta(InformationMessage<T> info){
+        salidaInfo.add(info);
+        System.out.println("El Publish Subscriber manda un dato.");
+    }
+
     private void enviarInfo() {
-        InformationMessage mensaje = entradaInfo.poll();
+        T mensaje = entradaInfo.poll();
         if (mensaje != null) {
             System.out.println("El Publish Subscriber recibe informacion para enviar");
-            for (Suscripcion s : suscripciones){
+            for (Suscripcion<T> s : suscripciones){
                 if (s.seCorresponde(mensaje)){
                     Integer receptor = s.getIdSuscriptor();
-                    InformationMessage respuesta = new InformationMessage(receptor,mensaje);
+                    InformationMessage<T> respuesta = new InformationMessage<T>(receptor,mensaje);
                     enviarRespuesta(respuesta);
                 }
             }
