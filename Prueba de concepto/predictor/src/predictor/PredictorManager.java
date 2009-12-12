@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.concurrent.BlockingQueue;
 import modelo.Modelo;
 import selectorDatos.SelectorDatos;
+import selectorResultados.ResultadosDAO;
 
 /**
  *
@@ -28,6 +29,7 @@ public class PredictorManager implements Runnable {
     private Evaluador evaluador;
     private Analizador analizador = new Analizador();
     private CargadorModelo cargadorModelos;
+    private ResultadosDAO resultadosDAO;
     
     private BlockingQueue<Modelo> salidaSubscriptor;
     private BlockingQueue<Collection<ResultadoEvaluacion>> salidaResultManager;
@@ -36,7 +38,7 @@ public class PredictorManager implements Runnable {
         cargadorModelos = new CargadorModelo(path);
         selectorDatos = new SelectorDatos(server);
         evaluador = new Evaluador(selectorDatos, controladorAreas);
-        analizador.getAnalizadorDAO().setServerResultados(serverResultados);
+        resultadosDAO.setServerResultados(serverResultados);
     }
 
     public void setSalidaResultManager(BlockingQueue<Collection<ResultadoEvaluacion>> salidaResultManager) {

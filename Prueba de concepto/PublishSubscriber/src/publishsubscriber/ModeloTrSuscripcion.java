@@ -18,7 +18,7 @@ public class ModeloTrSuscripcion extends Suscripcion{
         this.trID = trID;
     }
     
-    @Override
+    //@Override
     public Boolean seCorresponde(SuscriptorMessage mensaje) {
 
        // TODO: modificar esta clase igual que el TRFactoresSuscripcion
@@ -62,6 +62,11 @@ public class ModeloTrSuscripcion extends Suscripcion{
         hash = 37 * hash + (this.modeloID != null ? this.modeloID.hashCode() : 0);
         hash = 37 * hash + (this.trID != null ? this.trID.hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public Boolean seCorresponde(Object mensaje) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     

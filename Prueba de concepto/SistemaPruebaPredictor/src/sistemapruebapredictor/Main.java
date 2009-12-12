@@ -47,7 +47,7 @@ public class Main {
         System.out.println("Se creo la base Valid Data en la ruta:" + serverValidDataPath.getAbsolutePath());
         resultadosServer = Db4o.openServer(serverResultadosPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Resultados en la ruta:" + serverResultadosPath.getAbsolutePath());
-        predictor = new PredictorManager(validDataServer, resultadosServer,null);
+        predictor = new PredictorManager(validDataServer, resultadosServer, "modelo");
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
         try {
             cargador1 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.temperatura, GeneradorDatosOrdenados.Orden.creciente, -10.0f, 1.0f, 30.0f, 1, 1));
