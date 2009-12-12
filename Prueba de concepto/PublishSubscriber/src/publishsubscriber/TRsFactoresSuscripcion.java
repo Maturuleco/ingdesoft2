@@ -1,6 +1,7 @@
 
 package publishsubscriber;
 
+import Datos.DatoAlmacenado;
 import Datos.FactorClimatico;
 import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import model.SuscriptorMessage;
@@ -9,7 +10,7 @@ import model.SuscriptorMessage;
  *
  * @author mar
  */
-public class TRsFactoresSuscripcion extends Suscripcion{
+public class TRsFactoresSuscripcion extends Suscripcion<DatoAlmacenado>{
 
     private Integer idTR;
     private FactorClimatico factor;
@@ -29,16 +30,10 @@ public class TRsFactoresSuscripcion extends Suscripcion{
     }
 
     @Override
-    public Boolean seCorresponde(SuscriptorMessage mensaje) {
-        if (mensaje instanceof MensajePedidoSubscripcionDatos) {
-            MensajePedidoSubscripcionDatos pedido = (MensajePedidoSubscripcionDatos) mensaje;
-            Boolean res = pedido.getIdSuscriptor().equals(getIdSuscriptor());
-            res = res && pedido.getFactorClimatico().equals(getFactor());
-            res = res && pedido.getTR().equals(getIdTR());
-            return res;
-        }
-        else
-            return false;
+    public Boolean seCorresponde(DatoAlmacenado mensaje) {
+        Boolean res = mensaje.getFactor().equals(getFactor());
+        res = res && mensaje.getIdTR().equals(getIdTR());
+        return res;
     }
 
     @Override
