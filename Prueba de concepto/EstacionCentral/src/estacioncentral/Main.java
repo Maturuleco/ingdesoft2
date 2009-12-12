@@ -1,5 +1,6 @@
 package estacioncentral;
 
+import DataSender.DatosPublishSubscriber;
 import com.db4o.Db4o;
 import com.db4o.ObjectServer;
 import dataReceiver.DataReceiver;
@@ -15,9 +16,15 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import Datos.DatoAlmacenado;
+import EcComunicator.EcComunicator;
 import model.Mensaje;
 import EstadoDeRed.HeartbeatMessege;
 import ModeloTerminal.ModeloTerminalRemota;
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
+import SubscripcionesEc.MensajePedidoSubscripcionResultados;
+import SubscripcionesEc.SubscriberMessage;
+import SubscripcionesEc.SubscriptionAcceptedMessage;
+import SubscriptorModelos.SubscriptorModelos;
 import ValidDataManager.ValidDataManager;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,6 +32,8 @@ import java.io.FileReader;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.LinkedList;
+import model.InformationMessage;
+import model.SuscriptorMessage;
 import red_gsm.ComparadorMsjGSM;
 import red_gsm.MensajeGSM;
 import red_gsm.ModemGSM;
@@ -49,16 +58,40 @@ public class Main {
     private static NetworkController networkController;
     private static ModemDispatcher modemDispatcher;
     private static ModemGSM modemGSM;
+    private static EcComunicator ecComunicator;
+    private static DatosPublishSubscriber dataSender;
+    private static SubscriptorModelos subscriptorModelos;
     
-    private static BlockingQueue<Mensaje> trReceiverToData = new LinkedBlockingQueue<Mensaje>();
-    private static BlockingQueue<DatoAlmacenado> dataToValidator = new LinkedBlockingQueue<DatoAlmacenado>();
-    private static BlockingQueue<DatoAlmacenado> validatorToValidDataManager = new LinkedBlockingQueue<DatoAlmacenado>();
-    private static BlockingQueue<HeartbeatMessege> dataToNetwork = new LinkedBlockingQueue<HeartbeatMessege>();
-    private static BlockingQueue<MensajeGSM> salidaModem = new LinkedBlockingQueue<MensajeGSM>();
-    private static BlockingQueue<MensajeGSM> entradaModem = new PriorityBlockingQueue<MensajeGSM>(3, new ComparadorMsjGSM());
-    private static BlockingQueue<MensajeGSM> dispatcherReceiver = new LinkedBlockingQueue<MensajeGSM>();
-    private static BlockingQueue<MensajeGSM> dispatcherNetwork = new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<Mensaje> trReceiverToData =
+            new LinkedBlockingQueue<Mensaje>();
+    private static BlockingQueue<DatoAlmacenado> dataToValidator =
+            new LinkedBlockingQueue<DatoAlmacenado>();
+    private static BlockingQueue<DatoAlmacenado> validatorToValidDataManager =
+            new LinkedBlockingQueue<DatoAlmacenado>();
+    private static BlockingQueue<HeartbeatMessege> dataToNetwork =
+            new LinkedBlockingQueue<HeartbeatMessege>();
+    private static BlockingQueue<MensajeGSM> salidaModem =
+            new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> entradaModem =
+            new PriorityBlockingQueue<MensajeGSM>(3, new ComparadorMsjGSM());
+    private static BlockingQueue<MensajeGSM> dispatcherReceiver =
+            new LinkedBlockingQueue<MensajeGSM>();
+    private static BlockingQueue<MensajeGSM> dispatcherNetwork =
+            new LinkedBlockingQueue<MensajeGSM>();
+    
+    private static BlockingQueue<SubscriberMessage> colaSubsDatos =
+            new LinkedBlockingQueue<SubscriberMessage>();
+    private static BlockingQueue<SubscriberMessage> colaSubsResul =
+            new LinkedBlockingQueue<SubscriberMessage>();
+    private static BlockingQueue<SubscriptionAcceptedMessage> respuestaSubs =
+            new LinkedBlockingQueue<SubscriptionAcceptedMessage>();
 
+    private static BlockingQueue<SubscriberMessage> pedidosDeSubsADatos =
+            new LinkedBlockingQueue<SubscriberMessage>();
+    private static BlockingQueue<SuscriptorMessage> aceptacionSubsDatos =
+            new LinkedBlockingQueue<SuscriptorMessage>();
+    private static BlockingQueue<InformationMessage<DatoAlmacenado>> datosSalientes =
+            new LinkedBlockingQueue<InformationMessage<DatoAlmacenado>>();
 
     private static ObjectServer validDataServer;
     private static ObjectServer outlierDataServer;
@@ -177,9 +210,30 @@ public class Main {
 
         validator.setEntradaDatos(dataToValidator);
         validator.setSalidaDatos(validatorToValidDataManager);
+
         validDataManager.setEntradaDatosInternos(validatorToValidDataManager);
 
-        // OJO! FALTA la cola del EC-COMUNICATOR AL VALIDDATAMANAGER (externos)
+        dataSender.setEntrada(pedidosDeSubsADatos);
+        // TODO: falta la cola desde el validador
+        dataSender.setSalidaAceptacionSubs(aceptacionSubsDatos);
+        dataSender.setSalidaInfo(datosSalientes);
+
+        subscriptorModelos.setEntradaRespuestaSubscriptor(respuestaSubs);
+        subscriptorModelos.setSalidaSubscripcionesDatos(colaSubsDatos);
+        subscriptorModelos.setSalidaSubscripcionesResultados(colaSubsResul);
+        // TODO: subscriptorModelos.setEntradaModelos(coooolaaa);
+
+        ecComunicator.setEntradaDatos(datosSalientes);
+        ecComunicator.setSalidaSubscripExternasDatos(colaSubsDatos);
+        ecComunicator.setEntradaRespSubscripExternasDatos(respuestaSubs);
+
+        ecComunicator.setEntradaEnvioSubscripcionesDatos(colaSubsDatos);
+        ecComunicator.setEntradaEnvioSubscripcionesResult(colaSubsResul);
+        ecComunicator.setSalidaRespSubscripcionesResult(respuestaSubs);
+        ecComunicator.setSalidaRespSubscripcionesDatos(respuestaSubs);
+
+        ecComunicator.setSalidaDatosExternos(validatorToValidDataManager);
+        //TODO: setear colas de informacion
 
     }
 
@@ -234,6 +288,14 @@ public class Main {
         networkController = new NetworkController();
         System.out.println("Se creo el Network Controller");
 
+        dataSender = new DatosPublishSubscriber();
+        System.out.println("Se creo el Data Sender");
+
+        subscriptorModelos = new SubscriptorModelos();
+        System.out.println("Se creo el Subscriptor de los Modelos");
+
+        ecComunicator = new EcComunicator(archivoDePuertosDeLaRed);
+        System.out.println("Se creo el EcComunicator");
     }
 
     private static void prenderComponentes() {
