@@ -1,5 +1,5 @@
 <modelo.Modelo>
-  <nombreModelo>FRIO</nombreModelo>
+  <nombreModelo>2</nombreModelo>
   <reglas class="linked-list">
     <modelo.Regla>
       <nombre>Regla 1</nombre>
@@ -212,31 +212,4 @@
       </condicionesPorFactor>
     </modelo.Regla>
   </reglas>
-  <area>
-    <curves>
-      <sun.awt.geom.Order0>
-        <direction>1</direction>
-        <x>0.0</x>
-        <y>0.0</y>
-      </sun.awt.geom.Order0>
-      <sun.awt.geom.Order1>
-        <direction>1</direction>
-        <x0>0.0</x0>
-        <y0>0.0</y0>
-        <x1>0.0</x1>
-        <y1>10.0</y1>
-        <xmin>0.0</xmin>
-        <xmax>0.0</xmax>
-      </sun.awt.geom.Order1>
-      <sun.awt.geom.Order1>
-        <direction>-1</direction>
-        <x0>10.0</x0>
-        <y0>0.0</y0>
-        <x1>10.0</x1>
-        <y1>10.0</y1>
-        <xmin>10.0</xmin>
-        <xmax>10.0</xmax>
-      </sun.awt.geom.Order1>
-    </curves>
-  </area>
 </modelo.Modelo>

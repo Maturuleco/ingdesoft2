@@ -1,5 +1,5 @@
 <modelo.Modelo>
-  <nombreModelo>FRIO POLAR</nombreModelo>
+  <nombreModelo>1</nombreModelo>
   <reglas class="linked-list">
     <modelo.Regla>
       <nombre>Regla 1</nombre>
