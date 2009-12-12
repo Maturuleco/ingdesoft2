@@ -4,6 +4,7 @@
  */
 package evaluador;
 
+import particionador.Particionador;
 import areaController.ControladorDeRequerimientos;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import Datos.DatoAlmacenado;
 import modelo.Modelo;
+import particionador.ParticionadorPorCantidad;
 import predictor.Predictor;
 import predictor.ResultadoRegla;
 import predictorFactory.PredictorAgruparPorFactorFactory;
@@ -28,7 +30,7 @@ public class Evaluador {
     private SelectorDatos selectorDatos;
     private ControladorDeRequerimientos controladorRequerimientos;
     private PredictorFactory predictorFactory = new PredictorAgruparPorFactorFactory();
-    private Particionador particionador = new Particionador(3);
+    private Particionador particionador = new ParticionadorPorCantidad(3);
 
     public Evaluador(SelectorDatos selectorDatos, ControladorDeRequerimientos controladorAreas) {
         this.selectorDatos = selectorDatos;

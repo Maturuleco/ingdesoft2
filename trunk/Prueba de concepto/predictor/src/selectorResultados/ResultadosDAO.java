@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package analizador;
+package selectorResultados;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
@@ -21,15 +21,15 @@ import java.util.List;
  *
  * @author Santiago Avendaño
  */
-public class AnalizadorDAO {
+public class ResultadosDAO {
 
     private ObjectServer server;
     private ObjectContainer cliente;
 
-    public AnalizadorDAO() {
+    public ResultadosDAO() {
     }
 
-    public AnalizadorDAO(ObjectServer serverBD) {
+    public ResultadosDAO(ObjectServer serverBD) {
         this.server = serverBD;
     }
 
@@ -45,23 +45,23 @@ public class AnalizadorDAO {
         this.server = serverResultados;
     }
 
-    public void escribirResultados(Collection<ResultadoEvaluacion> resultados) {
-        abrirCliente();
-        try {
-            for (ResultadoEvaluacion resultado : resultados) {
-                cliente.store(resultado);
-            }
-            cliente.commit();
-        } catch (DatabaseClosedException e) {
-            System.out.println("la base que intenta ingresar se encuentra cerrada");
-            System.out.println(e.getMessage());
-        } catch (DatabaseReadOnlyException e) {
-            System.out.println("la base que intenta ingresar esta en estado read-only");
-            System.out.println(e.getMessage());
-        } finally {
-            cerrarCliente();
-        }
-    }
+//    public void escribirResultados(Collection<ResultadoEvaluacion> resultados) {
+//        abrirCliente();
+//        try {
+//            for (ResultadoEvaluacion resultado : resultados) {
+//                cliente.store(resultado);
+//            }
+//            cliente.commit();
+//        } catch (DatabaseClosedException e) {
+//            System.out.println("la base que intenta ingresar se encuentra cerrada");
+//            System.out.println(e.getMessage());
+//        } catch (DatabaseReadOnlyException e) {
+//            System.out.println("la base que intenta ingresar esta en estado read-only");
+//            System.out.println(e.getMessage());
+//        } finally {
+//            cerrarCliente();
+//        }
+//    }
 
     public List<ResultadoEvaluacion> seleccionar(Collection<Integer> idTRs, Collection<Integer> idModelos, Integer segundos) {
         Predicate<ResultadoEvaluacion> predicado = predicadoDatosTodos();

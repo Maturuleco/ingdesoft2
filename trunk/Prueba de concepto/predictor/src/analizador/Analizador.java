@@ -5,6 +5,7 @@
 
 package analizador;
 
+import selectorResultados.ResultadosDAO;
 import evaluador.ResultadoEvaluacion;
 import java.util.Collection;
 import modelo.Modelo;
@@ -15,15 +16,8 @@ import modelo.Modelo;
  */
 public class Analizador {
 
-    private AnalizadorDAO analizadorDAO = new AnalizadorDAO();
-
-    public AnalizadorDAO getAnalizadorDAO() {
-        return analizadorDAO;
-    }
-
     public void analizar(Modelo modelo, Collection<ResultadoEvaluacion> resultados){
-        analizadorDAO.escribirResultados(resultados);
+        //TODO: implementar analisis del resultado
     }
-
 
 }

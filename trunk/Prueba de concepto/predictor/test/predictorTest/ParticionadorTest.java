@@ -4,7 +4,7 @@
  */
 package predictorTest;
 
-import evaluador.Particionador;
+import particionador.Particionador;
 import evaluador.PredictorThread;
 import java.util.Collection;
 import java.util.LinkedList;
