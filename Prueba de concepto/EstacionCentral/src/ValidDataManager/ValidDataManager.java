@@ -19,16 +19,8 @@ public class ValidDataManager extends Thread{
     private ObjectServer serverDatosValidos;
     private BlockingQueue<DatoAlmacenado> entradaDatosInternos;
 
-    // OJO! este mensaje de entrada (externo) que viene de un DATA SENDER 
-    // no esta definido (por eso dos colas), en principio es DatoAlmacenado.
-    private BlockingQueue<DatoAlmacenado> entradaDatosExternos;
-
     public ValidDataManager(ObjectServer server) {
          this.serverDatosValidos = server;
-    }
-
-    public void setEntradaDatosExternos(BlockingQueue<DatoAlmacenado> entradaDatosExternos) {
-        this.entradaDatosExternos = entradaDatosExternos;
     }
 
     public void setEntradaDatosInternos(BlockingQueue<DatoAlmacenado> entradaDatosInternos) {
@@ -38,7 +30,7 @@ public class ValidDataManager extends Thread{
     @Override
      public void run() {
         while (true) {
-            if (! sensarEntradaDatosInternos() && !sensarEntradaDatosExternos() ) {
+            if (! sensarEntradaDatosInternos() ) {
                 try {
                     // Duermo un segundo
                     Thread.sleep(sleepTime);
@@ -49,14 +41,6 @@ public class ValidDataManager extends Thread{
 
     private boolean sensarEntradaDatosInternos() {
         DatoAlmacenado cabeza = entradaDatosInternos.poll();
-        if (cabeza != null) {
-            escribirDatosValidos(cabeza);
-            return true;
-        }
-        return false;
-    }
-    private boolean sensarEntradaDatosExternos() {
-        DatoAlmacenado cabeza = entradaDatosExternos.poll();
         if (cabeza != null) {
             escribirDatosValidos(cabeza);
             return true;
