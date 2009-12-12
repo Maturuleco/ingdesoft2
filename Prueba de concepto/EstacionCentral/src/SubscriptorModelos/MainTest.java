@@ -8,12 +8,11 @@ package SubscriptorModelos;
 import Datos.FactorClimatico;
 import RequerimientosModelos.RequerimientoDato;
 import RequerimientosModelos.RequerimientoResultado;
+import com.thoughtworks.xstream.XStream;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import modelo.Comparador;
 import modelo.Condicion;
 import modelo.Modelo;
@@ -39,18 +38,20 @@ public class MainTest {
         Modelo modelo2 = new Modelo(7070, getReglas2());
         
         modelo1.setRequerimientosDatos(getReqDato1());
+        modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());
+        modelo2.setRequerimientosDatos(new HashSet<RequerimientoDato>());
         modelo2.setRequerimientosResultados(getReqResult1());
         
-        SubscriptorModelos subs = new SubscriptorModelos();
-        BlockingQueue<Modelo> entradaModelos = new LinkedBlockingQueue<Modelo>();
+//        SubscriptorModelos subs = new SubscriptorModelos();
+//        BlockingQueue<Modelo> entradaModelos = new LinkedBlockingQueue<Modelo>();
+//
+//        subs.setEntradaModelos(entradaModelos);
+//        entradaModelos.add(modelo1);
+//        entradaModelos.add(modelo2);
+//
+//        subs.run();
         
-        subs.setEntradaModelos(entradaModelos);
-        entradaModelos.add(modelo1);
-        entradaModelos.add(modelo2);
-        
-        subs.run();
-        
-/*
+
         XStream xstream = new XStream();
         String xml1 = xstream.toXML(modelo1);
         String xml2 = xstream.toXML(modelo2);
@@ -59,12 +60,9 @@ public class MainTest {
         Modelo modelo1bis = (Modelo)xstream.fromXML(xml1);
         Modelo modelo2bis = (Modelo)xstream.fromXML(xml2);
         System.out.println("Son iguales?..."+modelo1.equals(modelo1bis));
-        modelo1bis.setNombreModelo("Lalala");
         System.out.println("Y ahora que le cambié el nombre?..."+modelo1.equals(modelo1bis));
 
-        modelos.add(modelo2);
-        return modelos;
-        */
+        //modelos.add(modelo2);
     }
 
     private static Set<RequerimientoDato> getReqDato1() {

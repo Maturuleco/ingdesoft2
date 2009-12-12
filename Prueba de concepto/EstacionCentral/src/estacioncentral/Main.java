@@ -20,20 +20,21 @@ import EcComunicator.EcComunicator;
 import model.Mensaje;
 import EstadoDeRed.HeartbeatMessege;
 import ModeloTerminal.ModeloTerminalRemota;
-import SubscripcionesEc.MensajePedidoSubscripcionDatos;
-import SubscripcionesEc.MensajePedidoSubscripcionResultados;
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
 import SubscriptorModelos.SubscriptorModelos;
 import ValidDataManager.ValidDataManager;
+import evaluador.ResultadoEvaluacion;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingDeque;
 import model.InformationMessage;
 import model.SuscriptorMessage;
+import modelo.Modelo;
 import red_gsm.ComparadorMsjGSM;
 import red_gsm.MensajeGSM;
 import red_gsm.ModemGSM;
@@ -92,6 +93,14 @@ public class Main {
             new LinkedBlockingQueue<SuscriptorMessage>();
     private static BlockingQueue<InformationMessage<DatoAlmacenado>> datosSalientes =
             new LinkedBlockingQueue<InformationMessage<DatoAlmacenado>>();
+    private static BlockingQueue<InformationMessage<ResultadoEvaluacion>> resultadosSalientes =
+            new LinkedBlockingQueue<InformationMessage<ResultadoEvaluacion>>();
+    private static BlockingQueue<Modelo> modelosSubscripcion =
+            new LinkedBlockingQueue<Modelo>();
+    private static BlockingQueue<Collection<ResultadoEvaluacion>> salidasResultados =
+            new LinkedBlockingQueue<Collection<ResultadoEvaluacion>>();
+    private static BlockingQueue<SubscriberMessage> salidaSubscripExternasDatos =
+            new LinkedBlockingQueue<SubscriberMessage>();
 
     private static ObjectServer validDataServer;
     private static ObjectServer outlierDataServer;
@@ -155,12 +164,12 @@ public class Main {
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             idEc = Integer.valueOf(dato);
-            System.out.println("IdEc cargado\n");
+            System.out.println("IdEC cargado:" + idEc + "\n");
             
             linea = br.readLine();
             dato = getDatoFromLine(linea);
             numeroModem = Integer.valueOf(dato);
-            System.out.println("IdEc cargado\n");
+            System.out.println("IdEc modem cargado " + numeroModem+"\n");
             
             linea = br.readLine();
             dato = getDatoFromLine(linea);
@@ -207,6 +216,7 @@ public class Main {
 
         networkController.setEntrada(dataToNetwork);
         networkController.setEntradaRaise(dispatcherNetwork);
+        networkController.setModemSalida(entradaModem);
 
         validator.setEntradaDatos(dataToValidator);
         validator.setSalidaDatos(validatorToValidDataManager);
@@ -221,11 +231,12 @@ public class Main {
         subscriptorModelos.setEntradaRespuestaSubscriptor(respuestaSubs);
         subscriptorModelos.setSalidaSubscripcionesDatos(colaSubsDatos);
         subscriptorModelos.setSalidaSubscripcionesResultados(colaSubsResul);
-        // TODO: subscriptorModelos.setEntradaModelos(coooolaaa);
+        subscriptorModelos.setEntradaModelos(modelosSubscripcion);
 
         ecComunicator.setEntradaDatos(datosSalientes);
-        ecComunicator.setSalidaSubscripExternasDatos(colaSubsDatos);
-        ecComunicator.setEntradaRespSubscripExternasDatos(respuestaSubs);
+        ecComunicator.setEntradaResult(resultadosSalientes);
+        ecComunicator.setSalidaSubscripExternasDatos(salidaSubscripExternasDatos);
+        //ecComunicator.setEntradaRespSubscripExternasDatos();
 
         ecComunicator.setEntradaEnvioSubscripcionesDatos(colaSubsDatos);
         ecComunicator.setEntradaEnvioSubscripcionesResult(colaSubsResul);
@@ -234,6 +245,11 @@ public class Main {
 
         ecComunicator.setSalidaDatosExternos(validatorToValidDataManager);
         //TODO: setear colas de informacion
+
+        predictor.setSalidaSubscriptor(modelosSubscripcion);
+        predictor.setSalidaResultManager(salidasResultados);
+
+        System.out.println("[MAIN] Conecte los componentes");
 
     }
 
@@ -324,6 +340,14 @@ public class Main {
         new Thread(networkController).start();
         System.out.println("Se prendio el network controller");
 
+        new Thread(subscriptorModelos).start();
+        System.out.println("Se prendio el subscriptor de modelos");
+
+        new Thread(ecComunicator).start();
+        System.out.println("Se prendio el subscriptor de modelos");
+
+        //new Thread(dataSender).start();
+        //System.out.println("Se prendio el Data Sender");
 
         System.out.println("Se prendieron todos los componentes");
     }

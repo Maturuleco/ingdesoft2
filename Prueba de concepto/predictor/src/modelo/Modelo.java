@@ -82,6 +82,17 @@ public class Modelo {
         hash = 29 * hash + (this.requerimientosResultados != null ? this.requerimientosResultados.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        String modeloView = "";
+        modeloView += "ID modelo" + nombreModelo + "n";
+        modeloView += "Requerimientos:\n";
+        for (RequerimientoDato req : requerimientosDatos) {
+            modeloView += req.toString() + "\n";
+        }
+        return super.toString();
+    }
     
     
     

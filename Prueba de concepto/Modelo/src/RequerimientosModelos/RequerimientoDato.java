@@ -33,4 +33,9 @@ public class RequerimientoDato extends Requerimiento {
         return creador.crearPedidoDatos(idSubscriptor, this);
     }
 
+    @Override
+    public String toString() {
+        return "Requeriemiento: TR = " + trID + " Factor = " + factor.toString();
+    }
+
 }

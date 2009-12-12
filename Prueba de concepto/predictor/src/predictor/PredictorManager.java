@@ -38,7 +38,7 @@ public class PredictorManager implements Runnable {
         cargadorModelos = new CargadorModelo(path);
         selectorDatos = new SelectorDatos(server);
         evaluador = new Evaluador(selectorDatos, controladorAreas);
-        resultadosDAO.setServerResultados(serverResultados);
+        resultadosDAO = new ResultadosDAO(serverResultados);
     }
 
     public void setSalidaResultManager(BlockingQueue<Collection<ResultadoEvaluacion>> salidaResultManager) {
@@ -59,7 +59,7 @@ public class PredictorManager implements Runnable {
 
                 for (Modelo modelo : modelos) {
                     salidaSubscriptor.put(modelo);
-                    
+                    System.out.println("[PM] ENVIE MODELO" + modelo.getNombreModelo());
                     resultados = evaluador.evaluar(modelo);
                     analizador.analizar(modelo, resultados);
                     salidaResultManager.put(resultados);
