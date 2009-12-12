@@ -7,6 +7,7 @@ package SubscriptorModelos;
 
 import RequerimientosModelos.RequerimientoDato;
 import RequerimientosModelos.RequerimientoResultado;
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import java.util.concurrent.BlockingQueue;
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
