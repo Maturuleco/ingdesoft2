@@ -1,5 +1,5 @@
 ﻿idEc:02
-numeroModem:998
+numeroModem:902
 pathRelativoModelo:../Configuraciones/ModelosEc2
 archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos.xml
-trID:2#pos:Lat·54_E|Long·32_S#tipoSensores:H|P
+trID:2#pos:Lat·64_o|Long·13_S#tipoSensores:T|P

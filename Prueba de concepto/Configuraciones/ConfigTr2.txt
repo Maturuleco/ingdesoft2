@@ -1,6 +1,6 @@
 idTR:02
 numeroModem:002
-NumeroEstacionAsignada:999
+NumeroEstacionAsignada:902
 latitud:64_O
 longitud:13_S
 Sensor1:default|sensor5|01|1000

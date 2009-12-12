@@ -1,5 +1,5 @@
 <modelo.Modelo>
-  <nombreModelo>1</nombreModelo>
+  <nombreModelo>4</nombreModelo>
   <reglas class="linked-list">
     <modelo.Regla>
       <nombre>Regla 1</nombre>
@@ -214,25 +214,31 @@
   </reglas>
   <requerimientosDatos>
     <RequerimientosModelos.RequerimientoDato>
-      <EcProveedora>2</EcProveedora>
-      <trID>4</trID>
+      <EcProveedora>1</EcProveedora>
+      <trID>1</trID>
       <factor>humedad</factor>
     </RequerimientosModelos.RequerimientoDato>
     <RequerimientosModelos.RequerimientoDato>
-      <EcProveedora>2</EcProveedora>
+      <EcProveedora>1</EcProveedora>
       <trID>1</trID>
-      <factor>lluvias</factor>
-    </RequerimientosModelos.RequerimientoDato>
-    <RequerimientosModelos.RequerimientoDato>
-      <EcProveedora>2</EcProveedora>
-      <trID>3</trID>
       <factor>temperatura</factor>
     </RequerimientosModelos.RequerimientoDato>
-    <RequerimientosModelos.RequerimientoDato>
-      <EcProveedora>2</EcProveedora>
-      <trID>2</trID>
-      <factor>lluvias</factor>
-    </RequerimientosModelos.RequerimientoDato>
   </requerimientosDatos>
-  <requerimientosResultados/>
+  <requerimientosResultados>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>2</modelo>
+      <trID>1</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>1</modelo>
+      <trID>1</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>3</modelo>
+      <trID>1</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+  </requerimientosResultados>
 </modelo.Modelo>
