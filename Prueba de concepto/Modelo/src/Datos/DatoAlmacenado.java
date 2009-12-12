@@ -5,7 +5,8 @@
 
 package Datos;
 
-import java.io.Serializable;
+import RequerimientosModelos.Requerimiento;
+import RequerimientosModelos.RequerimientoDato;
 import java.util.Date;
 
 /**
@@ -52,7 +53,7 @@ public class DatoAlmacenado extends DatoSensado {
     }
 
     public RequerimientoDato obtenerRequerimiento(){
-        return new Requerimiento(null, idTR,)
+        return new RequerimientoDato(null, idTR, factor);
     }
 
 }

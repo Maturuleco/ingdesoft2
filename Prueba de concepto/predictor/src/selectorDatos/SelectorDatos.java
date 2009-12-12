@@ -11,7 +11,6 @@ import com.db4o.ext.DatabaseClosedException;
 import com.db4o.ext.DatabaseReadOnlyException;
 import com.db4o.ext.Db4oIOException;
 import com.db4o.query.Predicate;
-import com.db4o.query.Query;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -28,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import Datos.DatoAlmacenado;
 import Datos.FactorClimatico;
+import RequerimientosModelos.RequerimientoDato;
+import java.util.Set;
 
 /**
  *
@@ -69,6 +70,11 @@ public class SelectorDatos {
         } finally {
             cerrarCliente();
         }
+    }
+
+    public List<DatoAlmacenado> seleccionar(Set<RequerimientoDato> requerimientos){
+        Predicate<DatoAlmacenado> predicado = predicadoDatosRequerimientos(requerimientos);
+        return select(predicado);
     }
 
     public List<DatoAlmacenado> seleccionar(Collection<Integer> idTRs, Collection<FactorClimatico> factores, Integer segundos) {
@@ -124,14 +130,16 @@ public class SelectorDatos {
         return resultado;
     }
 
-    private Predicate<DatoAlmacenado> predicadoDatosRequerimientos(){
+    private Predicate<DatoAlmacenado> predicadoDatosRequerimientos(final Set<RequerimientoDato> requerimientos){
         return new Predicate<DatoAlmacenado>(){
             @Override
-            public boolean match(DatoAlmacenado dato)
-        }
+            public boolean match(DatoAlmacenado dato){
+                return requerimientos.contains(dato.obtenerRequerimiento());
+            }
+        };
     }
 
-    private Predicate<DatoAlmacenado> predicadoDatosTodos(final Set<RequerimientoDato> requerimientos) {
+    private Predicate<DatoAlmacenado> predicadoDatosTodos() {
         return new Predicate<DatoAlmacenado>() {
 
             @Override

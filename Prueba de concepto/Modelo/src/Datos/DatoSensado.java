@@ -13,11 +13,11 @@ import java.util.Date;
  * @author Santiago Avendaño
  */
 public class DatoSensado{
-    private Integer idSensor;
-    private Date timeStamp;
+    protected Integer idSensor;
+    protected Date timeStamp;
 
-    private FactorClimatico factor;
-    private Float valor;
+    protected FactorClimatico factor;
+    protected Float valor;
 
     public DatoSensado(Integer idSensor, Date timeStamp, FactorClimatico factor, Float valor) {
         this.idSensor = idSensor;

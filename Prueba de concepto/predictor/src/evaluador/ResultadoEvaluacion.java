@@ -5,6 +5,7 @@
 
 package evaluador;
 
+import RequerimientosModelos.RequerimientoResultado;
 import java.util.Date;
 
 
@@ -81,5 +82,7 @@ public class ResultadoEvaluacion {
         return res;
     }
 
-
+    public RequerimientoResultado obtenerRequerimiento(){
+        return new RequerimientoResultado(null, idModelo, idTR);
+    }
 }
