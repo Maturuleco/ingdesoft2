@@ -2,8 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package publishsubscriber;
+
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
 import java.util.concurrent.BlockingQueue;
@@ -14,7 +14,8 @@ import java.util.logging.Logger;
  *
  * @author mar
  */
-public abstract class Subscriptor{
+public abstract class Subscriptor {
+
     private BlockingQueue<? super SubscriberMessage> salida;
     private BlockingQueue<? extends SubscriptionAcceptedMessage> entrada;
 
@@ -29,21 +30,25 @@ public abstract class Subscriptor{
         this.salida = salida;
     }
 
-    public void subscribe (SubscriberMessage mensaje) {
-        while (!LlegueRespuesta(mensaje)){
+    public void subscribe(SubscriberMessage mensaje) {
+        while (!LlegueRespuesta(mensaje)) {
             try {
                 Thread.sleep(1000);
-                salida.add(mensaje);
+                salida.put(mensaje);
+                System.out.println("[S]ENVIE PEDIDO SUSCRIPCION");
             } catch (InterruptedException ex) {
                 Logger.getLogger(Subscriptor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
 
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
-        return mensaje.equals(respuesta.getMensajeAceptado());
-        
+        if (respuesta != null) {
+            return mensaje.equals(respuesta.getMensajeAceptado());
+        } else{
+            return false;
+        }
     }
 }

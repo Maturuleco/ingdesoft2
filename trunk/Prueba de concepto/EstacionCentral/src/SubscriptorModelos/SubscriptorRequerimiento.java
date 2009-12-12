@@ -27,6 +27,7 @@ public class SubscriptorRequerimiento<T extends Requerimiento> extends Subscript
         for (T req : requerimientos) {
             if (! requerimientosSubscriptos.contains(req)) {
                 CreadorPedidosSubscripciones cp = new CreadorPedidosSubscripciones();
+                System.out.println("[SR]Me suscribo");
                 subscribe(req.crearSubscripcion(estacioncentral.Main.idEc , cp));
             }
         }

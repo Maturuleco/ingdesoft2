@@ -11,6 +11,7 @@ import SubscripcionesEc.MensajePedidoSubscripcionResultados;
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
 import com.thoughtworks.xstream.XStream;
+import evaluador.ResultadoEvaluacion;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,22 +44,22 @@ public class EcComunicator implements Runnable {
     private ServerSubscripcones<MensajePedidoSubscripcionResultados> serverSubsResult;
 
     private BlockingQueue<SubscriberMessage> entradaEnvioSubscripcionesDatos;
-//    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesDatos;
+    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesDatos;
 
     private BlockingQueue<SubscriberMessage> entradaEnvioSubscripcionesResult;
-//    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesResult;
+    private BlockingQueue<SubscriptionAcceptedMessage> salidaRespSubscripcionesResult;
 
     private BlockingQueue<InformationMessage<DatoAlmacenado>> entradaDatos;
-    private BlockingQueue<InformationMessage> entradaResult;
+    private BlockingQueue<InformationMessage<ResultadoEvaluacion>> entradaResult;
 
-//    private BlockingQueue<InformationMessage> salidaDatosExternos;
-//    private BlockingQueue<InformationMessage> salidaResultExternos;
+    private BlockingQueue<InformationMessage> salidaDatosExternos;
+    private BlockingQueue<InformationMessage> salidaResultExternos;
 
-//    private BlockingQueue<SubscriberMessage> salidaSubscripExternasDatos;
-//    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasDatos;
+    private BlockingQueue<SubscriberMessage> salidaSubscripExternasDatos;
+    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasDatos;
 
-//    private BlockingQueue<SubscriberMessage> salidaSubscripExternasResult;
-//    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasResult;
+    private BlockingQueue<SubscriberMessage> salidaSubscripExternasResult;
+    private BlockingQueue<SubscriptionAcceptedMessage> entradaRespSubscripExternasResult;
 
     /* Idea: El EcComunicator va a tener asignados 8 puertos, 4 de envio y 4 de recepción,
      * Los 4 de envío se implementan con Clientes, y los 4 de Recepción con Servers
@@ -95,7 +96,7 @@ public class EcComunicator implements Runnable {
         this.entradaDatos = entradaInformacion;
     }
 
-    public void setEntradaResult(BlockingQueue<InformationMessage> entradaResult) {
+    public void setEntradaResult(BlockingQueue<InformationMessage<ResultadoEvaluacion>> entradaResult) {
         this.entradaResult = entradaResult;
     }
     // Subscripciones Internas :
@@ -194,6 +195,7 @@ public class EcComunicator implements Runnable {
                 procesarResult(result);
             } else if (entradaEnvioSubscripcionesDatos.size() > 0) {
                 SubscriberMessage subscripcion = entradaEnvioSubscripcionesDatos.poll();
+                System.out.println("[EC]RECIBI MENSAJE SUSCRIPCION");
                 procesarSubscripcionDatos(subscripcion);
             } else if (entradaEnvioSubscripcionesResult.size() > 0) {
                 SubscriberMessage subscripcion = entradaEnvioSubscripcionesResult.poll();

@@ -72,7 +72,7 @@ public class DataReceiver extends Thread{
     }
 
     public void enviarNetworkController(HeartbeatMessege m) {
-        System.out.println("El Data receiver manda al Network: HeartBeat de tr "+m.getIdTR().toString());
+//        System.out.println("El Data receiver manda al Network: HeartBeat de tr "+m.getIdTR().toString());
         salidaNetworkController.add(m);
     }
 
