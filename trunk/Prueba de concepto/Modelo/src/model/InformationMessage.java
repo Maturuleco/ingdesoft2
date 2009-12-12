@@ -5,43 +5,35 @@
 
 package model;
 
-import SubscripcionesEc.SubscriberMessage;
+import java.io.Serializable;
 
 /**
  *
  * @author mar
  */
-public class InformationMessage implements SuscriptorMessage{
+public class InformationMessage<T> implements Serializable {
     Integer receptor;
-    InformationMessage mensaje;
+    T mensaje;
 
-    public InformationMessage getMensaje() {
+    public InformationMessage(Integer receptor, T mensaje) {
+        this.receptor = receptor;
+        this.mensaje = mensaje;
+    }
+
+    public T getMensaje() {
         return mensaje;
     }
 
-    public void setMensaje(InformationMessage mensaje) {
-        this.mensaje = mensaje;
-    }
+//    public void setMensaje(InformationMessage mensaje) {
+//        this.mensaje = mensaje;
+//    }
 
     public Integer getReceptor() {
         return receptor;
     }
 
-    public void setReceptor(Integer receptor) {
-        this.receptor = receptor;
-    }
-
-    public InformationMessage(Integer receptor, InformationMessage mensaje) {
-        this.receptor = receptor;
-        this.mensaje = mensaje;
-    }
-
-    public boolean subscripcionAceptada() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public SubscriberMessage getMessage() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+//    public void setReceptor(Integer receptor) {
+//        this.receptor = receptor;
+//    }
 
 }
