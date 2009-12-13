@@ -38,11 +38,13 @@ public abstract class NetworkServer<TipoMensajeEntrada extends Serializable, Tip
 
 
     public void esperarYAtenderCliente(){
+        InputStream entrada = null;
+        ObjectInputStream entradaObjetos = null;
         try {
             socketCliente = socket.accept();
 
-            InputStream entrada = socketCliente.getInputStream();
-            ObjectInputStream entradaObjetos = new ObjectInputStream (entrada);
+            entrada = socketCliente.getInputStream();
+            entradaObjetos = new ObjectInputStream (entrada);
 
             Object obj = entradaObjetos.readObject();
             TipoMensajeEntrada mensajeRecibido = (TipoMensajeEntrada) obj;
@@ -51,23 +53,31 @@ public abstract class NetworkServer<TipoMensajeEntrada extends Serializable, Tip
             TipoMensajeSalida respuesta = generarRespuesta(mensajeRecibido);
 
             if (respuesta != null)
-                enviarRespuesta(respuesta);
-
+                enviarRespuesta(respuesta);           
         } catch (ClassCastException ex) {
                 Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                entrada.close();
+                entradaObjetos.close();
+   //             socketCliente.close();
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }
 
     protected void enviarRespuesta(TipoMensajeSalida respuesta){
         OutputStream salida = null;
+        ObjectOutputStream salidaObjetos = null;
         try {
             salida = socketCliente.getOutputStream();
-            ObjectOutputStream salidaObjetos = new ObjectOutputStream(salida);
+            salidaObjetos = new ObjectOutputStream(salida);
 
             salidaObjetos.writeObject(respuesta);
 
@@ -76,6 +86,7 @@ public abstract class NetworkServer<TipoMensajeEntrada extends Serializable, Tip
         } finally {
             try {
                 salida.close();
+                salidaObjetos.close();
             } catch (IOException ex) {
                 Logger.getLogger(NetworkServer.class.getName()).log(Level.SEVERE, null, ex);
             }

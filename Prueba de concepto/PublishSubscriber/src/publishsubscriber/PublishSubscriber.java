@@ -91,7 +91,7 @@ public abstract class PublishSubscriber<T> implements Runnable {
     private void enviarInfo() {
         T mensaje = entradaInfo.poll();
         if (mensaje != null) {
-            System.out.println("El Publish Subscriber recibe informacion para enviar");
+            System.out.println("El Publish Subscriber recibe informacion para enviar: "+mensaje.toString());
             for (Suscripcion<T> s : suscripciones){
                 if (s.seCorresponde(mensaje)){
                     Integer receptor = s.getIdSuscriptor();
