@@ -35,7 +35,9 @@ public class ServerSubscripcones<T extends SubscriberMessage> extends NetworkSer
 
     
     public void run() {
-        super.esperarYAtenderCliente();
+        while(true) {
+            super.esperarYAtenderCliente();
+        }
     }
     @Override
     protected void procesarMensaje(T mensaje) {
