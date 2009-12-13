@@ -160,11 +160,11 @@
     </entry>
     <entry>
       <int>2</int>
-      <string>192.168.1.100</string>
+      <string>192.168.1.102</string>
     </entry>
     <entry>
       <int>1</int>
-      <string>192.168.1.102</string>
+      <string>192.168.1.100</string>
     </entry>
   </hosts>
 </EcComunicator.ControladorPuertos>
