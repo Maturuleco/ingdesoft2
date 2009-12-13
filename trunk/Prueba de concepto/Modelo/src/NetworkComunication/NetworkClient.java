@@ -53,14 +53,13 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
     }
     
     protected boolean enviarMensaje( TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
-        System.out.println("Se trata de enviar mensaje por la red desde un cliente:\n"+mensajeDeEnvio.toString());
+        System.out.println("Se trata de enviar mensaje por la red desde un cliente");
         Boolean mensajeEnviado = false;
         if (conectar()) {
             OutputStream salida = null;
-            ObjectOutputStream salidaObjetos = null;
             try {
                 salida = socket.getOutputStream();
-                salidaObjetos = new ObjectOutputStream(salida);
+                ObjectOutputStream salidaObjetos = new ObjectOutputStream(salida);
 
                 salidaObjetos.writeObject(mensajeDeEnvio);
 
@@ -72,9 +71,7 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
                 Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
-                    socket.close();
                     salida.close();
-                    salidaObjetos.close();
                 } catch (IOException ex) {
                     Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -85,10 +82,9 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
 
     private void esperarRespuesta() {
         InputStream entrada = null;
-        ObjectInputStream entradaObjetos = null;
         try {
             entrada = socket.getInputStream();
-            entradaObjetos = new ObjectInputStream(entrada);
+            ObjectInputStream entradaObjetos = new ObjectInputStream(entrada);
             // Validar que el readObj espera hasta que le envian la respuesta
             Object obj = entradaObjetos.readObject();
             TipoMensajeDeRespuesta mensajeRecibido = (TipoMensajeDeRespuesta) obj;
@@ -101,7 +97,6 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
         } finally {
             try {
                 entrada.close();
-                entradaObjetos.close();
             } catch (IOException ex) {
                 Logger.getLogger(NetworkClient.class.getName()).log(Level.SEVERE, null, ex);
             }
