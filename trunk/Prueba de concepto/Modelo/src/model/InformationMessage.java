@@ -35,5 +35,7 @@ public class InformationMessage<T> implements Serializable {
 //    public void setReceptor(Integer receptor) {
 //        this.receptor = receptor;
 //    }
-
+    public String toString() {
+        return mensaje.toString();
+    }
 }

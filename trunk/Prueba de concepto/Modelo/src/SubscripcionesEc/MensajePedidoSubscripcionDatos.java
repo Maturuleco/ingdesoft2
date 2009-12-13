@@ -57,11 +57,9 @@ public class MensajePedidoSubscripcionDatos extends SubscriberMessage{
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        return hash;
+    public String toString() {
+        return tr+factorClimatico.toString();
     }
-
 
 
 }
