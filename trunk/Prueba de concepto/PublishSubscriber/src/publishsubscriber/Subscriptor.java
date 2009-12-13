@@ -46,7 +46,7 @@ public abstract class Subscriptor {
     private boolean LlegueRespuesta(SubscriberMessage mensaje) {
         SubscriptionAcceptedMessage respuesta = entrada.poll();
         if (respuesta != null) {
-            System.out.println("[S] Llega respuesta de subscripcion al subscriptor");
+            System.out.println("[S] Llega respuesta de subscripcion al subscriptor: "+(mensaje.equals(respuesta.getMensajeAceptado())));
             return mensaje.equals(respuesta.getMensajeAceptado());
         } else{
             return false;

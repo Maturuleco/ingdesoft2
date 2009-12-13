@@ -33,4 +33,31 @@ public class MensajePedidoSubscripcionResultados extends SubscriberMessage{
         return trID;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MensajePedidoSubscripcionResultados other = (MensajePedidoSubscripcionResultados) obj;
+        if (this.timeStamp != other.timeStamp && (this.timeStamp == null || !this.timeStamp.equals(other.timeStamp))) {
+            return false;
+        }
+        if (this.modelo != other.modelo && (this.modelo == null || !this.modelo.equals(other.modelo))) {
+            return false;
+        }
+        if (this.trID != other.trID && (this.trID == null || !this.trID.equals(other.trID))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
 }

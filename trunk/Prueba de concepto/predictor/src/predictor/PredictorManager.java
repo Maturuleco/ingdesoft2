@@ -62,7 +62,7 @@ public class PredictorManager implements Runnable {
 
                 for (Modelo modelo : modelos) {
                     salidaSubscriptor.put(modelo);
-                    System.out.println("[PM] ENVIE MODELO" + modelo.getNombreModelo());
+//                    System.out.println("[PM] ENVIE MODELO" + modelo.getNombreModelo());
                     resultados = evaluador.evaluar(modelo);
                     resultadosExternos = resultadosDAO.seleccionar(modelo.getRequerimientosResultados());
                     resultados.addAll(resultadosExternos);

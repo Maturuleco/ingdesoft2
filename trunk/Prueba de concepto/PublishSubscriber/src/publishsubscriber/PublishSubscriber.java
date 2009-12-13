@@ -5,6 +5,7 @@
 
 package publishsubscriber;
 
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
 import java.util.HashSet;
@@ -32,7 +33,6 @@ public abstract class PublishSubscriber<T> implements Runnable {
 
     @Override
     public void run(){
-        System.out.println("PS prendido----------");
         while (true) {
             if (! sensarEntradaSubscripciones() ) {
                 try {
@@ -78,7 +78,9 @@ public abstract class PublishSubscriber<T> implements Runnable {
     
     private void enviarRespuesta(SubscriptionAcceptedMessage respuesta){
         salidaAceptacionSubs.add(respuesta);
-        System.out.println("El Publish Subscriber acepta una suscripcion");
+        System.out.println("El Publish Subscriber acepta una suscripcion: ecProveedora: "+respuesta.getMensajeAceptado().getEcProovedora()+" IdSuscriptor: "+respuesta.getMensajeAceptado().getIdSuscriptor());
+        System.out.println(" idTr: "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getTR()+" Factor: "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getFactorClimatico());
+
     }
 
     private void enviarRespuesta(InformationMessage<T> info){
