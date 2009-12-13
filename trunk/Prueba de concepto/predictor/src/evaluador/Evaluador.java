@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import Datos.DatoAlmacenado;
+import RequerimientosModelos.RequerimientoDato;
 import modelo.Modelo;
 import particionador.ParticionadorPorCantidad;
 import predictor.Predictor;
@@ -42,11 +43,9 @@ public class Evaluador {
         List<DatoAlmacenado> datosTotales;
         Map<Integer, List<DatoAlmacenado>> datosTotalesAgrupadosPorTR;
         List<Predictor> predictores;
-        Set<Integer> trsSeleccionadas;
+        Set<RequerimientoDato> requerimientos = modelo.getRequerimientosDatos();
 
-        
-        trsSeleccionadas = controladorRequerimientos.buscarTerminalesRemotas(modelo.getRequerimientosDatos());
-        datosTotales = selectorDatos.seleccionar(trsSeleccionadas, null, 10);
+        datosTotales = selectorDatos.seleccionar(requerimientos);
         datosTotalesAgrupadosPorTR = selectorDatos.agruparDatosPorTR(datosTotales);
         for (Integer idTR : datosTotalesAgrupadosPorTR.keySet()) {
             predictores = predictorFactory.obtenerPredictores(modelo, datosTotalesAgrupadosPorTR.get(idTR));

@@ -12,6 +12,7 @@ import com.db4o.ObjectServer;
 import evaluador.Evaluador;
 import evaluador.ResultadoEvaluacion;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.concurrent.BlockingQueue;
 import modelo.Modelo;
 import selectorDatos.SelectorDatos;
@@ -53,8 +54,9 @@ public class PredictorManager implements Runnable {
     @Override
     public void run() {
         Collection<Modelo> modelos;
-        Collection<ResultadoEvaluacion> resultados;
+        Collection<ResultadoEvaluacion> resultadosInternos;
         Collection<ResultadoEvaluacion> resultadosExternos;
+        Collection<ResultadoEvaluacion> resultadosTotales = new HashSet<ResultadoEvaluacion>();
         Prediccion prediccion;
         while (keepTrying) {
             try {
@@ -62,12 +64,13 @@ public class PredictorManager implements Runnable {
 
                 for (Modelo modelo : modelos) {
                     salidaSubscriptor.put(modelo);
-//                    System.out.println("[PM] ENVIE MODELO" + modelo.getNombreModelo());
-                    resultados = evaluador.evaluar(modelo);
+                    resultadosInternos = evaluador.evaluar(modelo);
                     resultadosExternos = resultadosDAO.seleccionar(modelo.getRequerimientosResultados());
-                    resultados.addAll(resultadosExternos);
-                    prediccion = analizador.analizar(modelo, resultados);
-                    salidaResultManager.put(resultados);
+                    resultadosTotales.addAll(resultadosInternos);
+                    resultadosTotales.addAll(resultadosExternos);
+                    prediccion = analizador.analizar(modelo, resultadosTotales);
+                    salidaResultManager.put(resultadosTotales);
+                    resultadosTotales.clear();
                     if (!prediccion.equals(Prediccion.PREDICCION_NULA)){
                         System.out.println(prediccion.toString());
                     }
