@@ -5,6 +5,7 @@
 
 package Datos;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author Santiago Avendaño
  */
-public class DatoSensado{
+public class DatoSensado {
     protected Integer idSensor;
     protected Date timeStamp;
 
@@ -24,6 +25,9 @@ public class DatoSensado{
         this.timeStamp = timeStamp;
         this.factor = factor;
         this.valor = valor;
+    }
+
+    public DatoSensado() {
     }
 
     public static DatoSensado parse(String dato) throws ParseException{
