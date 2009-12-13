@@ -29,7 +29,9 @@ public class ServerInformacion<T> extends NetworkServer<InformationMessage<T>, I
 
     
     public void run() {
-        super.esperarYAtenderCliente();
+        while (true) {
+            super.esperarYAtenderCliente();
+        }
     }
     
     @Override
