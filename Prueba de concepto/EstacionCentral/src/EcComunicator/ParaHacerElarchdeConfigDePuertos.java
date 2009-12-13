@@ -19,8 +19,8 @@ public class ParaHacerElarchdeConfigDePuertos {
     public static void main(String[] args) {
         ControladorPuertos controlador = new ControladorPuertos();
         
-        controlador.addHost(01, "localhost");
-        controlador.addHost(02, "localhost");
+        controlador.addHost(01, "192.168.1.102");
+        controlador.addHost(02, "192.168.1.100");
         controlador.addHost(03, "localhost");
         controlador.addHost(04, "localhost");
         
