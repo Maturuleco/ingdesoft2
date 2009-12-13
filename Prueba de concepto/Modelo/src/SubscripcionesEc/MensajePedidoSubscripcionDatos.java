@@ -35,4 +35,33 @@ public class MensajePedidoSubscripcionDatos extends SubscriberMessage{
         return timeStamp;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MensajePedidoSubscripcionDatos other = (MensajePedidoSubscripcionDatos) obj;
+        if (this.timeStamp != other.timeStamp && (this.timeStamp == null || !this.timeStamp.equals(other.timeStamp))) {
+            return false;
+        }
+        if (this.tr != other.tr && (this.tr == null || !this.tr.equals(other.tr))) {
+            return false;
+        }
+        if (this.factorClimatico != other.factorClimatico) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+
+
 }

@@ -97,7 +97,7 @@ public class Modelo {
         for (RequerimientoDato req : requerimientosDatos) {
             modeloView += req.toString() + "\n";
         }
-        return super.toString();
+        return modeloView;
     }
     
     

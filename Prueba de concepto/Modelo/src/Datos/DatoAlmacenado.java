@@ -5,15 +5,15 @@
 
 package Datos;
 
-import RequerimientosModelos.Requerimiento;
 import RequerimientosModelos.RequerimientoDato;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Santiago Avendaño
  */
-public class DatoAlmacenado extends DatoSensado {
+public class DatoAlmacenado extends DatoSensado implements Serializable {
     private Integer idTR;
     private DataSource dataSource;
 
@@ -21,6 +21,10 @@ public class DatoAlmacenado extends DatoSensado {
         super(idSensor, timeStamp, factor, valor);
         this.idTR = idTR;
         this.dataSource = dataSource;
+    }
+
+    public DatoAlmacenado(Integer idSensor, Date timeStamp, FactorClimatico factor, Float valor) {
+        super(idSensor, timeStamp, factor, valor);
     }
 
     public DataSource getDataSource() {

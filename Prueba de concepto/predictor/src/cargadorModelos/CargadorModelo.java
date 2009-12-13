@@ -13,8 +13,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,41 +43,41 @@ public class CargadorModelo {
     }
 
     public Collection<Modelo> getModelos() {
-        Collection<Modelo> modelos = new LinkedList<Modelo>();
-
-        Modelo modelo1 = new Modelo(1, "se detectaron vientos fuertes", getReglas1());
-        Modelo modelo2 = new Modelo(2,  "se detectó frio polar", getReglas2());
-
-        modelo1.setRequerimientosDatos(getReqDato1());
-        modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());
-        modelo2.setRequerimientosDatos(new HashSet<RequerimientoDato>());
-        modelo2.setRequerimientosResultados(getReqResult2());
-
-        modelos.add(modelo1);
-        modelos.add(modelo2);
-//        File folder = new File(path);
-//        FileFilter ff = new FileFilter() {
+//        Collection<Modelo> modelos = new LinkedList<Modelo>();
 //
-//            public boolean accept(File file) {
-//                String path = file.getPath();
-//                String extencion = path.split("\\.")[(path.split("\\.").length)-1];
-//                return file.isFile() && extencion.equalsIgnoreCase("xml");
-//            }
-//        };
+//        Modelo modelo1 = new Modelo(1, "se detectaron vientos fuertes", getReglas1());
+//        Modelo modelo2 = new Modelo(2,  "se detectó frio polar", getReglas2());
 //
-//        File[] files = folder.listFiles(ff);
-//        List<Modelo> modelos = new LinkedList<Modelo>();
+//        modelo1.setRequerimientosDatos(getReqDato1());
+//        modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());
+//        modelo2.setRequerimientosDatos(new HashSet<RequerimientoDato>());
+//        modelo2.setRequerimientosResultados(getReqResult2());
 //
-//        if (files != null) {
-//            for (int j = 0; j < files.length; j++) {
-//                File file = files[j];
-//                Modelo m = getModelo(file);
-//                System.out.println(m.toString());
-//                if (m != null) {
-//                    modelos.add(m);
-//                }
-//            }
-//        }
+//        modelos.add(modelo1);
+//        modelos.add(modelo2);
+        File folder = new File(path);
+        FileFilter ff = new FileFilter() {
+
+            public boolean accept(File file) {
+                String path = file.getPath();
+                String extencion = path.split("\\.")[(path.split("\\.").length)-1];
+                return file.isFile() && extencion.equalsIgnoreCase("xml");
+            }
+        };
+
+        File[] files = folder.listFiles(ff);
+        List<Modelo> modelos = new LinkedList<Modelo>();
+
+        if (files != null) {
+            for (int j = 0; j < files.length; j++) {
+                File file = files[j];
+                Modelo m = getModelo(file);
+//                System.out.println("Se carga el modelo:\n"+m.toString());
+                if (m != null) {
+                    modelos.add(m);
+                }
+            }
+        }
         return modelos;
     }
 

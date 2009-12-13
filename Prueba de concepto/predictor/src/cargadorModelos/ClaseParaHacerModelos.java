@@ -29,7 +29,7 @@ public class ClaseParaHacerModelos {
      */
     public static void main(String[] args) {
 
-        Modelo modelo = new Modelo(4, getReglas1());
+        Modelo modelo = new Modelo(4,"", getReglas1());
 
         modelo.setRequerimientosDatos(getReqDato());
         modelo.setRequerimientosResultados(getReqResult());
@@ -67,8 +67,8 @@ public class ClaseParaHacerModelos {
 
     private static Set<RequerimientoDato> getReqDato() {
         Set<RequerimientoDato> reqs = new HashSet<RequerimientoDato>();
-        reqs.add(new RequerimientoDato(01, 01, FactorClimatico.humedad));
         reqs.add(new RequerimientoDato(01, 01, FactorClimatico.temperatura));
+        reqs.add(new RequerimientoDato(01, 01, FactorClimatico.humedad));
         return reqs;
     }
 

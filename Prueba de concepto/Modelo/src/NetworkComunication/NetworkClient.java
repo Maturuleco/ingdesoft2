@@ -52,8 +52,8 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
         return enviarMensaje(mensajeDeEnvio,conRespuesta);
     }
     
-    
     protected boolean enviarMensaje( TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
+        System.out.println("Se trata de enviar mensaje por la red desde un cliente");
         Boolean mensajeEnviado = false;
         if (conectar()) {
             OutputStream salida = null;
