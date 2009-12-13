@@ -61,8 +61,8 @@ public class Main {
             cargador1 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.temperatura, GeneradorDatosOrdenados.Orden.creciente, -10.0f, 1.0f, 30.0f, 1, 1));
             cargador2 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.temperatura, GeneradorDatosOrdenados.Orden.decreciente, -10.0f, 1.0f, -30.0f, 3, 1));
             cargador3 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.humedad, GeneradorDatosOrdenados.Orden.decreciente, 50.0f, 1.0f, 30.0f, 3, 1));
-            cargadorRes1 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 1,1));
-            cargadorRes2 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 2,4));
+            cargadorRes1 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 1, 1));
+            cargadorRes2 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 2, 4));
         } catch (InstantiationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,16 +72,16 @@ public class Main {
         System.out.println("Prendiendo cargadores");
         new Thread(predictor).start();
         System.out.println("Se prendio el predictor");
-//        new Thread(cargador1).start();
-//        System.out.println("Se prendio el cargador1");
-//        new Thread(cargador2).start();
-//        System.out.println("Se prendio el cargador2");
-//        new Thread(cargador3).start();
-//        System.out.println("Se prendio el cargador3");
-          new Thread(cargadorRes1).start();
-          System.out.println("Se prendio el cargador de resultados 1");
-          new Thread(cargadorRes2).start();
-          System.out.println("Se prendio el cargador de resultados 2");
-          System.out.println("Se prendieron los cargadores");
+        new Thread(cargador1).start();
+        System.out.println("Se prendio el cargador1");
+        new Thread(cargador2).start();
+        System.out.println("Se prendio el cargador2");
+        new Thread(cargador3).start();
+        System.out.println("Se prendio el cargador3");
+        new Thread(cargadorRes1).start();
+        System.out.println("Se prendio el cargador de resultados 1");
+        new Thread(cargadorRes2).start();
+        System.out.println("Se prendio el cargador de resultados 2");
+        System.out.println("Se prendieron los cargadores");
     }
 }
