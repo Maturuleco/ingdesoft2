@@ -53,7 +53,7 @@ public abstract class Subscriptor {
                 boolean esAceptado = mensaje.equals(respuesta.getMensajeAceptado());
                 mensajesAceptados.put(respuesta.getMensajeAceptado());
                 if (esAceptado) {
-                    System.out.println("[S] Llega respuesta de subscripcion al subscriptor");
+                    System.out.println("[S] Llega respuesta de subscripcion al subscriptor: "+mensaje.toString());
                 }
                 res = esAceptado;
             } catch (InterruptedException ex) {
