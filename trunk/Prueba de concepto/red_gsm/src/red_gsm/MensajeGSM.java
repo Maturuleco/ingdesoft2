@@ -87,18 +87,18 @@ public class MensajeGSM {
 
     public static MensajeGSM parse(String msj) throws ParseException {
         String[] partes = msj.split(";");
+        MensajeGSM mensaje = null;
+        if (partes.length > 3){
+            //throw new ParseException(msj, 0);
 
-        if (partes.length < 4)
-            throw new ParseException(msj, 0);
+            Integer origen = Integer.valueOf(partes[0]);
+            Integer destino = Integer.valueOf(partes[1]);
+            Date fecha = new Date(Long.valueOf(partes[2]));
+            String cuerpo = partes[3];
 
-        Integer origen = Integer.valueOf(partes[0]);
-        Integer destino = Integer.valueOf(partes[1]);
-        Date fecha = new Date(Long.valueOf(partes[2]));
-        String cuerpo = partes[3];
-
-        MensajeGSM mensaje = new MensajeGSM(origen, destino, cuerpo);
-        mensaje.setFecha(fecha);
-        
+            mensaje = new MensajeGSM(origen, destino, cuerpo);
+            mensaje.setFecha(fecha);
+        }
         return mensaje;
     }
 }
