@@ -1,0 +1,5 @@
+﻿idEc:03
+numeroModem:903
+pathRelativoModelo:../Configuraciones/ModelosEc3
+archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos.xml
+trID:1#pos:Lat·74_E|Long·3_S#tipoSensores:T|H

@@ -1,0 +1,6 @@
+﻿idEc:04
+numeroModem:904
+pathRelativoModelo:../Configuraciones/ModelosEc4
+archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos.xml
+trID:4#pos:Lat·74_E|Long·3_S#tipoSensores:H
+trID:5#pos:Lat·70_E|Long·3_S#tipoSensores:L

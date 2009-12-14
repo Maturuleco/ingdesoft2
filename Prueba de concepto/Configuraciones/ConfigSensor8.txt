@@ -1,4 +1,4 @@
 Nombre:08
-FactorClimatico:T
+FactorClimatico:H
 Frecuencia:8000
 Directorio:sensor8
