@@ -62,7 +62,6 @@ public abstract class PublishSubscriber<T> implements Runnable {
     private boolean sensarEntradaSubscripciones() {
         SubscriberMessage mensaje = entradaSuscripciones.poll();
         if (mensaje != null) {
-            System.out.println("[PS] recibe un pedido de suscripcion");
             Suscripcion suscripcion = crearSuscripcion(mensaje);
             suscripciones.add(suscripcion);
             SubscriptionAcceptedMessage respuesta = new SubscriptionAcceptedMessage(mensaje);
@@ -83,13 +82,12 @@ public abstract class PublishSubscriber<T> implements Runnable {
 
     private void enviarRespuesta(InformationMessage<T> info){
         salidaInfo.add(info);
-        System.out.println("[PS] manda un dato: " + info.getMensaje().toString());
+        //System.out.println("[PS] manda un dato: " + info.getMensaje().toString());
     }
 
     private void enviarInfo() {
         T mensaje = entradaInfo.poll();
         if (mensaje != null) {
-            System.out.println("[PS] recibe informacion para enviar");
             for (Suscripcion<T> s : suscripciones){
                 if (s.seCorresponde(mensaje)){
                     Integer receptor = s.getIdSuscriptor();
