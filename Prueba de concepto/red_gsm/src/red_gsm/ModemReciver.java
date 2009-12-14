@@ -43,25 +43,33 @@ public class ModemReciver extends Thread {
         }
         for (int j = 0; j < longitud; j++) {
             File file = files[j];
-            //System.out.println( getName()+ "D:" + file.getName());
+            //System.out.println( " ----[MR]" + file.getName());
             if (file.canRead()) {
                 FileReader fr = null;
+
                 try {
                     fr = new FileReader(file);
+                }catch (FileNotFoundException ex){
+                    //System.out.println( " ----[MR] no pudo enviar el mensaje: " + file.getName());
+                }
+                
+                try{
+                     if( fr != null){
+                        BufferedReader br = new BufferedReader(fr, bufferSize);
+                        String texto = "";
+                        String linea;
+                        while ((linea = br.readLine()) != null) {
+                            texto += linea;
+                        }
 
-                    BufferedReader br = new BufferedReader(fr, bufferSize);
-                    String texto = "";
-                    String linea;
-                    while ((linea = br.readLine()) != null) {
-                        texto += linea;
+                        fr.close();
+                        file.delete();
+                        MensajeGSM mensaje = MensajeGSM.parse(texto);
+                        if ( mensaje != null )
+                            salida.put(mensaje);
                     }
-
-                    fr.close();
-                    file.delete();
-
-                    MensajeGSM mensaje = MensajeGSM.parse(texto);
-                    salida.put(mensaje);
-                } catch (InterruptedException ex) {
+                     
+                }catch (InterruptedException ex) {
                     Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ParseException ex) {
                     System.out.println("\nERROR GSM\tNo se puede Parsear: " + ex.toString());
@@ -70,7 +78,8 @@ public class ModemReciver extends Thread {
                     Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
-                        fr.close();
+                        if( fr != null)
+                            fr.close();
                     } catch (IOException ex) {
                         Logger.getLogger(ModemReciver.class.getName()).log(Level.SEVERE, null, ex);
                     }

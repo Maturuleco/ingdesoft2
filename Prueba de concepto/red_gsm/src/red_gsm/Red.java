@@ -40,7 +40,7 @@ public class Red {
             BufferedReader br = new BufferedReader(fr);
             String texto = br.readLine();
             if (texto != null) {
-                System.out.println("La red lee :" + texto);
+                System.out.println("La red lee :" + texto +", file: " + file.getName());
                 mensaje = MensajeGSM.parse(texto);
             }
             fr.close();

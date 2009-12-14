@@ -43,15 +43,16 @@ public class ModemSender extends Thread {
         
         try {
             path += "/" + numero + "-" + numSms +".txt";
-            //System.out.println(getName() + " C: " +"sms"+ j +".txt");
+            //System.out.println(" ---[MS]: " + path);
 
             File file = new File(path);
             FileOutputStream fos = new FileOutputStream(file);
-
             for (char ch : phrase.toCharArray()) {
                 fos.write(ch);
             }
             fos.close();
+            file.setWritable(false);
+            
             numSms++;
             if( numSms > maxSize )
                 numSms = 0;
