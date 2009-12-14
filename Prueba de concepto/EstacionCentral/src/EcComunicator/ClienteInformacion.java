@@ -16,7 +16,7 @@ import model.InformationMessage;
 public class ClienteInformacion extends NetworkClient<InformationMessage, InformationMessage> {
 
     public void send(InformationMessage dato, NetworkDestination destino){
-        System.out.println("[EcCom] Se envia informacion a otra EC");
+        System.out.println("[EcCom] Se envia informacion a otra EC: " + dato.toString());
         super.enviarMensaje(destino, dato, false);
     }
     
