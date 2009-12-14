@@ -1,0 +1,5 @@
+﻿idEc:02
+numeroModem:902
+pathRelativoModelo:../Configuraciones/ModelosEc2
+archivoDeConfiguracionesDePuertos:../Configuraciones/ConfigPuertos(LocalHost).xml
+trID:1#pos:Lat·54_E|Long·23_N#tipoSensores:T|H

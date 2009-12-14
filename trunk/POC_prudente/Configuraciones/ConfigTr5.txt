@@ -1,0 +1,6 @@
+idTR:03
+numeroModem:003
+NumeroEstacionAsignada:903
+latitud:70_E
+longitud:3_S
+Sensor1:default|sensor7|01|4000
