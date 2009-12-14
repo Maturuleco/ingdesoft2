@@ -189,6 +189,7 @@ public class EcComunicator implements Runnable {
         while (true) {
             if (entradaDatos.size() > 0) {
                 InformationMessage dato = entradaDatos.poll();
+                System.out.println("[ECom] recibe del DS dato: " + dato.toString() );
                 procesarDato(dato);
             } else if (entradaResult.size() > 0) {
                 InformationMessage result = entradaResult.poll();

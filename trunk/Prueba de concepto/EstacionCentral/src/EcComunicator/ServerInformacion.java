@@ -37,7 +37,7 @@ public class ServerInformacion<T> extends NetworkServer<InformationMessage<T>, I
     @Override
     protected void procesarMensaje(InformationMessage<T> mensaje) {
         try {
-            System.out.println("[EcCom]Se recive informacion externa y se manda");
+            System.out.println("[EcCom]Se recibe informacion externa y se manda: " + mensaje.getMensaje().toString() );
             salidaDeInformacion.put(mensaje.getMensaje());
         } catch (InterruptedException ex) {
             Logger.getLogger(ServerInformacion.class.getName()).log(Level.SEVERE, null, ex);
