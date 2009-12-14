@@ -37,7 +37,7 @@ public abstract class Subscriptor {
             try {
                 Thread.sleep(1000);
                 salida.put(mensaje);
-//                System.out.println("[S]ENVIE PEDIDO SUSCRIPCION");
+                //System.out.println("[S]ENVIE PEDIDO SUSCRIPCION " + mensaje.toString());
             } catch (InterruptedException ex) {
                 Logger.getLogger(Subscriptor.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -51,9 +51,9 @@ public abstract class Subscriptor {
         if (respuesta != null) {
             try {
                 boolean esAceptado = mensaje.equals(respuesta.getMensajeAceptado());
-                mensajesAceptados.put(respuesta.getMensajeAceptado());
                 if (esAceptado) {
-                    System.out.println("[S] Llega respuesta de subscripcion al subscriptor: "+mensaje.toString());
+                    mensajesAceptados.put(respuesta.getMensajeAceptado());
+                    System.out.println("[S] Llega respuesta de subscripcion al subscriptor: "+mensaje.toString() + " leng " + mensajesAceptados.size() );
                 }
                 res = esAceptado;
             } catch (InterruptedException ex) {
@@ -65,6 +65,12 @@ public abstract class Subscriptor {
         
     }
     public boolean isSubscripto( SubscriberMessage mensaje){
+//        System.out.println("mensajes aceptados: " );
+//        for (SubscriberMessage object : mensajesAceptados) {
+//            System.out.println(", " + object.toString() );
+//        }
+//        System.out.println("mensajes contenido: " + mensaje.toString() +": " + mensajesAceptados.contains(mensaje));
+
         return mensajesAceptados.contains(mensaje);
     }
 
