@@ -1,6 +1,5 @@
 package SubscripcionesEc;
 
-import model.*;
 import Datos.FactorClimatico;
 import java.util.Date;
 
@@ -62,6 +61,10 @@ public class MensajePedidoSubscripcionDatos extends SubscriberMessage{
         return hash;
     }
 
+ @Override
+    public String toString(){
+        return "<" +tr +", "+ factorClimatico+ ">";
+    }
 
 
 }

@@ -6,14 +6,13 @@
 package Datos;
 
 import RequerimientosModelos.RequerimientoDato;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Santiago Avendaño
  */
-public class DatoAlmacenado extends DatoSensado implements Serializable {
+public class DatoAlmacenado extends DatoSensado {
     private Integer idTR;
     private DataSource dataSource;
 

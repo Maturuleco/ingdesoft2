@@ -5,13 +5,11 @@
 
 package model;
 
-import java.io.Serializable;
-
 /**
  *
  * @author mar
  */
-public class InformationMessage<T> implements Serializable {
+public class InformationMessage<T> implements SuscriptorMessage {
     Integer receptor;
     T mensaje;
 
@@ -24,16 +22,12 @@ public class InformationMessage<T> implements Serializable {
         return mensaje;
     }
 
-//    public void setMensaje(InformationMessage mensaje) {
-//        this.mensaje = mensaje;
-//    }
-
     public Integer getReceptor() {
         return receptor;
     }
-
-//    public void setReceptor(Integer receptor) {
-//        this.receptor = receptor;
-//    }
-
+    
+    @Override
+    public String toString(){
+        return receptor+ " - " + mensaje.toString();
+    }
 }
