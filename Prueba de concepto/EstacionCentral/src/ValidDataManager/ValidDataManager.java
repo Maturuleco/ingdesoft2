@@ -42,7 +42,7 @@ public class ValidDataManager extends Thread{
     private boolean sensarEntradaDatosInternos() {
         DatoAlmacenado cabeza = entradaDatosInternos.poll();
         if (cabeza != null) {
-            System.out.println("Se recibe dato:\n"+cabeza.toString()+"\n");
+            //System.out.println("[DM] Se recibe dato: "+cabeza.toString());
             escribirDatosValidos(cabeza);
             return true;
         }

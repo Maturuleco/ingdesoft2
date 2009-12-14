@@ -52,7 +52,7 @@ public class DataReceiver extends Thread{
     private boolean sensarEntradaDatos() {
         Mensaje cabeza = entrada.poll();
         if (cabeza != null) {
-            System.out.println("El data Receiver recibe un mensaje");
+            //System.out.println("El data Receiver recibe un mensaje");
             for (DatoSensado dato : cabeza.getDatos()){
                 DatoAlmacenado datoAlm = new DatoAlmacenado(dato.getIdSensor(),
                         dato.getTimeStamp(),dato.getFactor(),dato.getValor(),
