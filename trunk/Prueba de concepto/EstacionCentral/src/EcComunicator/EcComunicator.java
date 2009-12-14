@@ -185,18 +185,18 @@ public class EcComunicator implements Runnable {
         new Thread(serverResultados).start();
         new Thread(serverSubsDatos).start();
         new Thread(serverSubsResult).start();
-        System.out.println("EcCONTROLLER\tSe Inician los Servers para recibie informacion y subscripciones externas");
+        System.out.println("EcCONTROLLER\tSe Inician los Servers para recibir informacion y subscripciones externas");
         while (true) {
             if (entradaDatos.size() > 0) {
                 InformationMessage dato = entradaDatos.poll();
-                System.out.println("[ECom] recibe del DS dato: " + dato.toString() );
+                //System.out.println("[ECom] recibe del DS dato: " + dato.toString() );
                 procesarDato(dato);
             } else if (entradaResult.size() > 0) {
                 InformationMessage result = entradaResult.poll();
                 procesarResult(result);
             } else if (entradaEnvioSubscripcionesDatos.size() > 0) {
                 SubscriberMessage subscripcion = entradaEnvioSubscripcionesDatos.poll();
-                System.out.println("[EC]RECIBI MENSAJE SUSCRIPCION Datos");
+                //System.out.println("[EC]RECIBI MENSAJE SUSCRIPCION Datos");
                 procesarSubscripcionDatos(subscripcion);
             } else if (entradaEnvioSubscripcionesResult.size() > 0) {
                 SubscriberMessage subscripcion = entradaEnvioSubscripcionesResult.poll();

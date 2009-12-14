@@ -4,9 +4,6 @@
  */
 package SubscriptorModelos;
 
-import RequerimientosModelos.RequerimientoDato;
-import RequerimientosModelos.RequerimientoResultado;
-import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import java.util.concurrent.BlockingQueue;
 import SubscripcionesEc.SubscriberMessage;
 import SubscripcionesEc.SubscriptionAcceptedMessage;
@@ -70,7 +67,7 @@ public class SubscriptorModelos implements Runnable {
     private boolean sensarEntradaModelos() {
         Modelo cabeza = entradaModelos.poll();
         if (cabeza != null) {
-            System.out.println("[SM]RECIBI MODELO:" + cabeza.getNombreModelo());
+            //System.out.println("[SM]RECIBI MODELO:" + cabeza.getNombreModelo());
             procesarRequerimientos(cabeza);
             return true;
         } else {
@@ -81,7 +78,7 @@ public class SubscriptorModelos implements Runnable {
     private void procesarRequerimientos(Modelo modelo) {
         subscriptorDatos.procesarRequerimientos(modelo.getRequerimientosDatos());
         subscriptorResultados.procesarRequerimientos(modelo.getRequerimientosResultados());
-        System.out.println("[SM]PROCESE REQUERIMIENTOS MODELO: " + modelo.getNombreModelo());
+        //System.out.println("[SM]PROCESE REQUERIMIENTOS MODELO: " + modelo.getNombreModelo());
     }
 
     public void requestStop() {

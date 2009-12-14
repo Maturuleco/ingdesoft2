@@ -59,7 +59,7 @@ public class NetworkController extends MessageReciever<MensajeRaise> implements 
         } else if(entrada.size() > 0) {
             
             HeartbeatMessege mensajeHeartbeat = entrada.poll();
-            System.out.println("NC Recibio mensaje HEART de la TR " + mensajeHeartbeat.getIdTR());
+            //System.out.println("NC Recibio mensaje HEART de la TR " + mensajeHeartbeat.getIdTR());
             procesarMensajeNC(mensajeHeartbeat);
             actualizarEstadoRedTelemetrica(mensajeHeartbeat);
             return true;
@@ -69,7 +69,7 @@ public class NetworkController extends MessageReciever<MensajeRaise> implements 
 
     public synchronized void timeout(Integer nombreTR) {
         // AVISAR A QUIEN CORRESPONDA QUE LA TR ESTA CAIDA
-        System.out.println("NC TR " + nombreTR + " caida");
+        System.out.println("[NC] TR " + nombreTR + " caida");
         trCaidas.put(nombreTR, true);
     }
 
@@ -107,7 +107,7 @@ public class NetworkController extends MessageReciever<MensajeRaise> implements 
     private void startTimerTR(Integer nombreTR) {
 
         if( trCaidas.get(nombreTR) ){
-            System.out.println("NC    RECU TR: " + nombreTR);
+            System.out.println("[NC] TR: " + nombreTR + " recuperada");
         } else {
             // Para que el timerTask anterior se corte
             timersTR.get(nombreTR).cancel();

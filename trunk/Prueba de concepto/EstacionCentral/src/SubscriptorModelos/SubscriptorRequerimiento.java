@@ -38,7 +38,7 @@ public class SubscriptorRequerimiento<T extends Requerimiento> extends Subscript
 
                 if( !isSubscripto(mensaje) ){
                     subscribe(mensaje);
-                    System.out.println("[SR]Me suscribo a req de Ec: "+req.getProveedor());
+                    //System.out.println("[SR]Me suscribo a req de Ec: "+req.getProveedor());
                 }
             }
         }
