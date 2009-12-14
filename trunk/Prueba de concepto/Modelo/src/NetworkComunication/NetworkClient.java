@@ -1,5 +1,6 @@
 package NetworkComunication;
 
+import SubscripcionesEc.MensajePedidoSubscripcionDatos;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -11,6 +12,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.InformationMessage;
 
 /**
  *
@@ -53,16 +55,14 @@ public abstract class NetworkClient<TipoMensajeDeEnvio extends Serializable, Tip
     }
     
     protected boolean enviarMensaje( TipoMensajeDeEnvio mensajeDeEnvio, Boolean conRespuesta) {
-        System.out.println("Se trata de enviar mensaje por la red desde un cliente");
         Boolean mensajeEnviado = false;
         if (conectar()) {
             OutputStream salida = null;
             try {
                 salida = socket.getOutputStream();
                 ObjectOutputStream salidaObjetos = new ObjectOutputStream(salida);
-
                 salidaObjetos.writeObject(mensajeDeEnvio);
-
+                
                 if (conRespuesta)
                     esperarRespuesta();
 

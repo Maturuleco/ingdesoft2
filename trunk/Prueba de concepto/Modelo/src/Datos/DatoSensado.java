@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author Santiago Avendaño
  */
-public class DatoSensado {
+public class DatoSensado implements Serializable{
     protected Integer idSensor;
     protected Date timeStamp;
 
@@ -25,9 +25,6 @@ public class DatoSensado {
         this.timeStamp = timeStamp;
         this.factor = factor;
         this.valor = valor;
-    }
-
-    public DatoSensado() {
     }
 
     public static DatoSensado parse(String dato) throws ParseException{
@@ -79,10 +76,24 @@ public class DatoSensado {
     }
 
     @Override public String toString(){
-        String idS = this.idSensor.toString();
-        String date = Long.toString(timeStamp.getTime());
-        String fc = factor.toString();
-        String val = valor.toString();
+        String idS = " sensorVacio ";
+
+        if( this.idSensor != null ) 
+            idS = this.idSensor.toString();
+
+        String date = " fechaVacia ";
+        if( timeStamp != null )
+           date = Long.toString(timeStamp.getTime());
+
+        String fc = " factorVacio ";
+        if( factor != null )
+            fc = factor.toString();
+
+        String val = " valVacio ";
+
+        if( valor != null )
+            val = valor.toString();
+
         return idS+"_"+date+"_"+fc+"_"+val;
     }
 

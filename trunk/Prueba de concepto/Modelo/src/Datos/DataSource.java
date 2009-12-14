@@ -5,13 +5,14 @@
 
 package Datos;
 
+import java.io.Serializable;
 import java.text.ParseException;
 
 /**
  *
  * @author Santiago Avendaño
  */
-public enum DataSource {
+public enum DataSource implements Serializable{
     terminal_remota,
     biggest_satellite,
     triangulador,
