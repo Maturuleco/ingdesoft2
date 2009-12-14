@@ -1,0 +1,4 @@
+Nombre:02
+FactorClimatico:H
+Frecuencia:70000
+Directorio:sensor2

@@ -1,0 +1,4 @@
+Nombre:03
+FactorClimatico:T
+Frecuencia:10000
+Directorio:sensor3
