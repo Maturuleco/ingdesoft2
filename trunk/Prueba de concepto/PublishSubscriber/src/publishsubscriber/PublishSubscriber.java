@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import model.InformationMessage;
-import model.SuscriptorMessage;
 
 
 /**
@@ -63,12 +62,11 @@ public abstract class PublishSubscriber<T> implements Runnable {
     private boolean sensarEntradaSubscripciones() {
         SubscriberMessage mensaje = entradaSuscripciones.poll();
         if (mensaje != null) {
-            System.out.println("El Publish Subscriber recibe una suscripcion");
+            System.out.println("[PS] recibe un pedido de suscripcion");
             Suscripcion suscripcion = crearSuscripcion(mensaje);
             suscripciones.add(suscripcion);
             SubscriptionAcceptedMessage respuesta = new SubscriptionAcceptedMessage(mensaje);
             enviarRespuesta(respuesta);
-            System.out.println("El Publish Subscriber acepta una suscripcion");
             return true;
         }
         return false;
@@ -78,20 +76,20 @@ public abstract class PublishSubscriber<T> implements Runnable {
     
     private void enviarRespuesta(SubscriptionAcceptedMessage respuesta){
         salidaAceptacionSubs.add(respuesta);
-        System.out.println("El Publish Subscriber acepta una suscripcion: ecProveedora: "+respuesta.getMensajeAceptado().getEcProovedora()+" IdSuscriptor: "+respuesta.getMensajeAceptado().getIdSuscriptor());
-        System.out.println(" idTr: "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getTR()+" Factor: "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getFactorClimatico());
+        System.out.println("[PS] acepta una suscripcion: de: "+respuesta.getMensajeAceptado().getEcProovedora()+" para: "+respuesta.getMensajeAceptado().getIdSuscriptor()
+                + " <TR "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getTR()+", FC "+((MensajePedidoSubscripcionDatos)(respuesta.getMensajeAceptado())).getFactorClimatico()+">");
 
     }
 
     private void enviarRespuesta(InformationMessage<T> info){
         salidaInfo.add(info);
-        System.out.println("El Publish Subscriber manda un dato.");
+        System.out.println("[PS] manda un dato: " + info.getMensaje().toString());
     }
 
     private void enviarInfo() {
         T mensaje = entradaInfo.poll();
         if (mensaje != null) {
-            System.out.println("El Publish Subscriber recibe informacion para enviar");
+            System.out.println("[PS] recibe informacion para enviar");
             for (Suscripcion<T> s : suscripciones){
                 if (s.seCorresponde(mensaje)){
                     Integer receptor = s.getIdSuscriptor();
