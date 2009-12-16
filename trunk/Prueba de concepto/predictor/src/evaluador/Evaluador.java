@@ -31,7 +31,7 @@ public class Evaluador {
     private SelectorDatos selectorDatos;
     private ControladorDeRequerimientos controladorRequerimientos;
     private PredictorFactory predictorFactory = new PredictorAgruparPorFactorFactory();
-    private Particionador particionador = new ParticionadorPorCantidad(3);
+    private Particionador particionador = new ParticionadorPorCantidad(10);
 
     public Evaluador(SelectorDatos selectorDatos, ControladorDeRequerimientos controladorAreas) {
         this.selectorDatos = selectorDatos;

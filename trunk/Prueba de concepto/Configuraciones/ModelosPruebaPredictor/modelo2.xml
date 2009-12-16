@@ -1,0 +1,124 @@
+<modelo.Modelo>
+  <nombreModelo>2</nombreModelo>
+  <descripcion>se detecto frio polar</descripcion>
+  <reglas class="linked-list">
+    <modelo.Regla>
+      <nombre>Regla 1</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">0.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">-10.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">-20.0</constante>
+          <factor>temperatura</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[2]"/>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[3]"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+    <modelo.Regla>
+      <nombre>Regla 2</nombre>
+      <condiciones class="linked-list">
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">60.0</constante>
+          <factor>humedad</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">50.0</constante>
+          <factor>humedad</factor>
+        </modelo.Condicion>
+        <modelo.Condicion>
+          <comparador>menor</comparador>
+          <constante class="float">40.0</constante>
+          <factor>humedad</factor>
+        </modelo.Condicion>
+      </condiciones>
+      <condicionesPorFactor class="enum-map" enum-type="Datos.FactorClimatico">
+        <entry>
+          <Datos.FactorClimatico>temperatura</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>humedad</Datos.FactorClimatico>
+          <linked-list>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion"/>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[2]"/>
+            <modelo.Condicion reference="../../../../condiciones/modelo.Condicion[3]"/>
+          </linked-list>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>presion</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>lluvias</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>velocidad_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+        <entry>
+          <Datos.FactorClimatico>direccion_viento</Datos.FactorClimatico>
+          <linked-list/>
+        </entry>
+      </condicionesPorFactor>
+    </modelo.Regla>
+  </reglas>
+  <requerimientosDatos/>
+  <requerimientosResultados>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>1</modelo>
+      <trID>1</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>1</modelo>
+      <trID>2</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+    <RequerimientosModelos.RequerimientoResultado>
+      <EcProveedora>1</EcProveedora>
+      <modelo>2</modelo>
+      <trID>4</trID>
+    </RequerimientosModelos.RequerimientoResultado>
+  </requerimientosResultados>
+</modelo.Modelo>
