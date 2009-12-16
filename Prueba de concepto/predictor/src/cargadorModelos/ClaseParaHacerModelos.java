@@ -29,36 +29,26 @@ public class ClaseParaHacerModelos {
      */
     public static void main(String[] args) {
 
-        Modelo modelo = new Modelo(4,"", getReglas1());
+        //Modelo modelo = new Modelo(4,"", getReglas1());
 
-        modelo.setRequerimientosDatos(getReqDato());
-        modelo.setRequerimientosResultados(getReqResult());
+        //modelo.setRequerimientosDatos(getReqDato());
+        //modelo.setRequerimientosResultados(getReqResult());
 
-//        File folder = new File(path);
-//        FileFilter ff = new FileFilter() {
-//
-//            public boolean accept(File file) {
-//                String path = file.getPath();
-//                String extencion = path.split("\\.")[(path.split("\\.").length)-1];
-//                return file.isFile() && extencion.equalsIgnoreCase("xml");
-//            }
-//        };
-//
-//        File[] files = folder.listFiles(ff);
-//        List<Modelo> modelos = new LinkedList<Modelo>();
-//
-//        if (files != null) {
-//            for (int j = 0; j < files.length; j++) {
-//                File file = files[j];
-//                Modelo m = getModelo(file);
-//                System.out.println(m.toString());
-//                if (m != null) {
-//                    modelos.add(m);
-//                }
-//            }
-//        }
+        Collection<Modelo> modelos = new LinkedList<Modelo>();
+
+        Modelo modelo1 = new Modelo(1, "se detectaron vientos fuertes", getReglas1());
+        Modelo modelo2 = new Modelo(2,  "se detectó frio polar", getReglas2());
+
+        modelo1.setRequerimientosDatos(getReqDato1());
+        modelo1.setRequerimientosResultados(new HashSet<RequerimientoResultado>());
+        modelo2.setRequerimientosDatos(new HashSet<RequerimientoDato>());
+        modelo2.setRequerimientosResultados(getReqResult2());
+
+        modelos.add(modelo1);
+        modelos.add(modelo2);
+
         XStream xstream = new XStream();
-        String xml = xstream.toXML(modelo);
+        String xml = xstream.toXML(modelo2);
 
         System.out.println("\nBegin Modelo\n");
         System.out.println(xml);
@@ -77,6 +67,23 @@ public class ClaseParaHacerModelos {
         reqs.add(new RequerimientoResultado(01, 01, 01));
         reqs.add(new RequerimientoResultado(01, 02, 01));
         reqs.add(new RequerimientoResultado(01, 03, 01));
+        return reqs;
+    }
+
+     private static Set<RequerimientoDato> getReqDato1() {
+        Set<RequerimientoDato> reqs = new HashSet<RequerimientoDato>();
+        reqs.add(new RequerimientoDato(02, 01, FactorClimatico.lluvias));
+        reqs.add(new RequerimientoDato(02, 02, FactorClimatico.lluvias));
+        reqs.add(new RequerimientoDato(02, 03, FactorClimatico.temperatura));
+        reqs.add(new RequerimientoDato(02, 04, FactorClimatico.humedad));
+        return reqs;
+    }
+
+    private static Set<RequerimientoResultado> getReqResult2() {
+        Set<RequerimientoResultado> reqs = new HashSet<RequerimientoResultado>();
+        reqs.add(new RequerimientoResultado(01, 1, 01));
+        reqs.add(new RequerimientoResultado(01, 1, 02));
+        reqs.add(new RequerimientoResultado(01, 2, 04));
         return reqs;
     }
 

@@ -53,7 +53,7 @@ public class Main {
         System.out.println("Se creo la base Valid Data en la ruta:" + serverValidDataPath.getAbsolutePath());
         resultadosServer = Db4o.openServer(serverResultadosPath.getAbsolutePath(), 0);
         System.out.println("Se creo la base Resultados en la ruta:" + serverResultadosPath.getAbsolutePath());
-        predictor = new PredictorManager(validDataServer, resultadosServer, "modelo");
+        predictor = new PredictorManager(validDataServer, resultadosServer, "../Configuraciones/ModelosPruebaPredictor");
         predictor.setSalidaResultManager(new LinkedBlockingQueue<Collection<ResultadoEvaluacion>>());
         predictor.setSalidaSubscriptor(new LinkedBlockingQueue<Modelo>());
         System.out.println("Se creo el Predictor y se le le asigno el server de ValidData");
@@ -61,8 +61,8 @@ public class Main {
             cargador1 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.temperatura, GeneradorDatosOrdenados.Orden.creciente, -10.0f, 1.0f, 30.0f, 1, 1));
             cargador2 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.temperatura, GeneradorDatosOrdenados.Orden.decreciente, -10.0f, 1.0f, -30.0f, 3, 1));
             cargador3 = new CargadorDatos(validDataServer, new GeneradorDatosOrdenados(FactorClimatico.humedad, GeneradorDatosOrdenados.Orden.decreciente, 50.0f, 1.0f, 30.0f, 3, 1));
-            cargadorRes1 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 1, 1));
-            cargadorRes2 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 7, 1, 10, 2, 4));
+            cargadorRes1 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 0, 1, 10, 1, 1));
+            cargadorRes2 = new CargadorResultados(resultadosServer, new GeneradorResultados(GeneradorResultados.Orden.creciente, 0, 1, 10, 2, 4));
         } catch (InstantiationException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
